@@ -1,0 +1,29 @@
+table {
+    border: solid black 2px;
+}
+td {
+    outline: solid 1px #000033;
+}
+#0 {
+    background-color: #FFCC99;
+    color: green;
+}
+#1 {
+    width: 45 px;
+    background-color: #FFCC99;
+    text-align: center;
+    color: #660000;
+}
+#2 {
+    width: 65px;
+    background-color: #FFCC99;
+    text-align: center;
+    color: green;
+}
+#3 {
+    width: 65px;
+    background-color: #FFFFCC;
+    text-align: center;
+    overflow: hidden;
+    color: #660000;
+}
