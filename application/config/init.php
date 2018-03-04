@@ -35,6 +35,9 @@ switch (getenv('APPLICATION_ENV')) {
     case 'master':
         require 'master.php';
     break;
+    case 'theKindlyMallard':
+        require 'theKindlyMallard.php';
+    break;
     default:
         //No environment set or environment not known. Do not do anything else.
         die('Cannot continue - invalid environment. Please contact administrator.');
