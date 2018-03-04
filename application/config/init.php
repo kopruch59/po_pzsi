@@ -42,6 +42,9 @@ switch (getenv('APPLICATION_ENV')) {
         require 'tkusiek.php';
             
     break;
+    case 'skomando':
+        require 'skomando.php';        
+    break;
     default:
         //No environment set or environment not known. Do not do anything else.
         die('Cannot continue - invalid environment. Please contact administrator.');
