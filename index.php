@@ -1,17 +1,30 @@
 <?php
 /**
- * A simple PHP MVC skeleton
+ * The student schedule.
  *
- * @package php-mvc
- * @author Panique
- * @link http://www.php-mvc.net
- * @link https://github.com/panique/php-mvc/
  * @license http://opensource.org/licenses/MIT MIT License
  */
-// load application config (error reporting etc.)
-//require 'application/config/config.php';
-// load application class
-require './application/application.php';
-require './application/controller/controller.php';
-// start the application
+
+/**
+ * @var string Represents directory separator.<br>
+ *              Shorter name version of DIRECTORY_SEPARATOR constant.
+ */
+define('DS', DIRECTORY_SEPARATOR);
+/**
+ * @var string PHP file extension with dot.
+ */
+define('FILE_PHP', '.php');
+/**
+ * @var string Absolute path to root directory.
+ */
+define('DIR_ROOT', __DIR__ . DIRECTORY_SEPARATOR);
+/**
+ * @var string Absolute path to configuration directory.
+ */
+define('DIR_CONFIG', __DIR__ . DS . 'application' . DS . 'config' . DS);
+
+//Initialize configuration.
+require DIR_CONFIG . 'init.php';
+
+//Launch the application!
 $app = new Application();

@@ -1,7 +1,7 @@
 <?php
 /**
  * This is the base controller class. 
- * All other normal controllers should extend this class.
+ * All other "normal" controllers should extend this class.
  * 
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
@@ -10,20 +10,20 @@ abstract class Controller {
     /**
      * Default action for each controller.
      */
-    public abstract function index();
+    public abstract function actionIndex();
     
     /**
      * Loads the model with the given name.
      * 
-     * @param string $model_name The name of the model.
+     * @param string $modelName The name of the model.
      * @return object Model object.
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function loadModel($model_name) {
+    public function loadModel(string $modelName) {
         
-        require 'application/models/' . strtolower($model_name) . '.php';
-        return new $model_name();
+        require_once DIR_MODEL . strtolower($modelName) . FILE_PHP;
+        return new $modelName();
     }
     
     /**
@@ -31,9 +31,9 @@ abstract class Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    protected function loadFooterView() {
+    protected function outputFooter() {
         //Default footer.
-        require 'application/view/templates/footer.php';
+        require DIR_VIEW . 'templates' . DS . 'footer.php';
     }
     
     /**
@@ -41,8 +41,8 @@ abstract class Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    protected function loadHeaderView() {
+    protected function outputHeader() {
         //Default header.
-        require 'application/view/templates/header.php';
+        require DIR_VIEW . 'templates' . DS . 'header.php';
     }
 }

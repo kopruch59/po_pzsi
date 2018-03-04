@@ -7,7 +7,7 @@
 class Application {
     
     /**
-     * @var string The method (of the above controller), often also named "action".
+     * @var string The method in controller often named as action.
      */
     private $action = null;
     /**
@@ -15,7 +15,7 @@ class Application {
      */
     private $controller = null;
     /** 
-     * @var array Contains parameters from url.
+     * @var array Contains parameters from URL.
      */
     private $parameters = [];
     
@@ -28,26 +28,26 @@ class Application {
         //Get data from url.
         $this->splitUrl();
         //Check if such controller exist.
-        if (file_exists('./application/controller/' . $this->controller . '.php')) {
+        if (file_exists(DIR_CONTROLLER . $this->controller . '.php')) {
             //Load this file.
-            require './application/controller/' . $this->controller . '.php';
+            require_once DIR_CONTROLLER . $this->controller . '.php';
             //Workaround for dynamicly create object from string.
-            $controller_name = $this->controller;
+            $controllerName = $this->controller;
             //Create this controller object.
-            $this->controller = new $controller_name();
+            $this->controller = new $controllerName();
             //Check for method: does such a method exist in the controller?
             if (method_exists($this->controller, $this->action)) {
                 //Call the method and pass the arguments to it.
                 $this->controller->{$this->action}($this->parameters);
             } else {
-                //Default/fallback: call the index() method of a selected controller.
-                $this->controller->index();
+                //Default fallback: call the index() method of a selected controller.
+                $this->controller->actionIndex();
             }
         } else {
             //Invalid URL, so simply show home/index
-            require './application/controller/home.php';
+            require DIR_CONTROLLER . 'home.php';
             $home = new Home();
-            $home->index();
+            $home->actionIndex();
         }
     }
     

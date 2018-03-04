@@ -11,12 +11,12 @@ class Home extends Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function index() {
+    public function actionIndex() {
         //Load default header.
-        $this->loadHeaderView();
+        $this->outputHeader();
         //Load this action views.
-        require 'application/view/home/index.php';
+        require DIR_VIEW . 'home' . DS . 'index.php';
         //Load default footer.
-        $this->loadFooterView();
+        $this->outputFooter();
     }
 }
