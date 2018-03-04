@@ -49,3 +49,4 @@ switch (getenv('APPLICATION_ENV')) {
  */
 require_once DIR_APPLICATION . 'application.php';
 require_once DIR_CONTROLLER . 'controller.php';
+require_once DIR_MODEL . 'model.php';
