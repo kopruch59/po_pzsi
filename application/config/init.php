@@ -38,6 +38,10 @@ switch (getenv('APPLICATION_ENV')) {
     case 'theKindlyMallard':
         require 'theKindlyMallard.php';
     break;
+    case 'tkusiek':
+        require 'tkusiek.php';
+            
+    break;
     default:
         //No environment set or environment not known. Do not do anything else.
         die('Cannot continue - invalid environment. Please contact administrator.');
