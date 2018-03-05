@@ -10,7 +10,7 @@ abstract class Controller {
     /**
      * Default action for each controller.
      */
-    public abstract function actionIndex();
+    public abstract function action_index();
     
     /**
      * Loads the model with the given name.

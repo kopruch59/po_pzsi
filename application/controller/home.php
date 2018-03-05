@@ -11,7 +11,7 @@ class Home extends Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function actionIndex() {
+    public function action_index() {
         //Load default header.
         $this->outputHeader();
         //Load this action views.
@@ -25,7 +25,7 @@ class Home extends Controller {
      * 
      * @author Tomasz <t.kusiek@gmail.com>
      */
-    public function actionSchedule() {
+    public function action_schedule() {
         //Load default header.
         $this->loadHeaderView();
         //Load this action views.

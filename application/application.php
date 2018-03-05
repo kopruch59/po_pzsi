@@ -35,19 +35,21 @@ class Application {
             $controllerName = $this->controller;
             //Create this controller object.
             $this->controller = new $controllerName();
+            //Create method name from recived action.
+            $actionMethod = 'action_' . $this->action;
             //Check for method: does such a method exist in the controller?
-            if (method_exists($this->controller, $this->action)) {
+            if (method_exists($this->controller, $actionMethod)) {
                 //Call the method and pass the arguments to it.
-                $this->controller->{$this->action}($this->parameters);
+                $this->controller->{$actionMethod}($this->parameters);
             } else {
                 //Default fallback: call the index() method of a selected controller.
-                $this->controller->actionIndex();
+                $this->controller->action_index();
             }
         } else {
             //Invalid URL, so simply show home/index
             require DIR_CONTROLLER . 'home.php';
             $home = new Home();
-            $home->actionIndex();
+            $home->action_index();
         }
     }
     
