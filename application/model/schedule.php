@@ -11,10 +11,10 @@ class ScheduleModel extends Model {
         $first_name = filter_input(INPUT_POST, 'first_name');
         $last_name = filter_input(INPUT_POST, 'last_name');
         $type = filter_input(INPUT_POST, 'type');
-        
+
         $connection = $this->getConnection();
 
-        $instruction = "INSERT INTO lessons SET name='$subject_name', start='$start_time', end='$end_time',first_name='$first_name', last_name='$last_name' ";
+        $instruction = "INSERT INTO " . DB_NAME . ".lessons SET name='$subject_name', start='$start_time', end='$end_time',first_name='$first_name', last_name='$last_name' ";
         $connection->query($instruction);
     }
 
