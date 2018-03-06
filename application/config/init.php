@@ -40,10 +40,12 @@ switch (getenv('APPLICATION_ENV')) {
     break;
     case 'tkusiek':
         require 'tkusiek.php';
-            
     break;
     case 'skomando':
         require 'skomando.php';        
+    break;
+    case 'mgrytz':
+        require 'mgrytz.php';
     break;
     default:
         //No environment set or environment not known. Do not do anything else.
