@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 05 Mar 2018, 12:44
--- Wersja serwera: 10.1.30-MariaDB
--- Wersja PHP: 7.2.2
+-- Host: 127.0.0.1:3306
+-- Czas generowania: 08 Mar 2018, 14:54
+-- Wersja serwera: 5.7.19
+-- Wersja PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,8 +19,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `lessons`
+-- Baza danych: `projekt-pon`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `days`
+--
+
+DROP TABLE IF EXISTS `days`;
+CREATE TABLE IF NOT EXISTS `days` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Zrzut danych tabeli `days`
+--
+
+INSERT INTO `days` (`id`, `name`) VALUES
+(1, 'Poniedzialek'),
+(2, 'wtorek'),
+(3, 'sroda'),
+(4, 'czwartek'),
+(5, 'piatek');
 
 -- --------------------------------------------------------
 
@@ -28,31 +52,67 @@ SET time_zone = "+00:00";
 -- Struktura tabeli dla tabeli `lessons`
 --
 
-CREATE TABLE `lessons` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `lessons`;
+CREATE TABLE IF NOT EXISTS `lessons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `start` datetime NOT NULL,
-  `end` datetime NOT NULL,
-  `first_name` varchar(64) NOT NULL,
-  `last_name` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `lessons`
 --
 
-INSERT INTO `lessons` (`id`, `name`, `start`, `end`, `first_name`, `last_name`) VALUES
-(1, 'Techniki internetowe', '2018-03-05 09:15:00', '2018-03-05 10:00:00', 'Anna', 'Bryniarska');
+INSERT INTO `lessons` (`id`, `name`) VALUES
+(1, 'Techniki internetowe'),
+(2, 'Narzędzia sztucznej inteligencji'),
+(3, 'Projekt zespołowy systemu informatycznego'),
+(4, 'Usługi katalogowe w systemach operacyjnych'),
+(5, 'Zarządzanie projektami informatycznymi'),
+(6, 'Bazy danych II'),
+(7, 'Język angielski'),
+(8, 'Praca przejściowa');
+
+-- --------------------------------------------------------
 
 --
--- Indeksy dla zrzutów tabel
+-- Struktura tabeli dla tabeli `plan`
 --
 
+DROP TABLE IF EXISTS `plan`;
+CREATE TABLE IF NOT EXISTS `plan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lesson` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  `day` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  `type` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `teacher_name` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
 --
--- Indeksy dla tabeli `lessons`
+-- Struktura tabeli dla tabeli `type`
 --
-ALTER TABLE `lessons`
-  ADD PRIMARY KEY (`id`);
+
+DROP TABLE IF EXISTS `type`;
+CREATE TABLE IF NOT EXISTS `type` (
+  `id` int(11) NOT NULL,
+  `Name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Zrzut danych tabeli `type`
+--
+
+INSERT INTO `type` (`id`, `Name`) VALUES
+(1, 'Laboratorium'),
+(2, 'Wyklad'),
+(3, 'Cwiczenia'),
+(4, 'Projekt');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
