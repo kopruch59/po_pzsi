@@ -1,7 +1,16 @@
 <?php
 
 class ScheduleModel extends Model {
-
+    public function getSchedule(){
+    $connection = $this->getConnection();
+    $query = 'SELECT * FROM `' . DB_NAME . '`.`plan` order by day, start';
+                $queryPrepare = $connection->prepare($query);
+                $queryPrepare->execute();
+                $schedule = $queryPrepare->fetchAll(); 
+                
+                return $schedule;
+    }
+    
     public function saveSchedule(array $formData) {
 
         $day = filter_input(INPUT_POST, 'day');
@@ -17,5 +26,5 @@ class ScheduleModel extends Model {
         $instruction = "INSERT INTO " . DB_NAME . ".lessons SET name='$subject_name', start='$start_time', end='$end_time',first_name='$first_name', last_name='$last_name' ";
         $connection->query($instruction);
     }
-
+    
 }
