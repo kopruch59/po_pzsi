@@ -1,12 +1,13 @@
+<h1>Plan zajęć:</h1>
 <table>
     <thead>
         <tr>
             <td>Dzień</td>
-            <td>typ zajęć</td>
-            <td>nazwa</td>
-            <td>od</td>
-            <td>do</td>
-            <td>prowadzący</td>
+            <td>Typ zajęć</td>
+            <td>Nazwa</td>
+            <td>Od</td>
+            <td>Do</td>
+            <td>Prowadzący</td>
         </tr>
     </thead>
     <tbody>
