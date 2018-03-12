@@ -17,7 +17,7 @@ define('FILE_PHP', '.php');
 /**
  * @var string Absolute path to root directory.
  */
-define('DIR_ROOT', __DIR__ . DIRECTORY_SEPARATOR);
+define('DIR_ROOT', __DIR__ . DS);
 /**
  * @var string Absolute path to configuration directory.
  */
