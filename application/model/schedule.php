@@ -25,8 +25,16 @@ class ScheduleModel extends Model {
         $connection->query($instruction);
     }
 
+    public function loadData(){
+        $formData = [];
+        $formData['lessons'] = $this->fetchLesson();
+        $formData['days'] = $this->fetchDay();
+        $formData['types'] = $this->fetchType();
+        return $formData;
+    }
+
     //Fetching lessons from database
-    public function fetchLesson(array $formData) {
+    private function fetchLesson() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM " . DB_NAME . ".lessons";
@@ -36,7 +44,7 @@ class ScheduleModel extends Model {
     }
 
     //Fetching days from database
-    public function fetchDay(array $formData) {
+    private function fetchDay() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM " . DB_NAME . ".days";
@@ -46,7 +54,7 @@ class ScheduleModel extends Model {
     }
 
     //Fetching type from database
-    public function fetchType(array $formData) {
+    private function fetchType() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM " . DB_NAME . ".type";

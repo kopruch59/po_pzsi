@@ -26,18 +26,19 @@ class Schedule extends Controller {
      * @author skomando <szymonkomander@gmail.com>
      */
     public function action_add() {
+        $model= new ScheduleModel();
+        $formSubmitted = filter_input(INPUT_POST, 'save_lesson');
+        if ($formSubmitted == 1) {
+            $model->saveSchedule([]);
+        }
         //Load default header.
         $this->outputHeader();
         //Query to DataBase
-        $fetch = new ScheduleModel();
-        $fetchLesson = $fetch->fetchLesson([]);
-        $fetchDay = $fetch->fetchDay([]);
-        $fetchType = $fetch->fetchType([]);
-        $model = new ScheduleModel();
-        $model->saveSchedule([]);
+        $formData = $model->loadData();
         //Load this action views.
         require DIR_VIEW . 'schedule' . DS . 'add.php';
         //Load default footer.
         $this->outputFooter();
     }
+
 }
