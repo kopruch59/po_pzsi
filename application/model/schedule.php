@@ -31,7 +31,7 @@ class ScheduleModel extends Model {
 
         //Connection and query to MySQL
         $connection = $this->getConnection();
-        $instruction = "INSERT INTO " . DB_NAME . ".plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type' ";
+        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type' ";
         $connection->query($instruction);
     }
     
@@ -48,7 +48,7 @@ class ScheduleModel extends Model {
     private function fetchLesson() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
-        $instruction = "SELECT name FROM " . DB_NAME . ".lessons";
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.lessons";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
@@ -58,7 +58,7 @@ class ScheduleModel extends Model {
     private function fetchDay() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
-        $instruction = "SELECT name FROM " . DB_NAME . ".days";
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.days";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
@@ -68,7 +68,7 @@ class ScheduleModel extends Model {
     private function fetchType() {
         //Connection and query to MySQL
         $connection = $this->getConnection();
-        $instruction = "SELECT name FROM " . DB_NAME . ".type";
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.type";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
