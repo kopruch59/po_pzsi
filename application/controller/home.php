@@ -19,18 +19,4 @@ class Home extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
-
-    /**
-     * action for discplay table
-     * 
-     * @author Tomasz <t.kusiek@gmail.com>
-     */
-    public function action_schedule() {
-        //Load default header.
-        $this->loadHeaderView();
-        //Load this action views.
-        require  DIR_VIEW . 'home' . DS . 'schedule.php';
-        //Load default footer.
-        $this->loadFooterView();
-    }
 }
