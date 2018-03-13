@@ -57,4 +57,3 @@ class Schedule extends Controller {
         $this->outputFooter();
     }
 }
-}
