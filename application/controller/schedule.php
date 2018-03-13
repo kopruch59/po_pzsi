@@ -40,6 +40,7 @@ class Schedule extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
+
      /**
      * action for display table
      * 
@@ -56,6 +57,4 @@ class Schedule extends Controller {
         $this->outputFooter();
     }
 }
- 
-
-
+}

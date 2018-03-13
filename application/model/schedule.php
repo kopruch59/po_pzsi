@@ -73,5 +73,4 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-
 }
