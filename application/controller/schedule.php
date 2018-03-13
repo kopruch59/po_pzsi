@@ -41,4 +41,20 @@ class Schedule extends Controller {
         $this->outputFooter();
     }
 
+     /**
+     * action for display table
+     * 
+     * @author Tomasz <t.kusiek@gmail.com>
+     */
+    public function action_show() {
+        //Load default header.
+        $this->outputHeader();
+        $model = new ScheduleModel();
+        $plan = $model->getSchedule();
+        //Load this action views.
+        require  DIR_VIEW . 'schedule' . DS . 'view.php';
+        //Load default footer.
+        $this->outputFooter();
+    }
+}
 }
