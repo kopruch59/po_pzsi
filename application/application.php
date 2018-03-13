@@ -28,15 +28,15 @@ class Application {
         //Get data from url.
         $this->splitUrl();
         //Check if such controller exist.
-        if (file_exists(DIR_CONTROLLER . $this->controller . '.php')) {
+        if (file_exists(DIR_CONTROLLER . $this->controller . FILE_PHP)) {
             //Load this file.
-            require_once DIR_CONTROLLER . $this->controller . '.php';
+            require_once DIR_CONTROLLER . $this->controller . FILE_PHP;
             //Workaround for dynamicly create object from string.
-            $controllerName = $this->controller;
+            $controllerName = ucfirst($this->controller) . Controller::SUFFIX_FOR_CONTROLLERS;
             //Create this controller object.
             $this->controller = new $controllerName();
             //Create method name from recived action.
-            $actionMethod = 'action_' . $this->action;
+            $actionMethod = Controller::PREFIX_FOR_ACTIONS . $this->action;
             //Check for method: does such a method exist in the controller?
             if (method_exists($this->controller, $actionMethod)) {
                 //Call the method and pass the arguments to it.
@@ -48,13 +48,13 @@ class Application {
         } else {
             //Invalid URL, so simply show home/index
             require DIR_CONTROLLER . 'home.php';
-            $home = new Home();
+            $home = new HomeController(false);
             $home->action_index();
         }
     }
     
     /**
-     * Gets url from $_GET and split it to the parts.
+     * Gets URL from $_GET and split it to the parts.
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
@@ -68,8 +68,8 @@ class Application {
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
             //Put URL parts into according properties.
-            $this->controller = isset($url[0]) ? $url[0] : null;
-            $this->action = isset($url[1]) ? $url[1] : null;
+            $this->controller = isset($url[0]) ? strtolower($url[0]) : null;
+            $this->action = isset($url[1]) ? strtolower($url[1]) : null;
             //Clear previous parameters.
             $this->parameters = [];
             $urlCount = count($url);
