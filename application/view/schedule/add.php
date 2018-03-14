@@ -37,8 +37,15 @@
     <label for="end_time">Podaj godzinę zakończenia zajęć</label>
     <input type="time" name="end_time"/>
     <br/><br/>
-    <label for="first_name">Podaj nazwisko prowadzącego</label>
-    <input type="text" name="teacher_name"/>
+    <label for="first_name">Wybierz prowadzącego</label>
+    <select name="type">
+        <option name="type"><?php
+            foreach ($formData['teachers'] as $row) {
+                echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+            }
+            ?>
+        </option> 
+    </select>
     <br/><br/>
     <input type="submit" value="Dodaj do planu!" name="subbmit"/>
     <input type="hidden" value="1" name="save_lesson" /> 
