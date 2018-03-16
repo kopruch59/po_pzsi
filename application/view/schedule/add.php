@@ -40,6 +40,16 @@
     <label for="first_name">Podaj nazwisko prowadzącego</label>
     <input type="text" name="teacher_name"/>
     <br/><br/>
+    <label for="group">Wybierz do której grupy ma być dodane zajęcia:</label>
+    <select name="group">
+        <option name="group"><?php
+            foreach ($formData['group'] as $row) {
+                echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+            }
+            ?>
+        </option> 
+    </select>
+    <br/><br/>
     <input type="submit" value="Dodaj do planu!" name="subbmit"/>
     <input type="hidden" value="1" name="save_lesson" /> 
 

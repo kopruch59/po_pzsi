@@ -26,7 +26,7 @@ class Schedule extends Controller {
      * @author skomando <szymonkomander@gmail.com>
      */
     public function action_add() {
-        $model= new ScheduleModel();
+        $model = new ScheduleModel();
         $formSubmitted = filter_input(INPUT_POST, 'save_lesson');
         if ($formSubmitted == 1) {
             $model->saveSchedule([]);
@@ -40,7 +40,8 @@ class Schedule extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
-     /**
+
+    /**
      * action for display table
      * 
      * @author Tomasz <t.kusiek@gmail.com>
@@ -51,11 +52,9 @@ class Schedule extends Controller {
         $model = new ScheduleModel();
         $plan = $model->getSchedule();
         //Load this action views.
-        require  DIR_VIEW . 'schedule' . DS . 'view.php';
+        require DIR_VIEW . 'schedule' . DS . 'view.php';
         //Load default footer.
         $this->outputFooter();
     }
+
 }
- 
-
-
