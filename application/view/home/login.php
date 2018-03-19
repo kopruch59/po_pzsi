@@ -32,8 +32,8 @@
 </div>
 
 <?php
-if (isset($message)) {
-    echo '<label class="text-danger">' . $message . '</label>';
+if (!empty($_POST['errors'])) {
+    echo '<label class="text-danger">' . $_POST['errors'] . '</label>';
 }
 ?>  
 

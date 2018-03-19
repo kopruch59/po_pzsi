@@ -8,9 +8,9 @@ class HomeModel extends Model {
     public function checkLogin() {
         try {
             $connection = $this->getConnection();
-            if (isset($_POST["login"])) {
+            
                 if (empty($_POST["login"]) || empty($_POST["pass"])) {
-                    $message = '<label>Wszystkie pola są wymagane!</label>';
+                    $_POST['errors'] = '<label>Wszystkie pola są wymagane!</label>';
                 } else {
                     $query = 'SELECT * FROM `' . DB_NAME . '`.`users` WHERE login = :login AND pass = :pass';
                     $statement = $connection->prepare($query);
@@ -26,10 +26,9 @@ class HomeModel extends Model {
                         $_SESSION["group"] = $row['group_number'];
                         header("Location: " . APPLICATION_URL . "/schedule/show");
                     } else {
-                        $message = '<label>Podane wartości są niepoprawne!</label>';
+                        $_POST['errors'] = '<label>Podane wartości są niepoprawne!</label>';
                     }
                 }
-            }
         } catch (PDOException $e) {
             // report error message
             $message = $e->getMessage();
