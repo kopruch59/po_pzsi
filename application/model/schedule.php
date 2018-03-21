@@ -47,6 +47,7 @@ class ScheduleModel extends Model {
         $formData['days'] = $this->fetchDay();
         $formData['types'] = $this->fetchType();
         $formData['group'] = $this->fetchGroup();
+        $formData['teacher'] = $this->fetchTeacher();
         return $formData;
     }
 
@@ -88,5 +89,14 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-
+    
+     //Fetching teachers from database
+    private function fetchTeacher() {
+        //Connection and query to MySQL
+        $connection = $this->getConnection();
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.teachers";
+        $query = $connection->query($instruction);
+        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
 }
