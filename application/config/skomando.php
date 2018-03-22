@@ -15,7 +15,7 @@ ini_set('display_errors', 1);
 /**
  * Configuration for: Project URL
  */
-define('APPLICATION_URL', 'http://vvposchedule');
+define('APPLICATION_URL', 'http://localhost');
 
 /**
  * Configuration for: Database
