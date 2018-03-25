@@ -53,6 +53,15 @@ switch (getenv('APPLICATION_ENV')) {
     break;
 }
 
+if (is_dir(DIR_ROOT . 'vendor')) {
+    /**
+     * @var string Absolute path to vendor directory.
+     */
+    define('DIR_VENDOR', DIR_ROOT . 'vendor' . DS);
+    
+    require DIR_VENDOR . 'autoload.php';
+}
+
 /**
  * Load necessary classes.
  */

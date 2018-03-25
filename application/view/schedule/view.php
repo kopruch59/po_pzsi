@@ -1,11 +1,7 @@
-<h1></h1>   
-
+<h1>Plan lekcji</h1>   
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h3>
-                Plan lekcj:
-            </h3>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -31,7 +27,6 @@
                 </thead>
                 <tbody>
 
-
                     <?php
 //        Iterate throught lessons.
                     foreach ($plan as $key => $lesson) {
@@ -46,7 +41,8 @@
                         '</tr>';
                     }
                     ?>
-                  
-
-
-
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

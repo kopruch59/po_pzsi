@@ -1,10 +1,6 @@
 <?php
 
-class Schedule extends Controller {
-
-    public function __construct() {
-        require_once DIR_MODEL . 'schedule.php';
-    }
+class ScheduleController extends Controller {
 
     /**
      * Default action for schedule
@@ -15,7 +11,7 @@ class Schedule extends Controller {
         //Load default header.
         $this->outputHeader();
         //Load this action views.
-        require DIR_VIEW . 'schedule' . DS . 'index.php';
+        require $this->dirViews . 'index.php';
         //Load default footer.
         $this->outputFooter();
     }
@@ -26,22 +22,22 @@ class Schedule extends Controller {
      * @author skomando <szymonkomander@gmail.com>
      */
     public function action_add() {
-        $model = new ScheduleModel();
+        
         $formSubmitted = filter_input(INPUT_POST, 'save_lesson');
         if ($formSubmitted == 1) {
-            $model->saveSchedule([]);
+            $this->model->saveSchedule([]);
         }
         //Load default header.
         $this->outputHeader();
         //Query to DataBase
-        $formData = $model->loadData();
+        $formData = $this->model->loadData();
         //Load this action views.
-        require DIR_VIEW . 'schedule' . DS . 'add.php';
+        require $this->dirViews . 'add.php';
         //Load default footer.
         $this->outputFooter();
     }
 
-    /**
+     /**
      * action for display table
      * 
      * @author Tomasz <t.kusiek@gmail.com>
@@ -49,10 +45,10 @@ class Schedule extends Controller {
     public function action_show() {
         //Load default header.
         $this->outputHeader();
-        $model = new ScheduleModel();
-        $plan = $model->getSchedule();
+        
+        $plan = $this->model->getSchedule();
         //Load this action views.
-        require DIR_VIEW . 'schedule' . DS . 'view.php';
+        require  $this->dirViews . 'view.php';
         //Load default footer.
         $this->outputFooter();
     }

@@ -34,7 +34,16 @@
         <label for="end">Podaj godzinę zakończenia zajęć:</label>
         <input class="form-control" type="time" name="end_time" value="" id="end">
         <label for="teacher_name">Podaj nazwisko prowadzącego</label>
-        <input type="text" name="teacher_name" id="teacher_name"/>
+        <input type="text" name="teacher_name" list="tlist" id="teacher_name"/>
+            <datalist id="tlist">
+                <option name="teacher"><?php
+                foreach ($formData['teacher'] as $row) {
+                    echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+                }
+                ?>
+                </option>
+            </datalist>
+        
         <label for="group">Wybierz do której grupy ma być dodane zajęcia:</label>
         <select name="group">
             <option name="group"><?php

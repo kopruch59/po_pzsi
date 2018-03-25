@@ -6,6 +6,10 @@
 -- Czas generowania: 16 Mar 2018, 14:45
 -- Wersja serwera: 10.1.30-MariaDB
 -- Wersja PHP: 7.2.2
+-- Host: 127.0.0.1:3306
+-- Czas generowania: 14 Mar 2018, 16:07
+-- Wersja serwera: 5.7.19
+-- Wersja PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,7 +34,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `days` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) CHARACTER SET utf8 NOT NULL
+  `name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -94,16 +98,39 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 -- Struktura tabeli dla tabeli `plan`
 --
 
-CREATE TABLE `plan` (
+DROP TABLE IF EXISTS `plan`;
+CREATE TABLE IF NOT EXISTS `plan` (
   `id` int(11) NOT NULL,
   `lesson` varchar(64) NOT NULL,
   `day` varchar(64) NOT NULL,
   `type` varchar(64) NOT NULL,
   `start` time NOT NULL,
   `end` time NOT NULL,
+  `group_number` varchar(64) NOT NULL,
   `teacher_name` varchar(64) NOT NULL,
-  `group_number` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  KEY `lesson` (`lesson`),
+  KEY `day` (`day`),
+  KEY `type` (`type`),
+  KEY `teacher_name` (`teacher_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `teachers`
+--
+
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE IF NOT EXISTS `teachers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `teachers` (`id`, `name`) VALUES
+(1, 'Bryniarska'),
+(2, 'Wotzka'),
+(3, 'Gola');
 
 --
 -- Zrzut danych tabeli `plan`

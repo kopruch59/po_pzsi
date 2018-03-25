@@ -1,4 +1,4 @@
-table {
+/*table {
     border: solid black 2px;
 }
 td {
@@ -26,4 +26,35 @@ td {
     text-align: center;
     overflow: hidden;
     color: #660000;
+} */
+
+#menu
+{
+	background-color: #303030;
+	color: #ffffff;
+	padding: 10px;
+}
+
+.option
+{
+	float: left;
+	min-width: 120px;
+	height: 25px;
+	font-size: 18px;
+	border-right: 2px dotted #444444;
+	opacity: 0.8;
+        text-align: center;
+}
+
+.neutrallink
+{
+	text-decoration: none;
+	color: #ffffff;
+}
+
+.option:hover
+{
+	background-color: #000000;
+	cursor: pointer;
+        color:white;
 }
