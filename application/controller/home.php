@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Home controller.
  *
@@ -19,4 +20,19 @@ class HomeController extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
+
+    /**
+     * Checking login from database
+     * 
+     * @author skomando <szymonkomander@gmail.com>
+     */
+    public function action_login() {
+        
+        $this->model->checkLogin();
+
+        $this->outputHeader();
+        require $this->dirViews . 'login.php';
+        $this->outputFooter();
+    }
+
 }
