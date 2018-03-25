@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Czas generowania: 08 Mar 2018, 14:54
+-- Czas generowania: 14 Mar 2018, 16:07
 -- Wersja serwera: 5.7.19
 -- Wersja PHP: 7.1.9
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `days` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `days`
@@ -82,14 +82,40 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 DROP TABLE IF EXISTS `plan`;
 CREATE TABLE IF NOT EXISTS `plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `lesson` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
-  `day` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
-  `type` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  `lesson` varchar(64) NOT NULL,
+  `day` varchar(64) NOT NULL,
+  `type` varchar(64) NOT NULL,
   `start` time NOT NULL,
   `end` time NOT NULL,
-  `teacher_name` varchar(64) CHARACTER SET utf8mb4 NOT NULL,
+  `teacher_name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lesson` (`lesson`),
+  KEY `day` (`day`),
+  KEY `type` (`type`),
+  KEY `teacher_name` (`teacher_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `teachers`
+--
+
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE IF NOT EXISTS `teachers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `name`) VALUES
+(1, 'Bryniarska'),
+(2, 'Wotzka'),
+(3, 'Fedczuk');
 
 -- --------------------------------------------------------
 
@@ -102,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `type` (
   `id` int(11) NOT NULL,
   `Name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `type`
