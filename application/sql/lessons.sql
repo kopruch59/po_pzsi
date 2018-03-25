@@ -34,8 +34,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `days` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
+  `name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -101,15 +100,14 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `plan`;
 CREATE TABLE IF NOT EXISTS `plan` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `lesson` varchar(64) NOT NULL,
   `day` varchar(64) NOT NULL,
   `type` varchar(64) NOT NULL,
   `start` time NOT NULL,
   `end` time NOT NULL,
-  `group_number` varchar(64) NOT NULL
+  `group_number` varchar(64) NOT NULL,
   `teacher_name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `lesson` (`lesson`),
   KEY `day` (`day`),
   KEY `type` (`type`),
@@ -128,6 +126,11 @@ CREATE TABLE IF NOT EXISTS `teachers` (
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `teachers` (`id`, `name`) VALUES
+(1, 'Bryniarska'),
+(2, 'Wotzka'),
+(3, 'Gola');
 
 --
 -- Zrzut danych tabeli `plan`
@@ -153,8 +156,7 @@ INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `teacher_name
 
 CREATE TABLE `type` (
   `id` int(11) NOT NULL,
-  `Name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
+  `Name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --

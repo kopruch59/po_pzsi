@@ -34,5 +34,4 @@ class HomeModel extends Model {
             $message = $e->getMessage();
         }
     }
-
 }

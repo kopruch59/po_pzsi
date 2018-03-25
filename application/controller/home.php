@@ -7,10 +7,6 @@
  */
 class HomeController extends Controller {
 
-    public function __construct() {
-        require_once DIR_MODEL . 'home.php';
-    }
-
     /**
      * Default action for controller.
      * 
@@ -31,11 +27,11 @@ class HomeController extends Controller {
      * @author skomando <szymonkomander@gmail.com>
      */
     public function action_login() {
-        $model = new HomeModel();
-        $model->checkLogin();
+        
+        $this->model->checkLogin();
 
         $this->outputHeader();
-        require DIR_VIEW . 'home' . DS . 'login.php';
+        require $this->dirViews . 'login.php';
         $this->outputFooter();
     }
 
