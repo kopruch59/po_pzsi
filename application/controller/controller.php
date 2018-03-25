@@ -8,22 +8,45 @@
 abstract class Controller {
     
     /**
+     * @var string Prefix that is used for action methods in controllers.
+     */
+    const PREFIX_FOR_ACTIONS = 'action_';
+    
+    /**
+     * @var string Suffix for all controllers class names extended by this abstract.
+     */
+    const SUFFIX_FOR_CONTROLLERS = 'Controller';
+    
+    /**
+     * @var string Name of controller without "Controller" suffix.
+     */
+    public $name;
+    
+    /**
+     * @var string Absolute path to default directory with views for this controller.
+     */
+    protected $dirViews;
+    
+    /**
+     * @var Model Default model for this controller. 
+     */
+    protected $model;
+
+    /**
      * Default action for each controller.
      */
     public abstract function action_index();
     
     /**
-     * Loads the model with the given name.
-     * 
-     * @param string $modelName The name of the model.
-     * @return object Model object.
+     * @param bool $loadModel True if load default model for this controller, false otherwise.
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function loadModel(string $modelName) {
+    public function __construct(bool $loadModel = true) {
         
-        require_once DIR_MODEL . strtolower($modelName) . FILE_PHP;
-        return new $modelName();
+        $this->name = strtolower(str_replace(self::class, '', static::class));
+        $this->dirViews = DIR_VIEW . $this->name . DS;
+        $this->model = $loadModel ? Model::loadModel($this->name) : null;
     }
     
     /**

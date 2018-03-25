@@ -6,11 +6,6 @@
  */
 class Google extends Controller {
     
-    public function __construct() {
-        
-        require DIR_MODEL . 'google.php';
-    }
-    
     /**
      * Default action for this controller.
      * 
