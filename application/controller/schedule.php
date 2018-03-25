@@ -52,4 +52,5 @@ class ScheduleController extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
+
 }

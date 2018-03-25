@@ -1,24 +1,27 @@
 <?php
+
 /**
  * Main application class.
  * 
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
 class Application {
-    
+
     /**
      * @var string The method in controller often named as action.
      */
     private $action = null;
+
     /**
      * @var string The controller name.
      */
     private $controller = null;
-    /** 
+
+    /**
      * @var array Contains parameters from URL.
      */
     private $parameters = [];
-    
+
     /**
      * Analyze the URL elements and calls the according controller/method or the fallback.
      * 
@@ -52,7 +55,7 @@ class Application {
             $home->action_index();
         }
     }
-    
+
     /**
      * Gets URL from $_GET and split it to the parts.
      * 
@@ -61,7 +64,7 @@ class Application {
     private function splitUrl() {
         //Get url from $_URL.
         $url = filter_input(INPUT_GET, 'url');
-        
+
         if (isset($url)) {
             //Split URL.
             $url = rtrim($url, '/');

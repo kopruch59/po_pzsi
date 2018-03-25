@@ -1,10 +1,10 @@
 <?php
+
 /**
  * 
  * 
  * @author skomando <szymonkomander@gmail.com>
  */
-
 /**
  * Configuration for: Error reporting
  * For testing environment display all errors.
