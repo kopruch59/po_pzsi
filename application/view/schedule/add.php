@@ -30,10 +30,9 @@
             </option> 
         </select>
         <label for="start">Podaj godzinę rozpoczęcia zajęć:</label>
-        <input class="form-control" type="time" value="" id="start">
+        <input class="form-control" type="time" name="start_time" value="" id="start">
         <label for="end">Podaj godzinę zakończenia zajęć:</label>
-        <input class="form-control" type="time" value="" id="end">
-        
+        <input class="form-control" type="time" name="end_time" value="" id="end">
         <label for="teacher_name">Podaj nazwisko prowadzącego</label>
         <input type="text" name="teacher_name" list="tlist" id="teacher_name"/>
             <datalist id="tlist">

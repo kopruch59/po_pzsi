@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the base model class. 
  * All other "normal" models should extend this class.
@@ -6,7 +7,7 @@
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
 abstract class Model {
-    
+
     /**
      * @var string Suffix for all model class names extended by this abstract.
      */
@@ -16,7 +17,7 @@ abstract class Model {
      * @var PDO Holds PDO object connected to database.
      */
     private $db = null;
-    
+
     /**
      * Loads the model with the given name.
      * 
@@ -49,7 +50,7 @@ abstract class Model {
         //Prepare database connection.
         $this->db = $this->setConnection();
     }
-    
+
     /**
      * Getter for PDO database connection;
      * 
@@ -58,10 +59,10 @@ abstract class Model {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     protected function getConnection() {
-        
+
         return $this->db;
     }
-    
+
     /**
      * Creates PDO object (connect to database).
      * 
@@ -72,19 +73,17 @@ abstract class Model {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     private function setConnection() {
-        
         try {
             $pdo = new PDO(
-                DB_TYPE . ':host:'. DB_HOST . ';dbname:' . DB_NAME, 
-                DB_USER, 
-                DB_PASS
+                    DB_TYPE . ':host:' . DB_HOST . ';dbname:' . DB_NAME, DB_USER, DB_PASS, [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"]
             );
         } catch (PDOException $ex) {
             //Output exception message.
             echo $ex->getMessage();
             $pdo = null;
         }
-        
+
         return $pdo;
     }
+
 }

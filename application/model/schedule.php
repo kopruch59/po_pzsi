@@ -20,19 +20,19 @@ class ScheduleModel extends Model {
         $start_time = filter_input(INPUT_POST, 'start_time');
         $end_time = filter_input(INPUT_POST, 'end_time');
         $subject_name = filter_input(INPUT_POST, 'subject_name');
-        $teacher_name = filter_input(INPUT_POST, 'teacher_name');
+        $teacher_name = filter_input(INPUT_POST, 'teacher_name', FILTER_SANITIZE_STRING);
         $day = filter_input(INPUT_POST, 'day');
         $type = filter_input(INPUT_POST, 'type');
         $group = filter_input(INPUT_POST, 'group');
 
         //Protection for MySQL Injection
-        $start_time = htmlentities($start_time, ENT_QUOTES, "UTF-8");
-        $end_time = htmlentities($end_time, ENT_QUOTES, "UTF-8");
-        $subject_name = htmlentities($subject_name, ENT_QUOTES, "UTF-8");
-        $teacher_name = htmlentities($teacher_name, ENT_QUOTES, "UTF-8");
-        $day = htmlentities($day, ENT_QUOTES, "UTF-8");
-        $type = htmlentities($type, ENT_QUOTES, "UTF-8");
-        $group = htmlentities($group, ENT_QUOTES, "UTF-8");
+//        $start_time = htmlentities($start_time, ENT_QUOTES, "UTF-8");
+//        $end_time = htmlentities($end_time, ENT_QUOTES, "UTF-8");
+//        $subject_name = htmlentities($subject_name, ENT_QUOTES, "UTF-8");
+//        $teacher_name = htmlentities($teacher_name, ENT_QUOTES, "UTF-8");
+//        $day = htmlentities($day, ENT_QUOTES, "UTF-8");
+//        $type = htmlentities($type, ENT_QUOTES, "UTF-8");
+//        $group = htmlentities($group, ENT_QUOTES, "UTF-8");
 
         //Connection and query to MySQL
         $connection = $this->getConnection();
