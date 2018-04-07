@@ -1,3 +1,18 @@
+<?php
+    if (!isset($_SESSION['zalogowany']))
+	{
+		header("Location: " . APPLICATION_URL . "/home/login");
+		exit();
+	}
+	
+?>
+
+<div class="info">
+<?php
+    echo 'Witaj '. $_SESSION["test"];
+?>
+</div>
+
 <h1>Plan lekcji</h1>   
 <div class="container-fluid">
     <div class="row">

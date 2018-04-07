@@ -9,11 +9,14 @@
     </head>
     <body class="text-center">
         <div id="menu">
-            <a href="../home/index" class="neutrallink"><div class="option">home</div></a>
-            <a href="../home/login" class="neutrallink"><div class="option">home/login</div></a>
-            <a href="../schedule/index" class="neutrallink"><div class="option">schedule</div></a>
-            <a href="../schedule/add" class="neutrallink"><div class="option">schedule/add</div></a>
-            <a href="../schedule/show" class="neutrallink"><div class="option">schedule/show</div></a>
+            <a href="../home/index" class="neutrallink"><div class="optionL" style="border-left:2px dotted #444444;">home</div></a>
+            <a href="../schedule/index" class="neutrallink"><div class="optionL">schedule</div></a>
+            <a href="../google/index" class="neutrallink"><div class="optionL">google</div></a>
+            <a href="../schedule/add" class="neutrallink"><div class="optionL">Dodaj zajęcia</div></a>
+            <a href="../schedule/show" class="neutrallink"><div class="optionL">Plan</div></a>
+            
+            <a href="../home/logout" class="neutrallink"><div class="optionR">Logout</div></a>
+            <a href="../home/login" class="neutrallink"><div class="optionR" style="border-left:2px dotted #444444;">Login</div></a>
             <div style="clear:both;"></div> 
         </div>
         

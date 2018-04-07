@@ -34,5 +34,19 @@ class HomeController extends Controller {
         require $this->dirViews . 'login.php';
         $this->outputFooter();
     }
+    
+    /**
+     * Logging out
+     * 
+     * @author mgrytz
+     */
+    public function action_logout() 
+    {
+        $this->model->Logout();
+
+        $this->outputHeader();
+        require $this->dirViews . 'logout.php';
+        $this->outputFooter();
+    }
 
 }

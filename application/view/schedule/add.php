@@ -1,3 +1,18 @@
+<?php
+    if (!isset($_SESSION['zalogowany']))
+	{
+		header("Location: " . APPLICATION_URL . "/home/login");
+		exit();
+	}
+	
+?>
+
+<div class="info">
+<?php
+    echo 'Witaj '. $_SESSION["test"];
+?>
+</div>
+
 <div class="container">
     <div class="row">
         <h1>Wprowadź dane dotyczące planu:</h1>
@@ -7,14 +22,19 @@
 
                     <form action="" method="post">
 
-                        <label for="lessons">Wybierz przedmiot:</label>
-
-                        <select class="form-control" id="lessons" name="subject_name"><?php
-                            foreach ($formData['lessons'] as $row) {
-                                echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                            }
-                            ?>
-                        </select>
+                        <label for="lessons">Wprowadź nazwę przedmiotu:</label>
+                        <input type="text" name="lesson" list="llist" id="lesson" class="planinput"/>
+                            <datalist id="llist">
+                                <option name="lesson">
+                                    <?php
+                                    foreach ($formData['lessons'] as $row) 
+                                        {
+                                            echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+                                        }
+                                    ?>
+                                </option>
+                            </datalist>
+                        <br />
                         <label for="day">Wybierz dzień:</label>
                         <select class="form-control" id="day" name="day">
                             <option name="day"><?php
@@ -40,7 +60,7 @@
                     <label for="end">Podaj godzinę zakończenia zajęć:</label>
                     <input class="form-control" type="time" name="end_time" value="" id="end">
                     <label for="teacher_name">Podaj nazwisko prowadzącego</label>
-                    <input type="text" name="teacher_name" list="tlist" id="teacher_name"/>
+                    <input type="text" name="teacher_name" list="tlist" id="teacher_name" class="planinput"/>
                     <datalist id="tlist">
                         <option name="teacher"><?php
                             foreach ($formData['teacher'] as $row) {

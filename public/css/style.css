@@ -28,7 +28,8 @@ td {
     color: #660000;
 } */
 
-input {
+input 
+{
     margin-bottom: 10px;
 }
 
@@ -39,12 +40,13 @@ input {
 	padding: 10px;
 }
 
-#login-img {
+#login-img 
+{
     width: 50%;
     height: auto;
 }
 
-.option
+.optionL
 {
 	float: left;
 	min-width: 120px;
@@ -55,15 +57,46 @@ input {
         text-align: center;
 }
 
+.optionL:hover
+{
+	background-color: #000000;
+	cursor: pointer;
+        color:white;
+}
+
+.optionR
+{
+	float: right;
+	min-width: 120px;
+	height: 25px;
+	font-size: 18px;
+	border-right: 2px dotted #444444;
+	opacity: 0.8;
+        text-align: center;
+}
+
+.optionR:hover
+{
+	background-color: #000000;
+	cursor: pointer;
+        color:white;
+}
+
 .neutrallink
 {
 	text-decoration: none;
 	color: #ffffff;
 }
 
-.option:hover
+.info
 {
-	background-color: #000000;
-	cursor: pointer;
-        color:white;
+    background-color: #303030;
+    color: #ffffff;
+    padding: 10px;
+    text-align: right;
+}
+
+.planinput
+{
+    width: 330px;
 }
