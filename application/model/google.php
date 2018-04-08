@@ -6,6 +6,8 @@
  */
 class GoogleModel extends Model {
     
+    private static $instance;
+    
     /**
      * @var Google_Client Google client object.
      */
@@ -15,6 +17,24 @@ class GoogleModel extends Model {
      * @var Google_Service_Calendar Google Calendar service.
      */
     public $calendarService;
+    
+    /**
+     * Returns single instance of class. If instance is not invoke create a new one.
+     * 
+     * @return GoogleModel Instance.
+     * 
+     * @static
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public static function getInstance() {
+
+        if (is_null(static::$instance)) {
+            static::$instance = new static;
+        }
+
+        return static::$instance;
+    }
 
     public function __construct() {
         parent::__construct();
@@ -35,7 +55,7 @@ class GoogleModel extends Model {
         define(
             'GOOGLE_API_SCOPES',
             implode(' ', [
-                Google_Service_Calendar::CALENDAR_READONLY,
+                Google_Service_Calendar::CALENDAR,
                 Google_Service_Oauth2::USERINFO_PROFILE,
             ])
         );
@@ -48,7 +68,9 @@ class GoogleModel extends Model {
         $client->setAuthConfig($this->prepareAuthConfig(GOOGLE_API_CLIENT_SECRET_PATH));
         $client->setAccessType('offline');
         $this->client = $client;
-//        $this->calendarService = new Google_Service_Calendar($this->client);
+        $this->calendarService = new Google_Service_Calendar($this->client);
+        
+        static::$instance = $this;
     }
     
     /**

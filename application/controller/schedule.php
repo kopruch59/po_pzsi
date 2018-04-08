@@ -20,6 +20,15 @@ class ScheduleController extends Controller {
         //Load default footer.
         $this->outputFooter();
     }
+    
+    public function action_insertSample() {
+        
+        $this->outputHeader();
+        
+        echo $this->model->insertSampleToGoogleCalendar();
+        
+        $this->outputFooter();
+    }
 
     /**
      * Add action for schedule

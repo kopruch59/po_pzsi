@@ -144,6 +144,7 @@ class UserController extends Controller {
         
         unset($_SESSION[self::GOOGLE_ACCESS_TOKEN]);
         unset($_SESSION[self::KEY_GOOGLE_USER_DATA]);
+        $this->modelGoogle->client->revokeToken();
         session_destroy();
         
         $this->outputHeader();
