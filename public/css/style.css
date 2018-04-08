@@ -28,11 +28,20 @@ td {
     color: #660000;
 } */
 
+input {
+    margin-bottom: 10px;
+}
+
 #menu
 {
 	background-color: #303030;
 	color: #ffffff;
 	padding: 10px;
+}
+
+#login-img {
+    width: 50%;
+    height: auto;
 }
 
 .option
