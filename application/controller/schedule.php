@@ -3,6 +3,11 @@
 class ScheduleController extends Controller {
 
     /**
+     * @var ScheduleModel Default model for this controller. 
+     */
+    protected $model;
+    
+    /**
      * Default action for schedule
      * 
      * @author skomando <szymonkomander@gmail.com>

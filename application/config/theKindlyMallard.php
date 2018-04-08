@@ -15,7 +15,14 @@ ini_set('display_errors', 1);
 /**
  * Configuration for: Project URL
  */
-define('APPLICATION_URL', 'http://vvposchedule');
+/**
+ * @var string Application main URL.
+ */
+define('APPLICATION_URL', 'http://vvposchedule/');
+/**
+ * @var string Application URL with IP address.
+ */
+define('APPLICATION_URL_IP', 'http://127.0.0.69/');
 
 /**
  * Configuration for: Database

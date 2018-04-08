@@ -24,7 +24,7 @@ class HomeModel extends Model {
                     if ($count > 0) {
                         $row = $statement->fetch();
                         $_SESSION["group"] = $row['group_number'];
-                        header("Location: " . APPLICATION_URL . "/schedule/show");
+                        header("Location: " . APPLICATION_URL . "schedule/show");
                     } else {
                         $_POST['errors'] = '<label>Podane wartości są niepoprawne!</label>';
                     }

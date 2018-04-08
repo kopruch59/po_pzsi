@@ -6,7 +6,12 @@
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
 class HomeController extends Controller {
-
+    
+    /**
+     * @var HomeController Default model for this controller. 
+     */
+    protected $model;
+    
     /**
      * Default action for controller.
      * 
@@ -34,5 +39,4 @@ class HomeController extends Controller {
         require $this->dirViews . 'login.php';
         $this->outputFooter();
     }
-
 }
