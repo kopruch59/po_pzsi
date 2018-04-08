@@ -45,43 +45,6 @@ input
     width: 50%;
     height: auto;
 }
-
-.optionL
-{
-	float: left;
-	min-width: 120px;
-	height: 25px;
-	font-size: 18px;
-	border-right: 2px dotted #444444;
-	opacity: 0.8;
-        text-align: center;
-}
-
-.optionL:hover
-{
-	background-color: #000000;
-	cursor: pointer;
-        color:white;
-}
-
-.optionR
-{
-	float: right;
-	min-width: 120px;
-	height: 25px;
-	font-size: 18px;
-	border-right: 2px dotted #444444;
-	opacity: 0.8;
-        text-align: center;
-}
-
-.optionR:hover
-{
-	background-color: #000000;
-	cursor: pointer;
-        color:white;
-}
-
 .neutrallink
 {
 	text-decoration: none;
