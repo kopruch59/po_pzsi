@@ -27,13 +27,9 @@ class ScheduleController extends Controller {
         if ($formSubmitted == 1) {
             $this->model->saveSchedule([]);
         }
-        //Load default header.
         $this->outputHeader();
-        //Query to DataBase
         $formData = $this->model->loadData();
-        //Load this action views.
         require $this->dirViews . 'add.php';
-        //Load default footer.
         $this->outputFooter();
     }
 
@@ -43,13 +39,9 @@ class ScheduleController extends Controller {
      * @author Tomasz <t.kusiek@gmail.com>
      */
     public function action_show() {
-        //Load default header.
         $this->outputHeader();
-        
         $plan = $this->model->getSchedule();
-        //Load this action views.
         require  $this->dirViews . 'view.php';
-        //Load default footer.
         $this->outputFooter();
     }
 

@@ -43,7 +43,6 @@
                 <tbody>
 
                     <?php
-//        Iterate throught lessons.
                     foreach ($plan as $key => $lesson) {
 
                         echo '<tr>' .

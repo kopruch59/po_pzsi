@@ -4,7 +4,6 @@ session_start();
 
 class HomeModel extends Model {
 
-    //Checking inserted login&pass with login&pass in database
     public function checkLogin() {
         try {
             $connection = $this->getConnection();
@@ -34,7 +33,6 @@ class HomeModel extends Model {
                     }
                 }
         } catch (PDOException $e) {
-            // report error message
             $message = $e->getMessage();
         }
     }
@@ -48,7 +46,6 @@ class HomeModel extends Model {
         } 
         catch (PDOException $e) 
         {
-            // report error message
             $message = $e->getMessage();
         }
     }
