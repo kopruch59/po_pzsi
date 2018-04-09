@@ -3,6 +3,11 @@
 class ScheduleController extends Controller {
 
     /**
+     * @var ScheduleModel Default model for this controller. 
+     */
+    protected $model;
+    
+    /**
      * Default action for schedule
      * 
      * @author skomando <szymonkomander@gmail.com>
@@ -13,6 +18,15 @@ class ScheduleController extends Controller {
         //Load this action views.
         require $this->dirViews . 'index.php';
         //Load default footer.
+        $this->outputFooter();
+    }
+    
+    public function action_insertSample() {
+        
+        $this->outputHeader();
+        
+        echo $this->model->insertSampleToGoogleCalendar();
+        
         $this->outputFooter();
     }
 
