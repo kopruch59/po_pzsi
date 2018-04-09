@@ -26,7 +26,7 @@ group.addEventListener('blur', groupVerify, true);
 function Validate() {
     if (subject_name.value == "") {
         subject_name.style.border = "1px solid red";
-        document.getElementById('lessons').style.color = "red";
+        document.getElementById('subject_name').style.color = "red";
         subject_name_error.textContent = "Pole wybierz przedmiot jest wymagane!";
         subject_name.focus();
         return false;
@@ -78,7 +78,7 @@ function Validate() {
 function subjectNameVerify() {
     if (subject_name.value != "") {
         subject_name.style.border = "1px solid #5e6e66";
-        document.getElementById('lessons').style.color = "#5e6e66";
+        document.getElementById('subject_name').style.color = "#5e6e66";
         subject_name_error.innerHTML = "";
         return true;
     }

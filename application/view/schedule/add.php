@@ -1,58 +1,24 @@
-<?php
-    if (!isset($_SESSION['zalogowany']))
-	{
-		header("Location: " . APPLICATION_URL . "/home/login");
-		exit();
-	}
-	
-?>
-
 <div class="info">
-<?php
-    echo 'Witaj '. $_SESSION["test"];
-?>
+    <?php
+    echo 'Witaj ' . $_SESSION["test"];
+    ?>
 </div>
-
-<div class="container">
-    <div class="row">
-        <h1>Wprowadź dane dotyczące planu:</h1>
-        <div class="form-group">
-            <div class="text-center">
-                <div class="col-md-4 order-md-4 mb-4">
-
-                    <form action="" method="post">
-
-                        <label for="lessons">Wprowadź nazwę przedmiotu:</label>
-                        <input type="text" name="lesson" list="llist" id="lesson" class="planinput"/>
-                            <datalist id="llist">
-                                <option name="lesson">
-                                    <?php
-                                    foreach ($formData['lessons'] as $row) 
-                                        {
-                                            echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                                        }
-                                    ?>
-                                </option>
-                            </datalist>
-                        <br />
-                        <label for="day">Wybierz dzień:</label>
-                        <select class="form-control" id="day" name="day">
-                            <option name="day"><?php
-                                foreach ($formData['days'] as $row) {
-                                    echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                                }
-                                ?>
-                            </option>
-                        </select>
-                        <label for="type">Wybierz typ:</label>
-                        <select class="form-control" id="type" name="type">
-                            <option name="type"><?php
-                                foreach ($formData['types'] as $row) {
-                                    echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                                }
-                                ?>
-                            </option> 
-                        </select>
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-offset-3" align="center">
+            <h2>Wprowadź dane dotyczące planu:</h2>
+            <form action="" method="post" name="addForm">
+                <div id="subject_name">
+                    <label for="lessons">Wprowadź nazwę przedmiotu:</label>
+                    <input class="planinput" type="text" name="subject_name" value="<?php if (isset($_POST['subject_name'])) echo $_POST['subject_name'] ?>" list="slist" id="subject_name" />
+                    <datalist id="slist">
+                        <?php
+                        foreach ($formData['lessons'] as $row) {
+                            echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+                        }
+                        ?>
+                    </datalist>
+                    <div id="subject_name_error"></div>
                 </div>
                 <div id="day">
                     <label for="day">Wybierz dzień:</label>
