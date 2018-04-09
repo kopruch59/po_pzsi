@@ -13,11 +13,8 @@ class HomeController extends Controller {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function action_index() {
-        //Load default header.
         $this->outputHeader();
-        //Load this action views.
         require $this->dirViews . 'index.php';
-        //Load default footer.
         $this->outputFooter();
     }
 
@@ -32,6 +29,20 @@ class HomeController extends Controller {
 
         $this->outputHeader();
         require $this->dirViews . 'login.php';
+        $this->outputFooter();
+    }
+    
+    /**
+     * Logging out
+     * 
+     * @author mgrytz
+     */
+    public function action_logout() 
+    {
+        $this->model->Logout();
+
+        $this->outputHeader();
+        require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
 

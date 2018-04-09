@@ -28,6 +28,11 @@ td {
     color: #660000;
 } */
 
+input 
+{
+    margin-bottom: 10px;
+}
+
 #menu
 {
 	background-color: #303030;
@@ -35,26 +40,26 @@ td {
 	padding: 10px;
 }
 
-.option
+#login-img 
 {
-	float: left;
-	min-width: 120px;
-	height: 25px;
-	font-size: 18px;
-	border-right: 2px dotted #444444;
-	opacity: 0.8;
-        text-align: center;
+    width: 50%;
+    height: auto;
 }
-
 .neutrallink
 {
 	text-decoration: none;
 	color: #ffffff;
 }
 
-.option:hover
+.info
 {
-	background-color: #000000;
-	cursor: pointer;
-        color:white;
+    background-color: #303030;
+    color: #ffffff;
+    padding: 10px;
+    text-align: right;
+}
+
+.planinput
+{
+    width: 330px;
 }
