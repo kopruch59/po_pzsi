@@ -26,11 +26,6 @@ abstract class Controller {
      * @var string Absolute path to default directory with views for this controller.
      */
     protected $dirViews;
-    
-    /**
-     * @var Model Default model for this controller. 
-     */
-    protected $model;
 
     /**
      * Default action for each controller.
@@ -38,7 +33,7 @@ abstract class Controller {
     public abstract function action_index();
     
     /**
-     * @param bool $loadModel True if load default model for this controller, false otherwise.
+     * @param bool $loadModel TRUE if load default model for this controller, FALSE if not load model.
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
