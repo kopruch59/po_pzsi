@@ -22,6 +22,16 @@ class UserController extends Controller {
     const KEY_LOGIN_METHOD = 'loginMethod';
     
     /**
+     * @var string Session ID when user is login by Google.
+     */
+    const SESSION_ID_GOOGLE = 'loginWithGoogle';
+    
+    /**
+     * @var string Session name when user is log in.
+     */
+    const SESSION_NAME = 'sessionName';
+    
+    /**
      * @var string Value for login method Google.
      */
     const VALUE_LOGIN_METHOD_GOOGLE = 'googleLogin';
@@ -48,6 +58,7 @@ class UserController extends Controller {
         if (isset($_SESSION[self::GOOGLE_ACCESS_TOKEN]) && !empty($_SESSION[self::GOOGLE_ACCESS_TOKEN])) {
             return true;
         } else {
+            session_destroy();
             return false;
         }
     }
@@ -64,6 +75,8 @@ class UserController extends Controller {
         
         $this->modelGoogle = Model::loadModel('Google');
         
+        session_name(self::SESSION_NAME);
+        session_id(self::SESSION_ID_GOOGLE);
         session_start();
     }
     
@@ -73,6 +86,8 @@ class UserController extends Controller {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function action_index() {
+        
+        $userData = $this->getUserData();
         
         $this->outputHeader();
         require $this->dirViews . 'index.php';
@@ -90,7 +105,7 @@ class UserController extends Controller {
         
         if ($this->isLoggedIn()) {
             //User already logged in. Redirect to index.
-            header('Location: ' . APPLICATION_URL_IP . $this->name . DS . 'index');
+            header('Location: ' . APPLICATION_URL . $this->name . DS . 'index');
         }
         
         if (filter_input(INPUT_POST, self::KEY_LOGIN_METHOD) == self::VALUE_LOGIN_METHOD_GOOGLE) {
@@ -126,7 +141,7 @@ class UserController extends Controller {
                 echo $authResonse['error_description'] . ' ' . $authResonse['error'];
             }
         } else {
-            $error_uri = APPLICATION_URL_IP . 'user/login';
+            $error_uri = APPLICATION_URL . 'user/login';
             header(
                 'Location: ' . filter_var($error_uri, FILTER_SANITIZE_URL),
                 true,
@@ -142,14 +157,30 @@ class UserController extends Controller {
      */
     public function action_logout() {
         
-        unset($_SESSION[self::GOOGLE_ACCESS_TOKEN]);
-        unset($_SESSION[self::KEY_GOOGLE_USER_DATA]);
         $this->modelGoogle->client->revokeToken();
-        session_destroy();
+        session_unset();
         
         $this->outputHeader();
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
+    }
+    
+    /**
+     * Returns currently logged in user data.
+     * 
+     * @return array User data received from Google or empty array if no data stored.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function getUserData() {
+        
+        $userData = [];
+        
+        if (isset($_SESSION[UserController::KEY_GOOGLE_USER_DATA])) {
+            $userData = (array)$_SESSION[UserController::KEY_GOOGLE_USER_DATA];
+        }
+        
+        return $userData;
     }
     
     /**
