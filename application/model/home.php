@@ -4,7 +4,6 @@ session_start();
 
 class HomeModel extends Model {
 
-    //Checking inserted login&pass with login&pass in database
     public function checkLogin() {
         try {
             $connection = $this->getConnection();
@@ -21,16 +20,32 @@ class HomeModel extends Model {
                             )
                     );
                     $count = $statement->rowCount();
-                    if ($count > 0) {
+                    if ($count > 0) 
+                    {
+                        $_SESSION['zalogowany'] = true;
+                        
                         $row = $statement->fetch();
                         $_SESSION["group"] = $row['group_number'];
-                        header("Location: " . APPLICATION_URL . "schedule/show");
+                        $_SESSION["test"] = $row['login'];
+                        header("Location: " . APPLICATION_URL . "/schedule/show");
                     } else {
                         $_POST['errors'] = '<label>Podane wartości są niepoprawne!</label>';
                     }
                 }
         } catch (PDOException $e) {
-            // report error message
+            $message = $e->getMessage();
+        }
+    }
+    
+    public function Logout() 
+    {
+        try 
+        {
+            session_unset();
+            header("Location: " . APPLICATION_URL . "/home/login");
+        } 
+        catch (PDOException $e) 
+        {
             $message = $e->getMessage();
         }
     }

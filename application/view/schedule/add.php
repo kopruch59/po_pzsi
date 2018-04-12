@@ -1,21 +1,23 @@
+<div class="info">
+    <?php
+    echo 'Witaj ' . $_SESSION["test"];
+    ?>
+</div>
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
             <h2>Wprowadź dane dotyczące planu:</h2>
             <form action="" method="post" name="addForm">
                 <div id="subject_name">
-                    <label for="lessons">Wybierz przedmiot:</label>
-                    <select class="form-control" id="lessons" name="subject_name">
+                    <label for="lessons">Wprowadź nazwę przedmiotu:</label>
+                    <input class="planinput" type="text" name="subject_name" value="<?php if (isset($_POST['subject_name'])) echo $_POST['subject_name'] ?>" list="slist" id="subject_name" />
+                    <datalist id="slist">
                         <?php
-                        if (isset($_POST['subject_name'])) {
-                            echo "<option value='" . $_POST['subject_name'] . "'>" . $_POST['subject_name'] . "</option>";
-                        }
                         foreach ($formData['lessons'] as $row) {
-
                             echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
                         }
                         ?>
-                    </select>
+                    </datalist>
                     <div id="subject_name_error"></div>
                 </div>
                 <div id="day">
@@ -70,7 +72,7 @@
                 </div>
                 <div id="teacher_name">
                     <label for="teacher_name">Podaj nazwisko prowadzącego</label>
-                    <input type="text" name="teacher_name" value="<?php if (isset($_POST['teacher_name'])) echo $_POST['teacher_name'] ?>" list="tlist" id="teacher_name" />
+                    <input class="planinput" type="text" name="teacher_name" value="<?php if (isset($_POST['teacher_name'])) echo $_POST['teacher_name'] ?>" list="tlist" id="teacher_name" />
                     <datalist id="tlist">
                         <?php
                         foreach ($formData['teacher'] as $row) {

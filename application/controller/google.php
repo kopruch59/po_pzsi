@@ -22,7 +22,6 @@ class GoogleController extends Controller {
         
         $model = new GoogleModel();
 
-        //Next 10 events on the user's calendar.
         $calendarId = 'primary';
         $optParams = [
             'maxResults' => 10,

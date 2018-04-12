@@ -7,6 +7,7 @@ class ScheduleModel extends Model {
     public function getSchedule() {
         $connection = $this->getConnection();
         $group = $_SESSION["group"];
+        
         $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by day, start";
         $queryPrepare = $connection->prepare($query);
         $queryPrepare->execute();
@@ -109,22 +110,12 @@ class ScheduleModel extends Model {
         $type = filter_input(INPUT_POST, 'type');
         $group = filter_input(INPUT_POST, 'group');
 
-        //Protection for MySQL Injection
-//        $start_time = htmlentities($start_time, ENT_QUOTES, "UTF-8");
-//        $end_time = htmlentities($end_time, ENT_QUOTES, "UTF-8");
-//        $subject_name = htmlentities($subject_name, ENT_QUOTES, "UTF-8");
-//        $teacher_name = htmlentities($teacher_name, ENT_QUOTES, "UTF-8");
-//        $day = htmlentities($day, ENT_QUOTES, "UTF-8");
-//        $type = htmlentities($type, ENT_QUOTES, "UTF-8");
-//        $group = htmlentities($group, ENT_QUOTES, "UTF-8");
-
-        //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group' ";
         $connection->query($instruction);
     }
 
-    //Loads all data from database
+
     public function loadData() {
         $formData = [];
         $formData['lessons'] = $this->fetchLesson();
@@ -135,9 +126,8 @@ class ScheduleModel extends Model {
         return $formData;
     }
 
-    //Fetching lessons from database
+
     private function fetchLesson() {
-        //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.lessons";
         $query = $connection->query($instruction);
@@ -145,9 +135,8 @@ class ScheduleModel extends Model {
         return $rows;
     }
 
-    //Fetching days from database
+
     private function fetchDay() {
-        //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.days";
         $query = $connection->query($instruction);
@@ -155,9 +144,7 @@ class ScheduleModel extends Model {
         return $rows;
     }
 
-    //Fetching type from database
     private function fetchType() {
-        //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.type";
         $query = $connection->query($instruction);
@@ -165,7 +152,6 @@ class ScheduleModel extends Model {
         return $rows;
     }
 
-    //Fetching group from database
     private function fetchGroup() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.groups";
@@ -174,9 +160,7 @@ class ScheduleModel extends Model {
         return $rows;
     }
     
-     //Fetching teachers from database
     private function fetchTeacher() {
-        //Connection and query to MySQL
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.teachers";
         $query = $connection->query($instruction);
