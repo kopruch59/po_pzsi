@@ -4,7 +4,12 @@
  *
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
-class Google extends Controller {
+class GoogleController extends Controller {
+    
+    /**
+     * @var GoogleModel Default model for this controller. 
+     */
+    protected $model;
     
     /**
      * Default action for this controller.
@@ -17,7 +22,6 @@ class Google extends Controller {
         
         $model = new GoogleModel();
 
-        //Next 10 events on the user's calendar.
         $calendarId = 'primary';
         $optParams = [
             'maxResults' => 10,
@@ -26,7 +30,7 @@ class Google extends Controller {
             'timeMin' => date('c'),
         ];
         
-        $results = $model->service->events->listEvents($calendarId, $optParams);
+        $results = $model->calendarService->events->listEvents($calendarId, $optParams);
         $items = $results->getItems();
         
         require DIR_VIEW . 'google' . DS . 'index.php';
