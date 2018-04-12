@@ -17,7 +17,7 @@ abstract class Model {
      * @var PDO Holds PDO object connected to database.
      */
     private $db = null;
-
+    
     /**
      * Loads the model with the given name.
      * 

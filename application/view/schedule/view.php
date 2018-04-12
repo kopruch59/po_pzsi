@@ -1,3 +1,9 @@
+<div class="info">
+<?php
+    echo 'Witaj '. $_SESSION["test"];
+?>
+</div>
+
 <h1>Plan lekcji</h1>   
 <div class="container-fluid">
     <div class="row">
@@ -28,7 +34,6 @@
                 <tbody>
 
                     <?php
-//        Iterate throught lessons.
                     foreach ($plan as $key => $lesson) {
 
                         echo '<tr>' .
