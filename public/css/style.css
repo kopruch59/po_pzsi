@@ -1,65 +1,85 @@
-/*table {
-    border: solid black 2px;
-}
-td {
-    outline: solid 1px #000033;
-}
-#0 {
-    background-color: #FFCC99;
-    color: green;
-}
-#1 {
-    width: 45 px;
-    background-color: #FFCC99;
-    text-align: center;
-    color: #660000;
-}
-#2 {
-    width: 65px;
-    background-color: #FFCC99;
-    text-align: center;
-    color: green;
-}
-#3 {
-    width: 65px;
-    background-color: #FFFFCC;
-    text-align: center;
-    overflow: hidden;
-    color: #660000;
-} */
 
 input 
 {
     margin-bottom: 10px;
 }
 
-#menu
+/*#menu
 {
 	background-color: #303030;
 	color: #ffffff;
 	padding: 10px;
-}
+}*/
 
 #login-img 
 {
     width: 50%;
     height: auto;
 }
-.neutrallink
+/*.neutrallink
 {
 	text-decoration: none;
 	color: #ffffff;
-}
+}*/
 
 .info
 {
-    background-color: #303030;
-    color: #ffffff;
-    padding: 10px;
+    padding: 5px;
     text-align: right;
+    font-size: 20px;
 }
 
 .planinput
 {
     width: 330px;
+}
+
+table
+{
+    border: 1px solid black;
+    text-align: left;
+    background-color: #efefef;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 283px;
+}
+
+tr
+{
+    border: 1px solid black;
+    height: 133px; 
+}
+
+thead > tr
+{
+    text-align: center;
+    background-color: lightgray;
+    height: 27px; 
+}
+
+.hour
+{
+    font-size: 13px;
+}
+
+.name
+{
+    font-size: 20px;
+}
+
+.spantype
+{
+    float:right;
+}
+
+.table_left
+{
+    float:left;
+}
+
+#tabels
+{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1425px;
 }

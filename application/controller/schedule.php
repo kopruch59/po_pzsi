@@ -50,7 +50,7 @@ class ScheduleController extends Controller {
         if ($formSubmitted == 1) {
             $this->model->saveSchedule([]);
         }
-        $this->outputHeader();
+        $this->outputHeader_logged();
         $formData = $this->model->loadData();
         require $this->dirViews . 'add.php';
         $this->outputFooter();
@@ -62,7 +62,7 @@ class ScheduleController extends Controller {
      * @author Tomasz <t.kusiek@gmail.com>
      */
     public function action_show() {
-        $this->outputHeader();
+        $this->outputHeader_logged();
         $plan = $this->model->getSchedule();
         require $this->dirViews . 'view.php';
         $this->outputFooter();
