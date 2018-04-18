@@ -35,9 +35,9 @@ input
 
 #menu
 {
-	background-color: #303030;
-	color: #ffffff;
-	padding: 10px;
+    background-color: #303030;
+    color: #ffffff;
+    padding: 10px;
 }
 
 #login-img 
@@ -45,10 +45,20 @@ input
     width: 50%;
     height: auto;
 }
+
+#error_message {
+    clear: both;
+}
+
+.sign-in-button {
+    height: 50px;
+    width: 150px;
+}
+
 .neutrallink
 {
-	text-decoration: none;
-	color: #ffffff;
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .info
@@ -62,4 +72,27 @@ input
 .planinput
 {
     width: 330px;
+}
+
+.modifySelect {
+    width: 330px;
+}
+
+#inputDaysValue {
+    width: 40px; 
+    height: 30px;
+}
+
+#id_custom_periodicity {
+    width: 150px; 
+    height: 30px;
+}
+
+#custom_day_periodicity {
+    width: 150px;
+    height: 30px;
+}
+
+#periodicity {
+    margin-bottom: 20px;
 }
