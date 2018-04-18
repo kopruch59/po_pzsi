@@ -22,16 +22,6 @@ class UserController extends Controller {
     const KEY_LOGIN_METHOD = 'loginMethod';
     
     /**
-     * @var string Session ID when user is login by Google.
-     */
-    const SESSION_ID_GOOGLE = 'loginWithGoogle';
-    
-    /**
-     * @var string Session name when user is log in.
-     */
-    const SESSION_NAME = 'sessionName';
-    
-    /**
      * @var string Value for login method Google.
      */
     const VALUE_LOGIN_METHOD_GOOGLE = 'googleLogin';
@@ -45,23 +35,6 @@ class UserController extends Controller {
      * @var GoogleModel GoogleModel object. 
      */
     protected $modelGoogle;
-        
-    /**
-     * Checks if current user is logged in with Google.
-     * 
-     * @return boolean TRUE if user is logged in, FALSE otherwise.
-     * 
-     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
-     */
-    public static function isLoggedIn() {
-        //Information about user login are stored in $_SESSION variable.
-        if (isset($_SESSION[self::GOOGLE_ACCESS_TOKEN]) && !empty($_SESSION[self::GOOGLE_ACCESS_TOKEN])) {
-            return true;
-        } else {
-            session_destroy();
-            return false;
-        }
-    }
     
     /**
      * Additional initialize Google model.
@@ -75,8 +48,8 @@ class UserController extends Controller {
         
         $this->modelGoogle = Model::loadModel('Google');
         
-        session_name(self::SESSION_NAME);
-        session_id(self::SESSION_ID_GOOGLE);
+        session_name(UserModel::SESSION_NAME);
+        session_id(UserModel::SESSION_ID_GOOGLE);
         session_start();
     }
     
@@ -103,7 +76,7 @@ class UserController extends Controller {
      */
     public function action_login() {
         
-        if ($this->isLoggedIn()) {
+        if (UserModel::isLoggedIn()) {
             //User already logged in. Redirect to index.
             header('Location: ' . APPLICATION_URL . $this->name . DS . 'index');
         }

@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class ScheduleModel extends Model {
 
     public function getSchedule() {
@@ -24,12 +22,12 @@ class ScheduleModel extends Model {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function insertSampleToGoogleCalendar() {
-        
+        //Prepare stuffs
         include_once DIR_MODEL . 'google.php';
         $googleModel = GoogleModel::getInstance();
         $googleModel->client->setAccessToken($_SESSION['accessToken']);
         $googleModel->calendarService = new Google_Service_Calendar($googleModel->client);
-        
+        //Get user calendars
         $url_parameters = [];
         $url_parameters['fields'] = 'items(id,summary,timeZone)';
         $url_parameters['minAccessRole'] = 'owner';
@@ -44,32 +42,9 @@ class ScheduleModel extends Model {
         if ($http_code != 200) {
                 throw new Exception('Error : Failed to get calendars list');
         }
-
-        $calendarInfo = $data['items'][0];
         
-//        $event = new Google_Service_Calendar_Event([
-//            'summary' => 'Sample event x=' . rand(0, 999),
-//            'location' => 'LOCATION',
-//            'description' => 'HELLO. Mallard is a kind of duck!',
-//            'start' => [
-//                'date' => '2018-04-11',
-//                'timeZone' => $calendarInfo['timeZone'],
-//            ],
-//            'end' => [
-//                'date' => '2018-04-11',
-//                'timeZone' => $calendarInfo['timeZone'],
-//            ],
-//            'recurrence' => [
-//                'RRULE:FREQ=DAILY;COUNT=2'
-//            ],
-//            'attendees' => [
-//                array('email' => 'rus@example.com'),
-//                array('email' => 'prus@example.com'),
-//            ],
-//        ]);
-//
-//      $event = $googleModel->calendarService->events->insert($dupa['id'], $event);
-      
+        $calendarInfo = $data['items'][0];
+        //Prepare event info
         $url_events = 'https://www.googleapis.com/calendar/v3/calendars/' . $calendarInfo['id'] . '/events';
         $curlPost = [
             'summary' => 'Sample event x=' . rand(0, 999),
@@ -82,6 +57,7 @@ class ScheduleModel extends Model {
                 'timeZone' => $calendarInfo['timeZone'],
             ],
         ];
+        //Insert event
         $ch = curl_init();		
         curl_setopt($ch, CURLOPT_URL, $url_events);		
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);		
@@ -94,10 +70,8 @@ class ScheduleModel extends Model {
         if ($http_code != 200) {
                 throw new Exception('Error : Failed to create event');
         }
-
-        $adupa = $data['id'];
       
-      return 'Event created: <a href="' . $data['htmlLink'] . '" target="blank">here</a>';
+        return 'Event created: <a href="' . $data['htmlLink'] . '" target="blank">here</a>';
     }
 
     public function saveSchedule(array $formData) {
@@ -115,7 +89,6 @@ class ScheduleModel extends Model {
         $connection->query($instruction);
     }
 
-
     public function loadData() {
         $formData = [];
         $formData['lessons'] = $this->fetchLesson();
@@ -126,7 +99,6 @@ class ScheduleModel extends Model {
         return $formData;
     }
 
-
     private function fetchLesson() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.lessons";
@@ -134,7 +106,6 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-
 
     private function fetchDay() {
         $connection = $this->getConnection();

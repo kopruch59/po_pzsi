@@ -6,13 +6,24 @@ class ScheduleController extends Controller {
      * @var ScheduleModel Default model for this controller. 
      */
     protected $model;
+    
+    /**
+     * @var UserModel User model instance.
+     */
+    protected $modelUser;
 
     public function __construct(bool $loadModel = true) {
         parent::__construct($loadModel);
+        
+        $this->modelUser = Model::loadModel('User');
+        
+        session_name(UserModel::SESSION_NAME);
+        session_id(UserModel::SESSION_ID_GOOGLE);
+        session_start();
 
-        if (!isset($_SESSION['zalogowany'])) {
+        if (!$this->modelUser->isLoggedIn()) {
 
-            header("Location: " . APPLICATION_URL . "/home/login");
+            header("Location: " . APPLICATION_URL . "user/login");
             exit();
         }
     }

@@ -46,7 +46,7 @@ class HomeController extends Controller {
      * @author mgrytz
      */
     public function action_logout() {
-        $this->model->Logout();
+        $this->model->logout();
     }
 
 }

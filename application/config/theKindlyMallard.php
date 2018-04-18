@@ -28,7 +28,7 @@ define('APPLICATION_URL_IP', 'http://127.0.0.69/');
  * Configuration for: Database
  */
 /**
- * @var string Type of database. Probably should by always mysql.
+ * @var string Type of database. Probably should by always "mysql".
  */
 define('DB_TYPE', 'mysql');
 /**
@@ -44,6 +44,6 @@ define('DB_NAME', 'po_pzsi_student-schedule');
  */
 define('DB_USER', 'po_pzsi');
 /**
- * @var string Database user pasword.
+ * @var string Database user password.
  */
 define('DB_PASS', 'qwerty');

@@ -51,7 +51,6 @@ class GoogleModel extends Model {
          */
         define('GOOGLE_API_CLIENT_SECRET_PATH', DIR_CONFIG . 'googleAPI_clientSecret.json');
         // If modifying these scopes, delete your previously saved credentials
-        // at ~/.credentials/calendar-php-quickstart.json
         define(
             'GOOGLE_API_SCOPES',
             implode(' ', [

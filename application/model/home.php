@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class HomeModel extends Model {
 
     public function checkLogin() {
@@ -37,16 +35,11 @@ class HomeModel extends Model {
         }
     }
     
-    public function Logout() 
-    {
-        try 
-        {
-            session_unset();
-            header("Location: " . APPLICATION_URL . "/home/login");
-        } 
-        catch (PDOException $e) 
-        {
-            $message = $e->getMessage();
-        }
+    /**
+     * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function logout() {
+        session_unset();
+        header("Location: " . APPLICATION_URL . "/home/login");
     }
 }
