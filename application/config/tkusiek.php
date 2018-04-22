@@ -15,12 +15,14 @@ ini_set('display_errors', 1);
 /**
  * Configuration for: Project URL
  */
-define('APPLICATION_URL', 'http://vvposchedule');
+define('APPLICATION_URL', 'http://vvposchedule/');
 
+define('APPLICATION_URL_IP', 'http://127.0.0.10/');
 /**
  * Configuration for: Database
  */
 /**
+ * 
  * @var string Type of database. Probably should by always mysql.
  */
 define('DB_TYPE', 'mysql');

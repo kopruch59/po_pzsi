@@ -151,7 +151,22 @@ class UserController extends Controller {
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
-    
+   public function action_settings()
+    {
+        if(isset($_SESSION["test"])) {
+        $formSubmitted = filter_input(INPUT_POST, 'save_settings');
+        if ($formSubmitted == 1) {
+            $this->model->saveSettings($_SESSION["test"]);
+        }
+    $userGroup = $this->model->getUserGroup($_SESSION["test"]);
+        }
+        $groups= $this->model->fetchGroup();
+
+        $this->outputHeader();
+        require $this->dirViews . 'settings.php';
+        $this->outputFooter();
+    }
+
     /**
      * Method provide user to log in with Google.
      * Redirects to Google's auth URL.
