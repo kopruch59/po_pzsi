@@ -60,6 +60,13 @@ function Validate() {
         start_time.focus();
         return false;
     }
+    if (start_date.value == "") {
+        start_date.style.border = "1px solid red";
+        document.getElementById('start_date_time').style.color = "red";
+        start_date_error.textContent = "Te pole jest wymagane!";
+        start_date.focus();
+        return false;
+    }
     if (end_time.value == "") {
         end_time.style.border = "1px solid red";
         document.getElementById('end_time').style.color = "red";
@@ -81,15 +88,7 @@ function Validate() {
         group.focus();
         return false;
     }
-    if (start_date.value == "") {
-        start_date.style.border = "1px solid red";
-        document.getElementById('start_date_time').style.color = "red";
-        start_date_error.textContent = "Pole wybierz przedmiot jest wymagane!";
-        start_date.focus();
-        return false;
-    }
 }
-// event handler functions
 function subjectNameVerify() {
     if (subject_name.value != "") {
         subject_name.style.border = "1px solid #5e6e66";
@@ -149,19 +148,24 @@ function groupVerify() {
 function startDateVerify() {
     if (start_date.value != "") {
         start_date.style.border = "1px solid #5e6e66";
-        document.getElementById('start_date').style.color = "#5e6e66";
+        document.getElementById('start_date_time').style.color = "#5e6e66";
         start_date_error.innerHTML = "";
         return true;
     }
 }
-/*
- * Added display periodicity div 
- */
 function periodicityVerify() {
     if (periodicity.value == "Niestandardowe") {
         $(custom_periodicity).css("display", "block");
+        document.getElementById("inputDaysValue").setAttribute("required", "true");
+        document.getElementById("id_custom_end_date").setAttribute("required", "true");
+        document.getElementById("inputDaysValue").setAttribute("min", "1");
+
         return true;
     } else {
         $(custom_periodicity).css("display", "none");
+        document.getElementById("inputDaysValue").removeAttribute("required");
+        document.getElementById("id_custom_end_date").removeAttribute("required");
+        document.getElementById("inputDaysValue").removeAttribute("min");
+        return true;
     }
 }

@@ -6,6 +6,7 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
+            <?php if (isset($_SESSION["subbmited"])) echo "<h4 style='color:red;'>Formularz został wysłany!</h4>" ?>
             <h2>Wprowadź dane dotyczące planu:</h2>
             <form action="" method="post" name="addForm">
                 <div id="subject_name">
@@ -61,9 +62,9 @@
                 </div>
                 <div id="start_date_time">
                     <label for="start_date">Podaj datę rozpoczęcia zajęć:</label>
-                    <input class="form-control modifySelect" id="id_start_date" type="date" name="start_date">
+                    <input class="form-control modifySelect" id="id_start_date" type="date" name="start_date" value="<?php if (isset($_POST['start_date'])) echo $_POST['start_date'] ?>">
+                    <div id="id_start_date_error"></div>
                 </div>
-                <div id="id_start_date_error"></div>
                 <div id="end_time">
                     <label for="end">Podaj godzinę zakończenia zajęć:</label>
                     <input class="form-control modifySelect" id="id_end_time" type="time" name="end_time" value="<?php
@@ -116,7 +117,10 @@
                 <div id="custom_periodicity" style="display: none;">
                     <h4>Powtarzanie niestandardowe</h4>
                     <label for="custom_periodicity">Powtarzaj co</label> 
-                    <input type="text" id="inputDaysValue" name="input_days_value" value="1"> 
+                    <div id="div_input_value">
+                        <input type="number" id="inputDaysValue" name="input_days_value" value="1">
+                        <div id="inputDaysValue_error"></div>
+                    </div>
                     <select id="id_custom_periodicity" name="custom_periodicity_type">
                         <?php
                         $customOptions = [$customDay = "Dzień", $customWeek = "Tydzień"];
@@ -126,10 +130,13 @@
                         }
                         ?>
                     </select></br>
-                    <label for="custom_periodicity">Koniec powtarzania:</label></br>
-                    W dniu <input type="date" name="custom_end_date"></label></br>
+                    <div id="div_custom_end_date"
+                         <label for="custom_periodicity">Koniec powtarzania:</label></br>
+                        W dniu <input type="date" id="id_custom_end_date" name="custom_end_date"></label></br>
+                        <div id="div_custom_end_date_error"></div>
+                    </div>
                 </div>
-                <input type="submit" class="btn-primary btn" onclick="return Validate();" value="Dodaj do planu!" name="subbmit" />
+                <input type="submit" class="btn-primary btn" onclick="return Validate(), <?php $_SESSION["subbmited"] = true ?>;" value="Dodaj do planu!" name="subbmit" />
                 <input type="hidden" value="1" name="save_lesson" />
             </form>
         </div>
