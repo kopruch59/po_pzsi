@@ -7,8 +7,8 @@ class ScheduleModel extends Model {
     public function getSchedule() {
         $connection = $this->getConnection();
         $group = $_SESSION["group"];
-
-        $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by day, start";
+        
+        $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
         $queryPrepare = $connection->prepare($query);
         $queryPrepare->execute();
         $schedule = $queryPrepare->fetchAll();

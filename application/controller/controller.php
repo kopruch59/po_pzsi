@@ -59,8 +59,13 @@ abstract class Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    protected function outputHeader() {
+    protected function outputHeader_logged() {
         //Default header.
-        require DIR_VIEW . 'templates' . DS . 'header.php';
+        require DIR_VIEW . 'templates' . DS . 'header_logged.php';
+    }
+    
+        protected function outputHeader_unlogged() {
+        //Default header.
+        require DIR_VIEW . 'templates' . DS . 'header_unlogged.php';
     }
 }
