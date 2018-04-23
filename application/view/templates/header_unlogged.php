@@ -10,29 +10,18 @@
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="../home/index">
-            <img src="https://t4.ftcdn.net/jpg/01/09/28/51/240_F_109285174_dYigK3bMKNbnMVg3qDLDCu4qUhwYPc3s.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-            Kalendarz studencki
+                <img src="https://t4.ftcdn.net/jpg/01/09/28/51/240_F_109285174_dYigK3bMKNbnMVg3qDLDCu4qUhwYPc3s.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+                Kalendarz studencki
             </a>
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse " id="navbarNav">
-            <div class="navbar-nav mr-auto"></div>
+                <div class="navbar-nav mr-auto"></div>
                 <ul class="navbar-nav">
-                    
-                    
-                    
                     <li class="nav-item">
                         <a class="nav-link" href="../home/login">zaloguj się</a>
                     </li>
-                        
-                     
-                    
-                    
-                    
-                    
                 </ul>
             </div>
         </nav>

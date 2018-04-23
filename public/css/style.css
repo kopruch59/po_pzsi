@@ -41,7 +41,7 @@ table
     background-color: #efefef;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 283px;
+    width: 272px;
 }
 
 tr
@@ -82,4 +82,39 @@ thead > tr
     margin-left: auto;
     margin-right: auto;
     max-width: 1425px;
+}
+
+#error_message {
+ 
+    clear: both; 
+}
+ 
+.sign-in-button {
+ 
+    height: 50px;
+    width: 150px;
+ 
+}
+.modifySelect {
+ 
+    width: 330px;
+}
+ 
+#inputDaysValue {
+    width: 40px; 
+    height: 30px;
+}
+ 
+#id_custom_periodicity {
+    width: 150px; 
+    height: 30px;
+}
+  
+#custom_day_periodicity {
+    width: 150px;
+    height: 30px;
+}
+ 
+#periodicity {
+    margin-bottom: 20px;
 }

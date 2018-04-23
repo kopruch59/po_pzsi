@@ -98,7 +98,7 @@ class UserController extends Controller {
             $this->logInWithGoogleProvider();
         }
         
-        $this->outputHeader();
+        $this->outputHeader_logged();
         
         require $this->dirViews . 'login.php';
         

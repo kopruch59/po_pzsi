@@ -6,7 +6,6 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
-            <?php if (isset($_SESSION["subbmited"])) echo "<h4 style='color:red;'>Formularz został wysłany!</h4>" ?>
             <h2>Wprowadź dane dotyczące planu:</h2>
             <form action="" method="post" name="addForm">
                 <div id="subject_name">
@@ -113,14 +112,11 @@
                         }
                         ?>
                     </select>
-                </div>
+                </div></br>
                 <div id="custom_periodicity" style="display: none;">
                     <h4>Powtarzanie niestandardowe</h4>
                     <label for="custom_periodicity">Powtarzaj co</label> 
-                    <div id="div_input_value">
-                        <input type="number" id="inputDaysValue" name="input_days_value" value="1">
-                        <div id="inputDaysValue_error"></div>
-                    </div>
+                    <input type="number" id="inputDaysValue" name="input_days_value" value="1">
                     <select id="id_custom_periodicity" name="custom_periodicity_type">
                         <?php
                         $customOptions = [$customDay = "Dzień", $customWeek = "Tydzień"];
@@ -136,7 +132,7 @@
                         <div id="div_custom_end_date_error"></div>
                     </div>
                 </div>
-                <input type="submit" class="btn-primary btn" onclick="return Validate(), <?php $_SESSION["subbmited"] = true ?>;" value="Dodaj do planu!" name="subbmit" />
+                <input type="submit" class="btn-primary btn" onclick="return Validate();" value="Dodaj do planu!" name="subbmit" />
                 <input type="hidden" value="1" name="save_lesson" />
             </form>
         </div>
