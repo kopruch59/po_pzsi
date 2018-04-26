@@ -24,7 +24,7 @@ input
 
 .info
 {
-    padding: 5px;
+    padding-left: 10px;
     text-align: right;
     font-size: 20px;
 }
@@ -41,30 +41,30 @@ table
     background-color: #efefef;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 272px;
+    width: 100%;
 }
 
 tr
 {
     border: 1px solid black;
-    height: 133px; 
+     
 }
 
 thead > tr
 {
     text-align: center;
     background-color: lightgray;
-    height: 27px; 
+   
 }
 
 .hour
 {
-    font-size: 13px;
+   
 }
 
 .name
 {
-    font-size: 20px;
+    
 }
 
 .spantype
@@ -75,13 +75,16 @@ thead > tr
 .table_left
 {
     float:left;
+    min-width: 19%;
+    display: block;
 }
 
 #tabels
 {
     margin-left: auto;
     margin-right: auto;
-    max-width: 1425px;
+    
+    
 }
 
 #error_message {
@@ -117,4 +120,18 @@ thead > tr
  
 #periodicity {
     margin-bottom: 20px;
+}
+
+#interval
+{
+    float:left;
+    width: 60%;
+    text-align: right;
+}
+
+#choice
+{
+    float:left;
+    width: 40%;
+    text-align: right;
 }

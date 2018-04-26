@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 22 Kwi 2018, 22:21
--- Wersja serwera: 10.1.30-MariaDB
--- Wersja PHP: 7.2.2
+-- Host: 127.0.0.1:3306
+-- Czas generowania: 26 Kwi 2018, 11:20
+-- Wersja serwera: 5.7.19
+-- Wersja PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `lessons`
+-- Baza danych: `projekt-pon`
 --
 
 -- --------------------------------------------------------
@@ -28,9 +28,11 @@ SET time_zone = "+00:00";
 -- Struktura tabeli dla tabeli `days`
 --
 
-CREATE TABLE `days` (
+DROP TABLE IF EXISTS `days`;
+CREATE TABLE IF NOT EXISTS `days` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -50,11 +52,13 @@ INSERT INTO `days` (`id`, `name`) VALUES
 -- Struktura tabeli dla tabeli `groups`
 --
 
-CREATE TABLE `groups` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `expire` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `expire` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `groups`
@@ -70,10 +74,12 @@ INSERT INTO `groups` (`id`, `name`, `expire`) VALUES
 -- Struktura tabeli dla tabeli `lessons`
 --
 
-CREATE TABLE `lessons` (
-  `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `lessons`;
+CREATE TABLE IF NOT EXISTS `lessons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `lessons`
@@ -92,11 +98,57 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `mondays`
+--
+
+DROP TABLE IF EXISTS `mondays`;
+CREATE TABLE IF NOT EXISTS `mondays` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `mondays`
+--
+
+INSERT INTO `mondays` (`id`, `date`) VALUES
+(1, '2018-01-01'),
+(2, '2018-01-08'),
+(3, '2018-01-15'),
+(4, '2018-01-22'),
+(5, '2018-01-29'),
+(6, '2018-02-05'),
+(7, '2018-02-12'),
+(8, '2018-02-19'),
+(9, '2018-02-26'),
+(10, '2018-03-05'),
+(11, '2018-03-12'),
+(12, '2018-03-19'),
+(13, '2018-03-26'),
+(14, '2018-04-02'),
+(15, '2018-04-09'),
+(16, '2018-04-16'),
+(17, '2018-04-23'),
+(18, '2018-04-30'),
+(19, '2018-05-07'),
+(20, '2018-05-14'),
+(21, '2018-05-21'),
+(22, '2018-05-28'),
+(23, '2018-06-04'),
+(24, '2018-06-11'),
+(25, '2018-06-18'),
+(26, '2018-06-25');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `plan`
 --
 
-CREATE TABLE `plan` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `plan`;
+CREATE TABLE IF NOT EXISTS `plan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `lesson` varchar(64) NOT NULL,
   `day` varchar(64) NOT NULL,
   `type` varchar(64) NOT NULL,
@@ -104,8 +156,13 @@ CREATE TABLE `plan` (
   `end` time NOT NULL,
   `group_number` varchar(64) NOT NULL,
   `teacher_name` varchar(64) NOT NULL,
-  `start_date` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `start_date` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lesson` (`lesson`),
+  KEY `day` (`day`),
+  KEY `type` (`type`),
+  KEY `teacher_name` (`teacher_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `plan`
@@ -150,7 +207,42 @@ INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `group_number
 (36, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '22:00:00', '23:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
 (37, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '23:00:00', '00:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
 (38, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(39, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25');
+(39, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
+(40, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-11'),
+(41, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-18'),
+(42, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-25'),
+(43, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-02'),
+(44, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-09'),
+(45, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-16'),
+(46, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-23'),
+(47, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-30'),
+(48, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-06'),
+(49, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-13'),
+(50, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-20'),
+(51, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-28'),
+(52, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-12'),
+(53, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-26'),
+(54, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-09'),
+(55, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-07'),
+(56, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-14'),
+(57, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-21'),
+(58, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-28'),
+(59, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-07'),
+(60, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-14'),
+(61, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-21'),
+(62, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-28'),
+(63, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-04'),
+(64, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-11'),
+(65, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-18'),
+(66, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-25'),
+(67, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-02'),
+(68, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-09'),
+(69, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-16'),
+(70, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-23'),
+(71, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-30'),
+(72, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-06'),
+(73, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-13'),
+(74, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-20');
 
 -- --------------------------------------------------------
 
@@ -158,10 +250,12 @@ INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `group_number
 -- Struktura tabeli dla tabeli `teachers`
 --
 
-CREATE TABLE `teachers` (
-  `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE IF NOT EXISTS `teachers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `teachers`
@@ -178,9 +272,11 @@ INSERT INTO `teachers` (`id`, `name`) VALUES
 -- Struktura tabeli dla tabeli `type`
 --
 
-CREATE TABLE `type` (
+DROP TABLE IF EXISTS `type`;
+CREATE TABLE IF NOT EXISTS `type` (
   `id` int(11) NOT NULL,
-  `Name` varchar(64) NOT NULL
+  `Name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -199,12 +295,14 @@ INSERT INTO `type` (`id`, `Name`) VALUES
 -- Struktura tabeli dla tabeli `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(64) NOT NULL,
   `pass` varchar(64) NOT NULL,
-  `group_number` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `group_number` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `users`
@@ -213,90 +311,6 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `login`, `pass`, `group_number`) VALUES
 (1, 'krzysiek', 'szczupak', 'Grupa W2'),
 (2, 'szymon', 'okon', 'Grupa W3 C5 L8');
-
---
--- Indeksy dla zrzutów tabel
---
-
---
--- Indeksy dla tabeli `days`
---
-ALTER TABLE `days`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `groups`
---
-ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `lessons`
---
-ALTER TABLE `lessons`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `plan`
---
-ALTER TABLE `plan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `lesson` (`lesson`),
-  ADD KEY `day` (`day`),
-  ADD KEY `type` (`type`),
-  ADD KEY `teacher_name` (`teacher_name`);
-
---
--- Indeksy dla tabeli `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `type`
---
-ALTER TABLE `type`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksy dla tabeli `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT dla tabeli `groups`
---
-ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT dla tabeli `lessons`
---
-ALTER TABLE `lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT dla tabeli `plan`
---
-ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- AUTO_INCREMENT dla tabeli `teachers`
---
-ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT dla tabeli `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

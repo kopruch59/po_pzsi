@@ -74,7 +74,7 @@ class UserController extends Controller {
      */
     public function action_index() {
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -98,7 +98,7 @@ class UserController extends Controller {
             $this->logInWithGoogleProvider();
         }
         
-        $this->outputHeader_logged();
+        $this->outputHeader_unlogged();
         
         require $this->dirViews . 'login.php';
         
@@ -147,7 +147,7 @@ class UserController extends Controller {
         $this->modelGoogle->client->revokeToken();
         session_destroy();
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
@@ -162,7 +162,7 @@ class UserController extends Controller {
         }
         $groups= $this->model->fetchGroup();
 
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'settings.php';
         $this->outputFooter();
     }
