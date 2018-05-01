@@ -51,7 +51,7 @@
             </thead>
             <?php
             foreach ($plan as $key => $lesson) {
-                if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date']>($Date->format('Y-m-d'))) && ($lesson['start_date']<($Date1->format('Y-m-d'))))
+                if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date']>=($Date->format('Y-m-d'))) && ($lesson['start_date']<=($Date1->format('Y-m-d'))))
                     echo '<tr><td>' .
                     '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
                     '<span class="name">' . $lesson['lesson'] . '</span><br />' .
@@ -62,7 +62,6 @@
 
         </table>
     </div>
-
     <div class="table_left">
         <table>
             <thead>
@@ -75,7 +74,7 @@
 
             <?php
             foreach ($plan as $key => $lesson) {
-                if (($lesson['day'] == "Wtorek") && ($lesson['start_date']>($Date->format('Y-m-d'))) && ($lesson['start_date']<($Date1->format('Y-m-d'))))
+                if (($lesson['day'] == "Wtorek") && ($lesson['start_date']>=($Date->format('Y-m-d'))) && ($lesson['start_date']<=($Date1->format('Y-m-d'))))
                     echo '<tr><td>' .
                     '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
                     '<span class="name">' . $lesson['lesson'] . '</span><br />' .
@@ -99,7 +98,7 @@
 
 <?php
 foreach ($plan as $key => $lesson) {
-                if (($lesson['day'] == "Środa") && ($lesson['start_date']>($Date->format('Y-m-d'))) && ($lesson['start_date']<($Date1->format('Y-m-d'))))
+                if (($lesson['day'] == "Środa") && ($lesson['start_date']>=($Date->format('Y-m-d'))) && ($lesson['start_date']<=($Date1->format('Y-m-d'))))
                     echo '<tr><td>' .
                     '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
                     '<span class="name">' . $lesson['lesson'] . '</span><br />' .
@@ -124,7 +123,7 @@ foreach ($plan as $key => $lesson) {
 
 <?php
 foreach ($plan as $key => $lesson) {
-                if (($lesson['day'] == "Czwartek") && ($lesson['start_date']>($Date->format('Y-m-d'))) && ($lesson['start_date']<($Date1->format('Y-m-d'))))
+                if (($lesson['day'] == "Czwartek") && ($lesson['start_date']>=($Date->format('Y-m-d'))) && ($lesson['start_date']<=($Date1->format('Y-m-d'))))
                     echo '<tr><td>' .
                     '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
                     '<span class="name">' . $lesson['lesson'] . '</span><br />' .
@@ -149,7 +148,7 @@ foreach ($plan as $key => $lesson) {
 
 <?php
 foreach ($plan as $key => $lesson) {
-                if (($lesson['day'] == "Piątek") && ($lesson['start_date']>($Date->format('Y-m-d'))) && ($lesson['start_date']<($Date1->format('Y-m-d'))))
+                if (($lesson['day'] == "Piątek") && ($lesson['start_date']>=($Date->format('Y-m-d'))) && ($lesson['start_date']<=($Date1->format('Y-m-d'))))
                     echo '<tr><td>' .
                     '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
                     '<span class="name">' . $lesson['lesson'] . '</span><br />' .
@@ -163,52 +162,3 @@ foreach ($plan as $key => $lesson) {
     <div style="clear:both;"></div>
 
 </div>
-
-
-<!--<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">-->
-
-<!--                <thead>
-        <tr>
-            <th>
-                Dzień
-            </th>
-            <th>
-                Typ zajęć
-            </th>
-            <th>
-                Nazwa
-            </th>
-            <th>
-                Od
-            </th>
-            <th>
-                Do
-            </th>
-            <th>
-                Prowadzący
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-
-        //<?php
-//                    foreach ($plan as $key => $lesson) {
-//
-//                        echo '<tr>' .
-//                        '<td>' . $lesson['day'] . ' </td>' .
-//                        '<td>' . $lesson['type'] . ' </td>' .
-//                        '<td>' . $lesson['lesson'] . ' </td>' .
-//                        '<td>' . $lesson['start'] . ' </td>' .
-//                        '<td>' . $lesson['end'] . ' </td>' .
-//                        '<td>' . $lesson['teacher_name'] . '</td>' .
-//                        '</tr>';
-//                    }
-//                    
-?>
-    </tbody>-->
-<!--class="table table-striped table-bordered"-->
-<!--        </div>
-</div>
-</div>-->
