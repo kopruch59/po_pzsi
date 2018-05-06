@@ -66,6 +66,7 @@ class ScheduleController extends Controller {
         $this->outputHeader_logged();
         $plan = $this->model->getSchedule();
         $formmondays = $this->model->loadmondays();
+        $addEvent = $this->model->addEvent();
         require $this->dirViews . 'view.php';
         $this->outputFooter();
     }

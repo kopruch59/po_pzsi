@@ -6,9 +6,9 @@ input
 
 /*#menu
 {
-	background-color: #303030;
-	color: #ffffff;
-	padding: 10px;
+        background-color: #303030;
+        color: #ffffff;
+        padding: 10px;
 }*/
 
 #login-img 
@@ -18,8 +18,8 @@ input
 }
 /*.neutrallink
 {
-	text-decoration: none;
-	color: #ffffff;
+        text-decoration: none;
+        color: #ffffff;
 }*/
 
 .info
@@ -42,21 +42,21 @@ table
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
-    
-    
+
+
 }
 
 tr
 {
     border: 1px solid black;
-     
+
 }
 
 thead > tr
 {
     text-align: center;
     background-color: lightgray;
-   
+
 }
 
 .spantype
@@ -80,36 +80,36 @@ thead > tr
 }
 
 #error_message {
- 
+
     clear: both; 
 }
- 
+
 .sign-in-button {
- 
+
     height: 50px;
     width: 150px;
- 
+
 }
 .modifySelect {
- 
+
     width: 330px;
 }
- 
+
 #inputDaysValue {
     width: 40px; 
     height: 30px;
 }
- 
+
 #id_custom_periodicity {
     width: 150px; 
     height: 30px;
 }
-  
+
 #custom_day_periodicity {
     width: 150px;
     height: 30px;
 }
- 
+
 #periodicity {
     margin-bottom: 20px;
 }
@@ -128,3 +128,22 @@ thead > tr
     text-align: right;
 }
 
+.eventButton {
+    width: auto;
+    height: auto;
+}
+
+#eventButton {
+    text-align:center;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+.eventsHeader {
+    font-weight: bold;
+}
+
+#spanBold {
+    font-weight: bold;
+    text-align: center;
+}

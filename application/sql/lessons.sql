@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Czas generowania: 26 Kwi 2018, 11:20
--- Wersja serwera: 5.7.19
--- Wersja PHP: 7.1.9
+-- Host: 127.0.0.1
+-- Czas generowania: 06 Maj 2018, 17:03
+-- Wersja serwera: 10.1.30-MariaDB
+-- Wersja PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `projekt-pon`
+-- Baza danych: `lessons`
 --
 
 -- --------------------------------------------------------
@@ -28,11 +28,9 @@ SET time_zone = "+00:00";
 -- Struktura tabeli dla tabeli `days`
 --
 
-DROP TABLE IF EXISTS `days`;
-CREATE TABLE IF NOT EXISTS `days` (
+CREATE TABLE `days` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
+  `name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -49,16 +47,34 @@ INSERT INTO `days` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_plan` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `description`, `id_plan`) VALUES
+(37, 'Kolokwium', 'Kolokwium z BCI!', 108);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `groups`
 --
 
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `groups` (
+  `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `expire` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `expire` date NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `groups`
@@ -74,12 +90,10 @@ INSERT INTO `groups` (`id`, `name`, `expire`) VALUES
 -- Struktura tabeli dla tabeli `lessons`
 --
 
-DROP TABLE IF EXISTS `lessons`;
-CREATE TABLE IF NOT EXISTS `lessons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `lessons` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `lessons`
@@ -101,12 +115,10 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 -- Struktura tabeli dla tabeli `mondays`
 --
 
-DROP TABLE IF EXISTS `mondays`;
-CREATE TABLE IF NOT EXISTS `mondays` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `mondays` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `mondays`
@@ -146,9 +158,8 @@ INSERT INTO `mondays` (`id`, `date`) VALUES
 -- Struktura tabeli dla tabeli `plan`
 --
 
-DROP TABLE IF EXISTS `plan`;
-CREATE TABLE IF NOT EXISTS `plan` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `plan` (
+  `id` int(11) NOT NULL,
   `lesson` varchar(64) NOT NULL,
   `day` varchar(64) NOT NULL,
   `type` varchar(64) NOT NULL,
@@ -156,93 +167,55 @@ CREATE TABLE IF NOT EXISTS `plan` (
   `end` time NOT NULL,
   `group_number` varchar(64) NOT NULL,
   `teacher_name` varchar(64) NOT NULL,
-  `start_date` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `lesson` (`lesson`),
-  KEY `day` (`day`),
-  KEY `type` (`type`),
-  KEY `teacher_name` (`teacher_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4;
+  `start_date` date NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `plan`
 --
 
 INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `group_number`, `teacher_name`, `start_date`) VALUES
-(1, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(2, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(3, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
-(4, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(5, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(6, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
-(7, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(8, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(9, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(10, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(11, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(12, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(13, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-01'),
-(14, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(15, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-15'),
-(16, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(17, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-29'),
-(18, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(19, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-12'),
-(20, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(21, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(22, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(23, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(24, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(25, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(26, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(27, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(28, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(29, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(30, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(31, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(32, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(33, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '19:00:00', '20:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(34, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '20:00:00', '21:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(35, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '21:00:00', '22:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(36, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '22:00:00', '23:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(37, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '23:00:00', '00:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(38, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(39, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
-(40, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-11'),
-(41, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-18'),
-(42, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-25'),
-(43, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-02'),
-(44, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-09'),
-(45, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-16'),
-(46, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-23'),
-(47, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-30'),
-(48, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-06'),
-(49, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-13'),
-(50, 'Techniki internetowe', 'Środa', 'Wykład', '10:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-20'),
-(51, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-28'),
-(52, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-12'),
-(53, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-26'),
-(54, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Ćwiczenia', '14:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-09'),
-(55, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-07'),
-(56, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-14'),
-(57, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-21'),
-(58, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-02-28'),
-(59, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-07'),
-(60, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-14'),
-(61, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-21'),
-(62, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-03-28'),
-(63, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-04'),
-(64, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-11'),
-(65, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-18'),
-(66, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-04-25'),
-(67, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-02'),
-(68, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-09'),
-(69, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-16'),
-(70, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-23'),
-(71, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-05-30'),
-(72, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-06'),
-(73, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-13'),
-(74, 'Język angielski', 'Piątek', 'Laboratorium', '09:00:00', '11:00:00', 'Grupa W3 C5 L8', 'Piotrowska', '2018-06-20');
+(75, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-04-30'),
+(76, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-07'),
+(77, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-14'),
+(78, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-21'),
+(79, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-28'),
+(80, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-04'),
+(81, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-11'),
+(82, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-18'),
+(83, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-01'),
+(84, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-08'),
+(85, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-15'),
+(86, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-22'),
+(87, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-29'),
+(88, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-05'),
+(89, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-12'),
+(90, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-19'),
+(91, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-02'),
+(92, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-02'),
+(93, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-09'),
+(94, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-16'),
+(95, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-23'),
+(96, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-30'),
+(97, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-06'),
+(98, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-13'),
+(99, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-20'),
+(100, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-03'),
+(101, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-10'),
+(102, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-17'),
+(103, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-24'),
+(104, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-31'),
+(105, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-07'),
+(106, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-14'),
+(107, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-21'),
+(108, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-04'),
+(109, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-11'),
+(110, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-18'),
+(111, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-25'),
+(112, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-01'),
+(113, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-08'),
+(114, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-15'),
+(115, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-22');
 
 -- --------------------------------------------------------
 
@@ -250,12 +223,10 @@ INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `group_number
 -- Struktura tabeli dla tabeli `teachers`
 --
 
-DROP TABLE IF EXISTS `teachers`;
-CREATE TABLE IF NOT EXISTS `teachers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `teachers`
@@ -272,11 +243,9 @@ INSERT INTO `teachers` (`id`, `name`) VALUES
 -- Struktura tabeli dla tabeli `type`
 --
 
-DROP TABLE IF EXISTS `type`;
-CREATE TABLE IF NOT EXISTS `type` (
+CREATE TABLE `type` (
   `id` int(11) NOT NULL,
-  `Name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
+  `Name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -295,14 +264,12 @@ INSERT INTO `type` (`id`, `Name`) VALUES
 -- Struktura tabeli dla tabeli `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
   `login` varchar(64) NOT NULL,
   `pass` varchar(64) NOT NULL,
-  `group_number` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `group_number` varchar(64) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `users`
@@ -311,6 +278,114 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `login`, `pass`, `group_number`) VALUES
 (1, 'krzysiek', 'szczupak', 'Grupa W2'),
 (2, 'szymon', 'okon', 'Grupa W3 C5 L8');
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `days`
+--
+ALTER TABLE `days`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `lessons`
+--
+ALTER TABLE `lessons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `mondays`
+--
+ALTER TABLE `mondays`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `plan`
+--
+ALTER TABLE `plan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `lesson` (`lesson`),
+  ADD KEY `day` (`day`),
+  ADD KEY `type` (`type`),
+  ADD KEY `teacher_name` (`teacher_name`);
+
+--
+-- Indeksy dla tabeli `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `type`
+--
+ALTER TABLE `type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT dla tabeli `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT dla tabeli `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `lessons`
+--
+ALTER TABLE `lessons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT dla tabeli `mondays`
+--
+ALTER TABLE `mondays`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT dla tabeli `plan`
+--
+ALTER TABLE `plan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
+-- AUTO_INCREMENT dla tabeli `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

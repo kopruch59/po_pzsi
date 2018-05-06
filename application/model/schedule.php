@@ -7,7 +7,7 @@ class ScheduleModel extends Model {
     public function getSchedule() {
         $connection = $this->getConnection();
         $group = $_SESSION["group"];
-        
+
         $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
         $queryPrepare = $connection->prepare($query);
         $queryPrepare->execute();
@@ -257,27 +257,39 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-    
+
     //Table of Mondays in view
-    public function loadmondays() 
-    {
+    public function loadmondays() {
         $formmondays = [];
         $formmondays['mondays'] = $this->fetchMonday();
         return $formmondays;
     }
-    
-    private function fetchMonday() 
-    {
+
+    private function fetchMonday() {
         $connection = $this->getConnection();
         $instruction = "SELECT date FROM `" . DB_NAME . "`.mondays";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-    
-     public function saveMonday(array $formmondays) 
-     {
+
+    public function saveMonday(array $formmondays) {
         $date = filter_input(INPUT_POST, 'date');
-     }
+    }
+
+    function addEvent() {
+        if (isset($_SESSION['subbmitedBtn'])) {
+            $eventName = filter_input(INPUT_POST, 'event-name', FILTER_SANITIZE_STRING);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+            $connection = $this->getConnection();
+            $idPlan = $_SESSION['subbmitedBtn'];
+
+            $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
+            $queryPrepare = $connection->prepare($query);
+            $queryPrepare->execute();
+            
+            unset($_SESSION['subbmitedBtn']);
+        }
+    }
 
 }
