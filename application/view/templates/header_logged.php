@@ -19,26 +19,20 @@
             </button>
 
             <div class="collapse navbar-collapse " id="navbarNav">
-            <div class="navbar-nav mr-auto"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../schedule/show">Kalendarz <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../schedule/add">Dodaj swój kalendarz</a>
-                    </li>
-                    
-                    
-                   
-                        
-                     
-                    
-                    
-                    <li class="nav-item">
-                        <a class="nav-link " href="../home/logout">Wyloguj się</a>
-                    </li>
-                   
-                    
-                </ul>
-            </div>
+                <div class="navbar-nav mr-auto"></div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="../schedule/show">Kalendarz <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="../schedule/add">Dodaj zajęcia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="../home/logout">Wyloguj się</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="info">
+                <?php echo 'Witaj ' . $_SESSION["test"];?>
+                </div>
         </nav>

@@ -1,8 +1,3 @@
-<div class="info">
-    <?php
-    echo 'Witaj ' . $_SESSION["test"];
-    ?>
-</div>
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">

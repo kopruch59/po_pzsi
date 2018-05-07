@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 22 Kwi 2018, 22:21
+-- Czas generowania: 06 Maj 2018, 17:03
 -- Wersja serwera: 10.1.30-MariaDB
 -- Wersja PHP: 7.2.2
 
@@ -43,6 +43,26 @@ INSERT INTO `days` (`id`, `name`) VALUES
 (3, 'Środa'),
 (4, 'Czwartek'),
 (5, 'Piątek');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_plan` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `description`, `id_plan`) VALUES
+(37, 'Kolokwium', 'Kolokwium z BCI!', 108);
 
 -- --------------------------------------------------------
 
@@ -92,6 +112,49 @@ INSERT INTO `lessons` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `mondays`
+--
+
+CREATE TABLE `mondays` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `mondays`
+--
+
+INSERT INTO `mondays` (`id`, `date`) VALUES
+(1, '2018-01-01'),
+(2, '2018-01-08'),
+(3, '2018-01-15'),
+(4, '2018-01-22'),
+(5, '2018-01-29'),
+(6, '2018-02-05'),
+(7, '2018-02-12'),
+(8, '2018-02-19'),
+(9, '2018-02-26'),
+(10, '2018-03-05'),
+(11, '2018-03-12'),
+(12, '2018-03-19'),
+(13, '2018-03-26'),
+(14, '2018-04-02'),
+(15, '2018-04-09'),
+(16, '2018-04-16'),
+(17, '2018-04-23'),
+(18, '2018-04-30'),
+(19, '2018-05-07'),
+(20, '2018-05-14'),
+(21, '2018-05-21'),
+(22, '2018-05-28'),
+(23, '2018-06-04'),
+(24, '2018-06-11'),
+(25, '2018-06-18'),
+(26, '2018-06-25');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `plan`
 --
 
@@ -112,45 +175,47 @@ CREATE TABLE `plan` (
 --
 
 INSERT INTO `plan` (`id`, `lesson`, `day`, `type`, `start`, `end`, `group_number`, `teacher_name`, `start_date`) VALUES
-(1, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(2, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(3, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
-(4, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(5, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(6, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25'),
-(7, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(8, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(9, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(10, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(11, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(12, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(13, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-01'),
-(14, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(15, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-15'),
-(16, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(17, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-29'),
-(18, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(19, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-12'),
-(20, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(21, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(22, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-26'),
-(23, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(24, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(25, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(26, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(27, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(28, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(29, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-08'),
-(30, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-05-22'),
-(31, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-05'),
-(32, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '18:00:00', '19:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-06-19'),
-(33, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '19:00:00', '20:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(34, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '20:00:00', '21:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(35, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '21:00:00', '22:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(36, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '22:00:00', '23:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(37, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '23:00:00', '00:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(38, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-24'),
-(39, 'Projekt zespołowy systemu informatycznego', 'Poniedziałek', 'Laboratorium', '00:00:00', '01:00:00', 'Grupa W3 C5 L8', 'Wotzka', '2018-04-25');
+(75, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-04-30'),
+(76, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-07'),
+(77, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-14'),
+(78, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-21'),
+(79, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-28'),
+(80, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-04'),
+(81, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-11'),
+(82, 'Techniki internetowe', 'Poniedziałek', 'Laboratorium', '12:00:00', '13:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-18'),
+(83, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-01'),
+(84, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-08'),
+(85, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-15'),
+(86, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-22'),
+(87, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-29'),
+(88, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-05'),
+(89, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-12'),
+(90, 'Narzędzia sztucznej inteligencji', 'Wtorek', 'Laboratorium', '13:00:00', '14:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-19'),
+(91, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '14:00:00', '15:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-02'),
+(92, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-02'),
+(93, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-09'),
+(94, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-16'),
+(95, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-23'),
+(96, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-30'),
+(97, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-06'),
+(98, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-13'),
+(99, 'Projekt zespołowy systemu informatycznego', 'Środa', 'Wykład', '15:00:00', '16:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-20'),
+(100, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-03'),
+(101, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-10'),
+(102, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-17'),
+(103, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-24'),
+(104, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-31'),
+(105, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-07'),
+(106, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-14'),
+(107, 'Usługi katalogowe w systemach operacyjnych', 'Czwartek', 'Ćwiczenia', '16:00:00', '17:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-21'),
+(108, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-04'),
+(109, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-11'),
+(110, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-18'),
+(111, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-05-25'),
+(112, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-01'),
+(113, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-08'),
+(114, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-15'),
+(115, 'Zarządzanie projektami informatycznymi', 'Piątek', 'Projekt', '17:00:00', '18:00:00', 'Grupa W3 C5 L8', 'Bryniarska', '2018-06-22');
 
 -- --------------------------------------------------------
 
@@ -225,6 +290,12 @@ ALTER TABLE `days`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `groups`
 --
 ALTER TABLE `groups`
@@ -234,6 +305,12 @@ ALTER TABLE `groups`
 -- Indeksy dla tabeli `lessons`
 --
 ALTER TABLE `lessons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `mondays`
+--
+ALTER TABLE `mondays`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -269,6 +346,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
@@ -281,10 +364,16 @@ ALTER TABLE `lessons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT dla tabeli `mondays`
+--
+ALTER TABLE `mondays`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT dla tabeli `plan`
 --
 ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT dla tabeli `teachers`
