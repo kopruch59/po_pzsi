@@ -18,7 +18,7 @@ class HomeController extends Controller {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function action_index() {
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -35,7 +35,7 @@ class HomeController extends Controller {
         }
         $this->model->checkLogin();
 
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'login.php';
         $this->outputFooter();
     }
