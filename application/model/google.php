@@ -19,6 +19,16 @@ class GoogleModel extends Model {
     public $calendarService;
     
     /**
+     * @var Google_Service_Oauth2 Google authenticate service.
+     */
+    public $oAuth2Service;
+    
+    /**
+     * @var Google_Service_Plus Google + service.
+     */
+    public $plusService;
+    
+    /**
      * Returns single instance of class. If instance is not invoke create a new one.
      * 
      * @return GoogleModel Instance.
@@ -55,7 +65,9 @@ class GoogleModel extends Model {
             'GOOGLE_API_SCOPES',
             implode(' ', [
                 Google_Service_Calendar::CALENDAR,
-                Google_Service_Oauth2::USERINFO_PROFILE,
+//                Google_Service_Oauth2::USERINFO_PROFILE,
+                Google_Service_Plus::USERINFO_PROFILE,
+                Google_Service_Plus::USERINFO_EMAIL,
             ])
         );
 
@@ -68,6 +80,8 @@ class GoogleModel extends Model {
         $client->setAccessType('offline');
         $this->client = $client;
         $this->calendarService = new Google_Service_Calendar($this->client);
+        $this->oAuth2Service = new Google_Service_Oauth2($this->client);
+        $this->plusService = new Google_Service_Plus($this->client);
         
         static::$instance = $this;
     }

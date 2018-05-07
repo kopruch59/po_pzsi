@@ -109,6 +109,8 @@ class UserController extends Controller {
                 $_SESSION[self::GOOGLE_ACCESS_TOKEN] = $authResonse['access_token'];
                 $_SESSION[self::KEY_GOOGLE_USER_DATA] = $this->modelGoogle->client->verifyIdToken();
                 
+                $this->model->updateUser($this->modelGoogle->plusService->people->get('me'));
+                
                 header('Location: ' . APPLICATION_URL . 'user/index');
             } else {
                 echo $authResonse['error_description'] . ' ' . $authResonse['error'];

@@ -44,16 +44,43 @@ class ScheduleModel extends Model {
         }
         
         $calendarInfo = $data['items'][0];
+        
+        $event = new Google_Service_Calendar_Event([
+            'summary' => 'Sample event x=' . rand(0, 999),
+            'location' => 'LOCATION',
+            'description' => 'HELLO. Mallard is a kind of duck!',
+            'start' => [
+                'date' => '2018-05-10',
+                'timeZone' => $calendarInfo['timeZone'],
+            ],
+            'end' => [
+                'date' => '2018-05-10',
+                'timeZone' => $calendarInfo['timeZone'],
+            ],
+            'recurrence' => [
+                'RRULE:FREQ=DAILY;COUNT=2'
+            ],
+            'attendees' => [
+                array('email' => 'rus@example.com'),
+                array('email' => 'prus@example.com'),
+            ],
+        ]);
+
+      $event = $googleModel->calendarService->events->insert($calendarInfo['id'], $event);
+      
+        
+        
+        
         //Prepare event info
         $url_events = 'https://www.googleapis.com/calendar/v3/calendars/' . $calendarInfo['id'] . '/events';
         $curlPost = [
             'summary' => 'Sample event x=' . rand(0, 999),
             'start' => [
-                'date' => '2018-04-11',
+                'date' => '2018-05-11',
                 'timeZone' => $calendarInfo['timeZone'],
             ],
             'end' => [
-                'date' => '2018-04-11',
+                'date' => '2018-05-11',
                 'timeZone' => $calendarInfo['timeZone'],
             ],
         ];
@@ -70,8 +97,8 @@ class ScheduleModel extends Model {
         if ($http_code != 200) {
                 throw new Exception('Error : Failed to create event');
         }
-      
-        return 'Event created: <a href="' . $data['htmlLink'] . '" target="blank">here</a>';
+        $x = ' and <a href"' . $event->htmlLink . '">first method</a>';
+        return 'Event created: <a href="' . $data['htmlLink'] . '" target="blank">here</a>' . $x;
     }
 
     public function saveSchedule(array $formData) {
