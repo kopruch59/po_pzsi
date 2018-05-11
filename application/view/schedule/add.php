@@ -82,6 +82,20 @@
                     </datalist>
                     <div id="teacher_name_error"></div>
                 </div>
+                <div id="room">
+                    <label for="room">Sala:</label>
+                    <select class="form-control modifySelect" id="id_room" name="room">
+                        <?php
+                        if (isset($_POST['room'])) {
+                            echo "<option value='" . $_POST['room'] . "'>" . $_POST['room'] . "</option>";
+                        }
+                        foreach ($formData['room'] as $row) {
+                            echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <div id="day_error"></div>
+                </div>
                 <div id="group">
                     <label for="group">Wybierz do której grupy ma być dodane zajęcia:</label>
                     <select class="form-control modifySelect" id="id_group" name="group">
