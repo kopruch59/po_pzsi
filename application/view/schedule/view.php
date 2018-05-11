@@ -1,6 +1,6 @@
 <?php
 if (!isset($_POST['week'])) {
-    $week = "2018-01-01";
+    $week = "2018-02-26";
 } else {
     $week = $_POST['week'];
 }
@@ -10,7 +10,7 @@ $Date1->modify('+6 day');
 ?>
 <div id="interval">
     <?php
-    echo "<h3>" . $Date->format('d-m-Y') . " - " . $Date1->format('d-m-Y') . "</h3>";
+    echo "<h3>" . $Date->format('d-m') . " - " . $Date1->format('d-m') . "</h3>";
     ?>
 </div>
 <div id="choice">
@@ -43,10 +43,11 @@ $Date1->modify('+6 day');
                 if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
                     '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
-                    '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
-                    '<span class="name">' . $lesson['lesson'] . '</span><br />' .
-                    '<span class="teacher">' . $lesson['teacher_name'] . '</span>' .
-                    '<span class="spantype">' . $lesson['type'] . '</span></br>' .
+                    '<span class="time">' . substr($lesson['start'],0,5) . ' - ' . substr($lesson['end'],0,5) . '</span>' .
+                    '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
+                    '<span>' . $lesson['lesson'] . '</span><br />' .
+                    '<span>' . $lesson['teacher_name'] . '</span>' .
+                    '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                     '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
                     '<div id="eventButton"><button onclick="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" type="button" class="btn btn-success eventButton" data-toggle="modal" data-target="#addEvent">Dodaj wydarzenie!</button></div></td></tr>';
                     settype($_SESSION['subbmitedBtn'], "integer");
@@ -69,10 +70,11 @@ $Date1->modify('+6 day');
                 if (($lesson['day'] == "Wtorek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
                     '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
-                    '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
-                    '<span class="name">' . $lesson['lesson'] . '</span><br />' .
-                    '<span class="teacher">' . $lesson['teacher_name'] . '</span>' .
-                    '<span class="spantype">' . $lesson['type'] . '</span></br>' .
+                    '<span class="time">' . substr($lesson['start'],0,5) . ' - ' . substr($lesson['end'],0,5) . '</span>' .
+                    '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
+                    '<span>' . $lesson['lesson'] . '</span><br />' .
+                    '<span>' . $lesson['teacher_name'] . '</span>' .
+                    '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                     '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
                     '<div id="eventButton"><button onclick="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" type="button" class="btn btn-success eventButton" data-toggle="modal" data-target="#addEvent">Dodaj wydarzenie!</button></div></td></tr>';
                     settype($_SESSION['subbmitedBtn'], "integer");
@@ -95,10 +97,11 @@ $Date1->modify('+6 day');
                 if (($lesson['day'] == "Środa") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
                     '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
-                    '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
-                    '<span class="name">' . $lesson['lesson'] . '</span><br />' .
-                    '<span class="teacher">' . $lesson['teacher_name'] . '</span>' .
-                    '<span class="spantype">' . $lesson['type'] . '</span></br>' .
+                    '<span class="time">' . substr($lesson['start'],0,5) . ' - ' . substr($lesson['end'],0,5) . '</span>' .
+                    '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
+                    '<span>' . $lesson['lesson'] . '</span><br />' .
+                    '<span>' . $lesson['teacher_name'] . '</span>' .
+                    '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                     '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
                     '<div id="eventButton"><button onclick="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" type="button" class="btn btn-success eventButton" data-toggle="modal" data-target="#addEvent">Dodaj wydarzenie!</button></div></td></tr>';
                     settype($_SESSION['subbmitedBtn'], "integer");
@@ -122,10 +125,11 @@ $Date1->modify('+6 day');
                 if (($lesson['day'] == "Czwartek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
                     '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
-                    '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
-                    '<span class="name">' . $lesson['lesson'] . '</span><br />' .
-                    '<span class="teacher">' . $lesson['teacher_name'] . '</span>' .
-                    '<span class="spantype">' . $lesson['type'] . '</span></br>' .
+                    '<span class="time">' . substr($lesson['start'],0,5) . ' - ' . substr($lesson['end'],0,5) . '</span>' .
+                    '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
+                    '<span>' . $lesson['lesson'] . '</span><br />' .
+                    '<span>' . $lesson['teacher_name'] . '</span>' .
+                    '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                     '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
                     '<div id="eventButton"><button onclick="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" type="button" class="btn btn-success eventButton" data-toggle="modal" data-target="#addEvent">Dodaj wydarzenie!</button></div></td></tr>';
                     settype($_SESSION['subbmitedBtn'], "integer");
@@ -148,10 +152,11 @@ $Date1->modify('+6 day');
                 if (($lesson['day'] == "Piątek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
                     '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
-                    '<span class="hour">' . $lesson['start'] . ' - ' . $lesson['end'] . '</span><br />' .
-                    '<span class="name">' . $lesson['lesson'] . '</span><br />' .
-                    '<span class="teacher">' . $lesson['teacher_name'] . '</span>' .
-                    '<span class="spantype">' . $lesson['type'] . '</span></br>' .
+                    '<span class="time">' . substr($lesson['start'],0,5) . ' - ' . substr($lesson['end'],0,5) . '</span>' .
+                    '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
+                    '<span>' . $lesson['lesson'] . '</span><br />' .
+                    '<span>' . $lesson['teacher_name'] . '</span>' .
+                    '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                     '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
                     '<div id="eventButton"><button onclick="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" type="button" class="btn btn-success eventButton" data-toggle="modal" data-target="#addEvent">Dodaj wydarzenie!</button></div></td></tr>';
                     settype($_SESSION['subbmitedBtn'], "integer");
