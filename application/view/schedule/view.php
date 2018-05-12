@@ -1,12 +1,14 @@
 <?php
 if (!isset($_POST['week'])) {
-    $week = "2018-02-26";
+    $week = date('Y-m-d', time());
+    
 } else {
     $week = $_POST['week'];
 }
 $Date = new DateTime($week);
 $Date1 = new DateTime($week);
 $Date1->modify('+6 day');
+
 ?>
 <div id="interval">
     <?php
@@ -16,17 +18,16 @@ $Date1->modify('+6 day');
 <div id="choice">
     <form action="" method="post">
         <label for="monday">Wybierz początek tygodnia:</label>
-        <select name="week">
+        <select id="week" name="week" onchange="this.form.submit()" onchange="options[selectedIndex].value&&self.location.reload(true)">
             <?php
-            foreach ($formmondays['mondays'] as $row) {
-                echo "<option value='" . $row['date'] . "'>" . $row['date'] . "</option>";
+            foreach ($formmondays['dates'] as $row) {
+                echo "<option value='" . $row['date'] . "'>".'Tydz '.$row['week_number'].': '. $row['date'] . "</option>";
             }
             ?>
         </select>
-        <br />
-        <input type="submit" value="Potwierdź" />
     </form>
 </div>
+
 <div style="clear:both;"></div>
 <div id="tabels">
     <div class="table_left">

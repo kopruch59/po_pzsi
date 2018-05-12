@@ -271,13 +271,13 @@ class ScheduleModel extends Model {
     //Table of Mondays in view
     public function loadmondays() {
         $formmondays = [];
-        $formmondays['mondays'] = $this->fetchMonday();
+        $formmondays['dates'] = $this->fetchMondaydate();
         return $formmondays;
     }
 
-    private function fetchMonday() {
+    private function fetchMondaydate() {
         $connection = $this->getConnection();
-        $instruction = "SELECT date FROM `" . DB_NAME . "`.mondays";
+        $instruction = "SELECT * FROM `" . DB_NAME . "`.mondays";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
