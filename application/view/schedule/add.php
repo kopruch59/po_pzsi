@@ -1,11 +1,11 @@
-<div class="container" style="margin-top: 20px;">
+<div class="container" style="margin-top: 60px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
             <h2>Wprowadź dane dotyczące planu:</h2>
             <form action="" method="post" name="addForm">
                 <div id="subject_name">
                     <label for="lessons">Wprowadź nazwę przedmiotu:</label>
-                    <input class="planinput" id="id_subject_name" type="text" name="subject_name" value="<?php if (isset($_POST['subject_name'])) echo $_POST['subject_name'] ?>" list="slist"/>
+                    <input class="planinput form-control modifySelect" id="id_subject_name" type="text" name="subject_name" value="<?php if (isset($_POST['subject_name'])) echo $_POST['subject_name'] ?>" list="slist"/>
                     <datalist id="slist">
                         <?php
                         foreach ($formData['lessons'] as $row) {
@@ -71,8 +71,8 @@
                     <div id="end_time_error"></div>
                 </div>
                 <div id="teacher_name">
-                    <label for="teacher_name">Podaj nazwisko prowadzącego</label>
-                    <input class="planinput" id="id_teacher_name" type="text" name="teacher_name" value="<?php if (isset($_POST['teacher_name'])) echo $_POST['teacher_name'] ?>" list="tlist"/>
+                    <label for="teacher_name">Podaj nazwisko prowadzącego:</label>
+                    <input class="planinput form-control modifySelect" id="id_teacher_name" type="text" name="teacher_name" value="<?php if (isset($_POST['teacher_name'])) echo $_POST['teacher_name'] ?>" list="tlist"/>
                     <datalist id="tlist">
                         <?php
                         foreach ($formData['teacher'] as $row) {
@@ -111,8 +111,8 @@
                     <div id="group_error"></div>
                 </div>
                 <div id="periodicity">
-                    <label for="periodicity">Cykliczność wydarzenia</label>
-                    <select class="form-control modifySelect" id="id_periodicity" name="periodicity">
+                    <label for="periodicity">Cykliczność wydarzenia:</label>;
+                    <select class="form-control modifySelect" id="id_periodicity" name="periodicity" onchange="return periodicityVerify();">
                         <?php
                         $options = [$none = "Nie powtarza się", $day = "Codziennie", $week = "Co tydzień", $two_weeks = "Co 2 tygodnie", $custom = "Niestandardowe"];
                         $counter = count($options);
@@ -124,9 +124,9 @@
                 </div></br>
                 <div id="custom_periodicity" style="display: none;">
                     <h4>Powtarzanie niestandardowe</h4>
-                    <label for="custom_periodicity">Powtarzaj co</label> 
-                    <input type="number" id="inputDaysValue" name="input_days_value" value="1">
-                    <select id="id_custom_periodicity" name="custom_periodicity_type">
+                    <label for="custom_periodicity">Powtarzaj co:</label> 
+                    <input class="form-control modifySelect" type="number" id="inputDaysValue" name="input_days_value" value="1">
+                    <select class="form-control modifySelect" id="id_custom_periodicity" name="custom_periodicity_type">
                         <?php
                         $customOptions = [$customDay = "Dzień", $customWeek = "Tydzień"];
                         $customCounter = count($customOptions);
@@ -137,7 +137,7 @@
                     </select></br>
                     <div id="div_custom_end_date"
                          <label for="custom_periodicity">Koniec powtarzania:</label></br>
-                        W dniu <input type="date" id="id_custom_end_date" name="custom_end_date"></label></br>
+                        W dniu <input class="form-control modifySelect" type="date" id="id_custom_end_date" name="custom_end_date"></label></br>
                         <div id="div_custom_end_date_error"></div>
                     </div>
                 </div>

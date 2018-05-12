@@ -297,8 +297,6 @@ class ScheduleModel extends Model {
             $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
             $queryPrepare = $connection->prepare($query);
             $queryPrepare->execute();
-            
-            unset($_SESSION['subbmitedBtn']);
         }
     }
 
