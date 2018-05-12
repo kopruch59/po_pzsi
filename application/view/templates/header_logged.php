@@ -28,11 +28,15 @@
                             <a class="nav-link" href="../schedule/add">Dodaj zajęcia</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="popover" title="Informacje o koncie" data-content=" 
+                                <?php 
+                                    echo 'Login: '.$_SESSION["test"].
+                                         ' Grupa: '.$_SESSION["group"];
+                                ?>">Konto</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link " href="../home/logout">Wyloguj się</a>
                         </li>
                     </ul>
-                </div>
-                <div class="info">
-                <?php echo 'Witaj ' . $_SESSION["test"];?>
-                </div>
+            </div>
         </nav>
