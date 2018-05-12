@@ -1,8 +1,8 @@
 $(document).ready(function(){
-                $('[data-toggle="popover"]').popover();   
-            });
-            
-            onunload = function()
+    $('[data-toggle="popover"]').popover();
+});
+
+onunload = function()
 {
 	var week = document.getElementById('week');
 	self.name = 'weekidx' + week.selectedIndex;

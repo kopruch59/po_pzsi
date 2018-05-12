@@ -6,6 +6,8 @@
         <title>Student schedule</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
         <link rel="stylesheet" href="../public/css/style.css" type="text/css" />
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,4 +41,5 @@
                         </li>
                     </ul>
             </div>
+            
         </nav>
