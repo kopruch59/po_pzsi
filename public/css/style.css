@@ -67,6 +67,7 @@ thead > tr
 {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
     width: 80%;
 }
 
@@ -85,13 +86,7 @@ thead > tr
 
     width: 330px;
 }
-
-#inputDaysValue {
-    width: 40px; 
-    height: 30px;
-}
-
-#id_custom_periodicity {
+.customPeriodicity {
     width: 150px; 
     height: 30px;
 }
@@ -137,4 +132,14 @@ thead > tr
 #spanBold {
     font-weight: bold;
     text-align: center;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 80;
+  margin-bottom: 100px;
 }
