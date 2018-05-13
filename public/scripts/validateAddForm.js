@@ -1,11 +1,14 @@
 // SELECTING ALL TEXT ELEMENTS
-var subject_name = document.forms['addForm']['subject_name'];
-var day = document.forms['addForm']['day'];
-var type = document.forms['addForm']['type'];
-var start_time = document.forms['addForm']['start_time'];
-var end_time = document.forms['addForm']['end_time'];
-var teacher_name = document.forms['addForm']['teacher_name'];
-var group = document.forms['addForm']['group'];
+var subject_name = document.forms['addForm']['id_subject_name'];
+var day = document.forms['addForm']['id_day'];
+var type = document.forms['addForm']['id_type'];
+var start_time = document.forms['addForm']['id_start_time'];
+var end_time = document.forms['addForm']['id_end_time'];
+var teacher_name = document.forms['addForm']['id_teacher_name'];
+var group = document.forms['addForm']['id_group'];
+var periodicity = document.forms['addForm']['id_periodicity'];
+var start_date = document.forms['addForm']['id_start_date'];
+
 // SELECTING ALL ERROR DISPLAY ELEMENTS
 var subject_name_error = document.getElementById('subject_name_error');
 var day_error = document.getElementById('day_error');
@@ -14,6 +17,8 @@ var start_time_error = document.getElementById('start_time_error');
 var end_time_error = document.getElementById('end_time_error');
 var teacher_name_error = document.getElementById('teacher_name_error');
 var group_error = document.getElementById('group_error');
+var start_date_error = document.getElementById('id_start_date_error');
+
 // SETTING ALL EVENT LISTENERS
 subject_name.addEventListener('blur', subjectNameVerify, true);
 day.addEventListener('blur', dayVerify, true);
@@ -22,6 +27,9 @@ start_time.addEventListener('blur', startTimeVerify, true);
 end_time.addEventListener('blur', endTimeVerify, true);
 teacher_name.addEventListener('blur', teacherNameVerify, true);
 group.addEventListener('blur', groupVerify, true);
+periodicity.addEventListener('blur', periodicityVerify, true);
+start_date.addEventListener('blur', startDateVerify, true);
+
 // validation function
 function Validate() {
     if (subject_name.value == "") {
@@ -52,6 +60,13 @@ function Validate() {
         start_time.focus();
         return false;
     }
+    if (start_date.value == "") {
+        start_date.style.border = "1px solid red";
+        document.getElementById('start_date_time').style.color = "red";
+        start_date_error.textContent = "Te pole jest wymagane!";
+        start_date.focus();
+        return false;
+    }
     if (end_time.value == "") {
         end_time.style.border = "1px solid red";
         document.getElementById('end_time').style.color = "red";
@@ -74,7 +89,6 @@ function Validate() {
         return false;
     }
 }
-// event handler functions
 function subjectNameVerify() {
     if (subject_name.value != "") {
         subject_name.style.border = "1px solid #5e6e66";
@@ -128,6 +142,30 @@ function groupVerify() {
         group.style.border = "1px solid #5e6e66";
         document.getElementById('group').style.color = "#5e6e66";
         group_error.innerHTML = "";
+        return true;
+    }
+}
+function startDateVerify() {
+    if (start_date.value != "") {
+        start_date.style.border = "1px solid #5e6e66";
+        document.getElementById('start_date_time').style.color = "#5e6e66";
+        start_date_error.innerHTML = "";
+        return true;
+    }
+}
+function periodicityVerify() {
+    if (periodicity.value == "Niestandardowe") {
+        $(custom_periodicity).css("display", "block");
+        document.getElementById("inputDaysValue").setAttribute("required", "true");
+        document.getElementById("id_custom_end_date").setAttribute("required", "true");
+        document.getElementById("inputDaysValue").setAttribute("min", "1");
+
+        return true;
+    } else {
+        $(custom_periodicity).css("display", "none");
+        document.getElementById("inputDaysValue").removeAttribute("required");
+        document.getElementById("id_custom_end_date").removeAttribute("required");
+        document.getElementById("inputDaysValue").removeAttribute("min");
         return true;
     }
 }

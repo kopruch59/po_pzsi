@@ -24,7 +24,7 @@ class ScheduleController extends Controller {
      */
     public function action_index() {
         //Load default header.
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         //Load this action views.
         require $this->dirViews . 'index.php';
         //Load default footer.
@@ -33,7 +33,7 @@ class ScheduleController extends Controller {
 
     public function action_insertSample() {
 
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
 
         echo $this->model->insertSampleToGoogleCalendar();
 
@@ -50,7 +50,7 @@ class ScheduleController extends Controller {
         if ($formSubmitted == 1) {
             $this->model->saveSchedule([]);
         }
-        $this->outputHeader();
+        $this->outputHeader_logged();
         $formData = $this->model->loadData();
         require $this->dirViews . 'add.php';
         $this->outputFooter();
@@ -62,8 +62,11 @@ class ScheduleController extends Controller {
      * @author Tomasz <t.kusiek@gmail.com>
      */
     public function action_show() {
-        $this->outputHeader();
+        $this->model->saveMonday([]);
+        $this->outputHeader_logged();
         $plan = $this->model->getSchedule();
+        $formmondays = $this->model->loadmondays();
+        $addEvent = $this->model->addEvent();
         require $this->dirViews . 'view.php';
         $this->outputFooter();
     }
