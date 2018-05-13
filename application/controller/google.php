@@ -18,7 +18,7 @@ class GoogleController extends Controller {
      */
     public function action_index() {
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         
         $model = new GoogleModel();
 
