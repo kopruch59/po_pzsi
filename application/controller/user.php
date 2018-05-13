@@ -51,6 +51,8 @@ class UserController extends Controller {
         session_name(UserModel::SESSION_NAME);
         session_id(UserModel::SESSION_ID_GOOGLE);
         session_start();
+        
+        empty($_SESSION[self::GOOGLE_ACCESS_TOKEN]) ?: $this->modelGoogle->client->setAccessToken($_SESSION[self::GOOGLE_ACCESS_TOKEN]);
     }
     
     /**
@@ -62,7 +64,7 @@ class UserController extends Controller {
         
         $userData = $this->getUserData();
         
-        $this->outputHeader_unlogged();
+        $this->outputHeader();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -86,7 +88,7 @@ class UserController extends Controller {
             $this->logInWithGoogleProvider();
         }
         
-        $this->outputHeader_unlogged();
+        $this->outputHeader();
         
         require $this->dirViews . 'login.php';
         
@@ -139,14 +141,15 @@ class UserController extends Controller {
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
-   public function action_settings()
-    {
+    
+    public function action_settings() {
+        
         if(isset($_SESSION["test"])) {
-        $formSubmitted = filter_input(INPUT_POST, 'save_settings');
-        if ($formSubmitted == 1) {
-            $this->model->saveSettings($_SESSION["test"]);
-        }
-    $userGroup = $this->model->getUserGroup($_SESSION["test"]);
+            $formSubmitted = filter_input(INPUT_POST, 'save_settings');
+            if ($formSubmitted == 1) {
+                $this->model->saveSettings($_SESSION["test"]);
+            }
+            $userGroup = $this->model->getUserGroup($_SESSION["test"]);
         }
         $groups= $this->model->fetchGroup();
 

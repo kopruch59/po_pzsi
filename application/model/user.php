@@ -4,7 +4,6 @@
  * 
  * @author theKindlyMallard <the.kindly.mallard@gmail.com>
  */
-
 class UserModel extends Model {
     
     /**
@@ -38,62 +37,130 @@ class UserModel extends Model {
         }
     }
     
-    public function __construct() {
-        parent::__construct();
-    }
-    
-    public function getUser($email) {
+    /**
+     * Gets user by field value e.g. Google e-mail.
+     * 
+     * @param string $field Field name for which get user (column name).
+     * @param type $value Value to search for in field.
+     * @return stdClass|false User object from DB or FALSE on failure.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function getUserByField(string $field, $value) {
+        
         $connection = $this->getConnection();
-        $query = 'SELECT * FROM `' . DB_NAME . "`.`users_g` WHERE g_email = '$email'";
+        $query = 'SELECT * FROM `' . DB_NAME . "`.`users_g` WHERE `$field` = '$value'";
         $statement = $connection->query($query);
-        $count = $statement->rowCount();
         
-        return $count > 0 ? true : false;
+        return $statement->fetchObject();
     }
     
-    public function updateUser(Google_Service_Plus_Person $userData) {
+    /**
+     * Updates user info. If user exist in DB updates him else saves new user.
+     * 
+     * @param Google_Service_Plus_Person $googlePlusUser Google user object.
+     * @return int|bool User ID or FALSE on failure.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function updateUser(Google_Service_Plus_Person $googlePlusUser) {
         
-        $userInfo = [
-            'g_id' => $userData->id,
-            'g_email' => $userData->emails[0]->value,
-            'g_first_name' => $userData->name->givenName,
-            'g_last_name' => $userData->name->familyName,
-            'g_created' => date(DateTime::ATOM),
-            'g_modified' => date(DateTime::ISO8601),
+        $userData = [
+            'g_email' => $googlePlusUser->emails[0]->value,
         ];
         
-        if (!$this->getUser($userInfo['g_email'])) {
-            $this->saveUser($userInfo);
+        if (!$this->getUserByField('g_email', $userData['g_email'])) {
+            //Prepare all data to save.
+            $userData += [
+                'g_id' => $googlePlusUser->id,
+                'g_first_name' => $googlePlusUser->name->givenName,
+                'g_last_name' => $googlePlusUser->name->familyName,
+                'g_created' => date(DateTime::ATOM),
+                'g_modified' => date(DateTime::ATOM),
+            ];
+            //Save new user.
+            return $this->saveUser($userData);
+        } else {
+            //Prepare data to update.
+            $userData += [
+                'g_id' => $googlePlusUser->id,
+                'g_first_name' => $googlePlusUser->name->givenName,
+                'g_last_name' => $googlePlusUser->name->familyName,
+                'g_modified' => date(DateTime::ATOM),
+            ];
+            //Update user data.
+            return $this->updateUserData($userData);
         }
     }
     
-    private function saveUser(array $userInfo) {
+    /**
+     * Updates user in database.
+     * 
+     * @param array $userData User data to save.
+     * @return int|bool Updated user ID or FALSE on failure.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    private function updateUserData(array $userData) {
+        
         $connection = $this->getConnection();
-        $query = "INSERT INTO `" . DB_NAME . "`.`users_g` " . 
-                "(g_id, g_email, g_first_name, g_last_name, g_created, g_modified) " . 
-                "VALUES (" .
-                "'" . $userInfo['g_id'] . "', " .
-                "'" . $userInfo['g_email'] . "', " .
-                "'" . $userInfo['g_first_name'] . "', " .
-                "'" . $userInfo['g_last_name'] . "', " .
-                "'" . $userInfo['g_created'] . "', " .
-                "'" . $userInfo['g_modified'] . "'" .
-                ")";
-        try {
-            $result = $connection->query($query);
-            $errors = $connection->errorInfo();
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
+        
+        $query = "UPDATE `" . DB_NAME . "`.`users_g` " . " SET ";
+        //Add all values to update to query.
+        foreach ($userData as $columnName => $value) {
+            $query .= "$columnName='$value', ";
         }
+        //Remove necessary colon at the and.
+        $query = substr_replace($query, '', -2, 1);
+        $query .= "WHERE g_email ='" . $userData['g_email'] . "';";
+        
+        $statement = $connection->query($query);
+        
+        if ($statement && $statement->rowCount() > 0) {
+            //Get updated user ID.
+            $user = $this->getUserByField('g_email', $userData['g_email']);
+            return $user->id;
+        }
+        
+        //There were some errors.
+        return false;
     }
-        public function fetchGroup() {
+
+    /**
+     * Saves user into DB.
+     * 
+     * @param array $userData User data to save.
+     * @return int|bool Saved user ID or FALSE on failure.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    private function saveUser(array $userData) {
+        
+        $connection = $this->getConnection();
+        
+        $query = "INSERT INTO `" . DB_NAME . "`.`users_g` " . 
+            "(g_id, g_email, g_first_name, g_last_name, g_created, g_modified) " . 
+            "VALUES (" .
+            "'" . $userData['g_id'] . "', " .
+            "'" . $userData['g_email'] . "', " .
+            "'" . $userData['g_first_name'] . "', " .
+            "'" . $userData['g_last_name'] . "', " .
+            "'" . $userData['g_created'] . "', " .
+            "'" . $userData['g_modified'] . "'" .
+            ")";
+        
+        return $connection->query($query) ? $connection->lastInsertId() : false;
+    }
+    
+    public function fetchGroup() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.groups";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
-        }
-        /**
+    }
+    
+    /**
      * @param string|int $user User for which get group.
      * @return type User group.
      */
@@ -109,6 +176,7 @@ class UserModel extends Model {
         
         return $group;
     }
+    
     public function saveSettings($user) {
         
         $group = filter_input(INPUT_POST, 'group');

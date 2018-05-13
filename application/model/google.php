@@ -71,13 +71,14 @@ class GoogleModel extends Model {
             ])
         );
 
-        date_default_timezone_set('America/New_York');
+        date_default_timezone_set('Europe/Warsaw');
         
         $client = new Google_Client();
         $client->setApplicationName('PO pzsi student schedule');
         $client->setScopes(GOOGLE_API_SCOPES);
         $client->setAuthConfig($this->prepareAuthConfig(GOOGLE_API_CLIENT_SECRET_PATH));
         $client->setAccessType('offline');
+        
         $this->client = $client;
         $this->calendarService = new Google_Service_Calendar($this->client);
         $this->oAuth2Service = new Google_Service_Oauth2($this->client);
