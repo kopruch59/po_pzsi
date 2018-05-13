@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Main application class.
  * 
@@ -83,4 +84,5 @@ class Application {
             }
         }
     }
+
 }

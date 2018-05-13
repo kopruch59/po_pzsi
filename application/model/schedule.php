@@ -5,15 +5,15 @@ class ScheduleModel extends Model {
     public function getSchedule() {
         $connection = $this->getConnection();
         $group = $_SESSION["group"];
-        
-        $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by day, start";
+
+        $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
         $queryPrepare = $connection->prepare($query);
         $queryPrepare->execute();
         $schedule = $queryPrepare->fetchAll();
 
         return $schedule;
     }
-    
+
     /**
      * Inserts sample event to Google calendar logged person.
      * 
@@ -31,16 +31,16 @@ class ScheduleModel extends Model {
         $url_parameters = [];
         $url_parameters['fields'] = 'items(id,summary,timeZone)';
         $url_parameters['minAccessRole'] = 'owner';
-        $url_calendars = 'https://www.googleapis.com/calendar/v3/users/me/calendarList?'. http_build_query($url_parameters);
-        $ch = curl_init();		
-        curl_setopt($ch, CURLOPT_URL, $url_calendars);		
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);	
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '. $_SESSION['accessToken']]);	
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);	
+        $url_calendars = 'https://www.googleapis.com/calendar/v3/users/me/calendarList?' . http_build_query($url_parameters);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url_calendars);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $_SESSION['accessToken']]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = json_decode(curl_exec($ch), true);
-        $http_code = curl_getinfo($ch,CURLINFO_HTTP_CODE);		
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($http_code != 200) {
-                throw new Exception('Error : Failed to get calendars list');
+            throw new Exception('Error : Failed to get calendars list');
         }
         
         $calendarInfo = $data['items'][0];
@@ -90,12 +90,12 @@ class ScheduleModel extends Model {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);		
         curl_setopt($ch, CURLOPT_POST, 1);		
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '. $_SESSION['accessToken'], 'Content-Type: application/json']);	
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($curlPost));	
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $_SESSION['accessToken'], 'Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($curlPost));
         $data = json_decode(curl_exec($ch), true);
-        $http_code = curl_getinfo($ch,CURLINFO_HTTP_CODE);		
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($http_code != 200) {
-                throw new Exception('Error : Failed to create event');
+            throw new Exception('Error : Failed to create event');
         }
         $x = ' and <a href"' . $event->htmlLink . '">first method</a>';
         return 'Event created: <a href="' . $data['htmlLink'] . '" target="blank">here</a>' . $x;
@@ -110,10 +110,103 @@ class ScheduleModel extends Model {
         $day = filter_input(INPUT_POST, 'day');
         $type = filter_input(INPUT_POST, 'type');
         $group = filter_input(INPUT_POST, 'group');
+        $start_date = filter_input(INPUT_POST, 'start_date');
+        $periodicity = filter_input(INPUT_POST, 'periodicity');
 
-        $connection = $this->getConnection();
-        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group' ";
-        $connection->query($instruction);
+        if ($periodicity == "Nie powtarza się") {
+            $connection = $this->getConnection();
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $connection->query($instruction);
+        } else if ($periodicity == "Codziennie") {
+            $connection = $this->getConnection();
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $connection->query($instruction);
+            $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
+            $expire = $connection->query($instruction2);
+            $row = $expire->fetch();
+            $expireData = $row["expire"];
+            $counter = "";
+            $Date = new DateTime($start_date);
+            while ($counter != $expireData) {
+                $Date->add(new DateInterval('P1D'));
+                $newDate = $Date->format('Y-m-d');
+                $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                $connection->query($instruction);
+                $counter = $newDate;
+            }
+        } else if ($periodicity == "Co tydzień") {
+            $connection = $this->getConnection();
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $connection->query($instruction);
+            $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
+            $expire = $connection->query($instruction2);
+            $row = $expire->fetch();
+            $expireData = $row["expire"];
+            $counter = "";
+            $Date = new DateTime($start_date);
+            while ($counter <= $expireData) {
+                $Date->add(new DateInterval('P7D'));
+                $newDate = $Date->format('Y-m-d');
+                $counter = $newDate;
+                if ($counter <= $expireData) {
+                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                    $connection->query($instruction);
+                }
+            }
+        } else if ($periodicity == "Co 2 tygodnie") {
+            $connection = $this->getConnection();
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $connection->query($instruction);
+            $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
+            $expire = $connection->query($instruction2);
+            $row = $expire->fetch();
+            $expireData = $row["expire"];
+            $counter = "";
+            $Date = new DateTime($start_date);
+            while ($counter <= $expireData) {
+                $Date->add(new DateInterval('P14D'));
+                $newDate = $Date->format('Y-m-d');
+                $counter = $newDate;
+                if ($counter <= $expireData) {
+                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                    $connection->query($instruction);
+                }
+            }
+        } else if ($periodicity == "Niestandardowe") {
+            $imputValue = filter_input(INPUT_POST, 'input_days_value');
+            $custom_periodicity_type = filter_input(INPUT_POST, 'custom_periodicity_type');
+            $custom_end_date = filter_input(INPUT_POST, 'custom_end_date');
+            $connection = $this->getConnection();
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $connection->query($instruction);
+            if ($custom_periodicity_type == "Dzień") {
+                $counter = "";
+                $Date = new DateTime($start_date);
+                $day_value = $imputValue * 1;
+                while ($counter <= $custom_end_date) {
+                    $Date->add(new DateInterval('P' . $day_value . 'D'));
+                    $newDate = $Date->format('Y-m-d');
+                    $counter = $newDate;
+                    if ($counter <= $custom_end_date) {
+                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                        $connection->query($instruction);
+                    }
+                }
+            } else if ($custom_periodicity_type == "Tydzień") {
+                $counter = "";
+                $Date = new DateTime($start_date);
+                $weeks_value = $imputValue * 7;
+                while ($counter <= $custom_end_date) {
+                    $Date->add(new DateInterval('P' . $weeks_value . 'D'));
+                    $newDate = $Date->format('Y-m-d');
+                    $counter = $newDate;
+                    if ($counter <= $custom_end_date) {
+                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                        $connection->query($instruction);
+                    }
+                }
+            }
+        }
     }
 
     public function loadData() {
@@ -157,7 +250,7 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-    
+
     private function fetchTeacher() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.teachers";
@@ -165,4 +258,39 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
+
+    //Table of Mondays in view
+    public function loadmondays() {
+        $formmondays = [];
+        $formmondays['mondays'] = $this->fetchMonday();
+        return $formmondays;
+    }
+
+    private function fetchMonday() {
+        $connection = $this->getConnection();
+        $instruction = "SELECT date FROM `" . DB_NAME . "`.mondays";
+        $query = $connection->query($instruction);
+        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
+
+    public function saveMonday(array $formmondays) {
+        $date = filter_input(INPUT_POST, 'date');
+    }
+
+    function addEvent() {
+        if (isset($_SESSION['subbmitedBtn'])) {
+            $eventName = filter_input(INPUT_POST, 'event-name', FILTER_SANITIZE_STRING);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+            $connection = $this->getConnection();
+            $idPlan = $_SESSION['subbmitedBtn'];
+
+            $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
+            $queryPrepare = $connection->prepare($query);
+            $queryPrepare->execute();
+            
+            unset($_SESSION['subbmitedBtn']);
+        }
+    }
+
 }

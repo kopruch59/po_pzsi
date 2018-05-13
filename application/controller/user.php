@@ -62,7 +62,7 @@ class UserController extends Controller {
         
         $userData = $this->getUserData();
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -86,7 +86,7 @@ class UserController extends Controller {
             $this->logInWithGoogleProvider();
         }
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         
         require $this->dirViews . 'login.php';
         
@@ -135,11 +135,26 @@ class UserController extends Controller {
         $this->modelGoogle->client->revokeToken();
         session_unset();
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
-    
+   public function action_settings()
+    {
+        if(isset($_SESSION["test"])) {
+        $formSubmitted = filter_input(INPUT_POST, 'save_settings');
+        if ($formSubmitted == 1) {
+            $this->model->saveSettings($_SESSION["test"]);
+        }
+    $userGroup = $this->model->getUserGroup($_SESSION["test"]);
+        }
+        $groups= $this->model->fetchGroup();
+
+        $this->outputHeader_unlogged();
+        require $this->dirViews . 'settings.php';
+        $this->outputFooter();
+    }
+
     /**
      * Returns currently logged in user data.
      * 
