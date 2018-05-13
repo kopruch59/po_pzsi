@@ -88,6 +88,112 @@ class GoogleModel extends Model {
     }
     
     /**
+     * Inserts event to Google Calendar logged person.
+     * 
+     * @param array $eventData Data to save in event
+     * @return string Message about action.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function insertEventIntoGoogleCalendar(array $eventData) {
+        
+        //Prepare stuffs
+        $this->client->setAccessToken($_SESSION['accessToken']);
+        $this->calendarService = new Google_Service_Calendar($this->client);
+        //Get user calendars
+        $calendatList = $this->getUserCalendarList();
+        $calendarInfo = $calendatList['items'][0];
+        //Prepare some informations for event.
+        $color = '8';
+        foreach ($this->getEventColors() as $colorId => $values) {
+            //Check just background color if match the given color.
+            if ($eventData['color'] == $values['background']) {
+                $color = $colorId;
+                break;
+            }
+        }
+        $description = 'prowadzący: ' . $eventData['teacher_name'] . ', grupa - ' . $eventData['group_number'];
+        //Prepare event
+        $event = new Google_Service_Calendar_Event([
+            'summary' => $eventData['lesson'] . ', ' . $eventData['type'],
+            'location' => $eventData['room'],
+            'description' => $description,
+            'start' => [
+                'dateTime' => $eventData['startDateTime'],
+                'timeZone' => $calendarInfo['timeZone'],
+            ],
+            'end' => [
+                'dateTime' => $eventData['endDateTime'],
+                'timeZone' => $calendarInfo['timeZone'],
+            ],
+            'colorId' => $color,
+            'reminders' => [
+                'useDefault' => false,
+            ],
+        ]);
+        //Insert the event to Google Calendar.
+        $event = $this->calendarService->events->insert($calendarInfo['id'], $event);
+        
+        return 'Event created: <a href="' . $event->htmlLink . '" target="blank">here</a>';
+    }
+    
+    /**
+     * Gets event colors.
+     * 
+     * @return array Event colors data.
+     * @throws Exception When HTTP error occured.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    protected function getEventColors() {
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/calendar/v3/colors');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $_SESSION['accessToken']]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $data = json_decode(curl_exec($ch), true);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($http_code != 200) {
+            throw new Exception('Error : Failed to get calendars list');
+        }
+        
+        return $data['event'];
+    }
+
+    /**
+     * Gets current user calendar list.
+     * 
+     * @return array Calendar list data.
+     * @throws Exception When HTTP error occured.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    protected function getUserCalendarList() {
+        
+        $url_parameters = [];
+        $url_parameters['fields'] = 'items(id,summary,timeZone)';
+        $url_parameters['minAccessRole'] = 'owner';
+        $url_calendars = 'https://www.googleapis.com/calendar/v3/users/me/calendarList?' . http_build_query($url_parameters);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url_calendars);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $_SESSION['accessToken']]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $data = json_decode(curl_exec($ch), true);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($http_code != 200) {
+            throw new Exception('Error : Failed to get calendars list');
+        }
+        
+        return $data;
+    }
+
+
+    /**
      * Expands the home directory alias '~' to the full path.
      * 
      * @param string $path the path to expand.

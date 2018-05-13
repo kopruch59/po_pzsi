@@ -53,6 +53,24 @@ class UserModel extends Model {
      * @var string Session name when user is log in.
      */
     const SESSION_NAME = 'sessionName';
+
+    /**
+     * Returns currently logged in user data.
+     * 
+     * @return array User data received from Google or empty array if no data stored.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public static function getUserData() {
+        
+        $userData = [];
+        
+        if (isset($_SESSION['googleUserData'])) {
+            $userData = (array)$_SESSION['googleUserData'];
+        }
+        
+        return $userData;
+    }
     
     /**
      * Checks if current user is logged in with Google.
@@ -68,6 +86,14 @@ class UserModel extends Model {
         } else {
             return false;
         }
+    }
+    
+    public function fetchGroup() {
+        $connection = $this->getConnection();
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.groups";
+        $query = $connection->query($instruction);
+        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
     }
     
     /**
@@ -88,6 +114,19 @@ class UserModel extends Model {
         return $statement->fetchObject();
     }
     
+    public function saveSettings($userId) {
+        
+        $group = filter_input(INPUT_POST, 'group');
+        
+        $userDataToUpdate = [
+            self::FIELD_ID => $userId,
+            self::FIELD_G_EMAIL => '',
+            self::FIELD_GROUP_NUMBER => $group,
+        ];
+        
+        return $this->updateUserData($userDataToUpdate);
+    }
+    
     /**
      * Updates user info. If user exist in DB updates him else saves new user.
      * 
@@ -100,6 +139,7 @@ class UserModel extends Model {
         
         $userData = [
             self::FIELD_G_EMAIL => $googlePlusUser->emails[0]->value,
+            self::FIELD_ID => '',
         ];
         
         if (!$this->getUserByField(self::FIELD_G_EMAIL, $userData[self::FIELD_G_EMAIL])) {
@@ -141,17 +181,23 @@ class UserModel extends Model {
         $query = "UPDATE `" . DB_NAME . "`.`users_g` " . " SET ";
         //Add all values to update to query.
         foreach ($userData as $columnName => $value) {
+            //Do not save this fields again.
+            if ($columnName == self::FIELD_ID || $columnName == self::FIELD_G_EMAIL) {
+                continue;
+            }
             $query .= "`$columnName` = '$value', ";
         }
         //Remove necessary colon at the and.
         $query = substr_replace($query, '', -2, 1);
-        $query .= "WHERE `" . self::FIELD_G_EMAIL . "` ='" . $userData[self::FIELD_G_EMAIL] . "';";
+        $query .= "WHERE `" . self::FIELD_G_EMAIL . "` = '" . $userData[self::FIELD_G_EMAIL] . "'"
+                . " OR `" . self::FIELD_ID . "` = '" . $userData[self::FIELD_ID] . "';";
         
         $statement = $connection->query($query);
         
         if ($statement && $statement->rowCount() > 0) {
             //Get updated user ID.
-            $user = $this->getUserByField(self::FIELD_G_EMAIL, $userData[self::FIELD_G_EMAIL]);
+            $byField = empty($userData[self::FIELD_ID]) ? self::FIELD_G_EMAIL : self::FIELD_ID;
+            $user = $this->getUserByField($byField, $userData[$byField]);
             return $user->id;
         }
         
@@ -183,22 +229,5 @@ class UserModel extends Model {
             ")";
         
         return $connection->query($query) ? $connection->lastInsertId() : false;
-    }
-    
-    public function fetchGroup() {
-        $connection = $this->getConnection();
-        $instruction = "SELECT name FROM `" . DB_NAME . "`.groups";
-        $query = $connection->query($instruction);
-        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $rows;
-    }
-    
-    public function saveSettings($userId) {
-        
-        $group = filter_input(INPUT_POST, 'group');
-        
-        $connection = $connection = $this->getConnection();
-        $query = "UPDATE `" . DB_NAME . "`.`users_g` SET `group_number` = '$group' WHERE `id` = '$userId'";
-        $connection->query($query);
     }
 }

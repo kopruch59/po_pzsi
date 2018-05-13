@@ -64,7 +64,7 @@ class UserController extends Controller {
         
         UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
         
-        $userData = $this->getUserData();
+        $userData = UserModel::getUserData();
         
         $this->outputHeader_logged();
         require $this->dirViews . 'index.php';
@@ -152,38 +152,22 @@ class UserController extends Controller {
     public function action_settings() {
         
         UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        $userId = $_SESSION[self::KEY_GOOGLE_USER_DATA][UserModel::FIELD_ID];
         
         $formSubmitted = filter_input(INPUT_POST, 'save_settings');
-        
         if ($formSubmitted == 1) {
-            $this->model->saveSettings($_SESSION[self::KEY_GOOGLE_USER_DATA]['id']);
+            if ($this->model->saveSettings($userId) != false) {
+                $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
+            }
         }
         
-        $user = $this->model->getUserByField('id', $_SESSION[self::KEY_GOOGLE_USER_DATA]['id']);
+        $user = $this->model->getUserByField(UserModel::FIELD_ID, $userId);
         $userGroup = $user->group_number;
         $groups = $this->model->fetchGroup();
 
         $this->outputHeader_logged();
         require $this->dirViews . 'settings.php';
         $this->outputFooter();
-    }
-
-    /**
-     * Returns currently logged in user data.
-     * 
-     * @return array User data received from Google or empty array if no data stored.
-     * 
-     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
-     */
-    public static function getUserData() {
-        
-        $userData = [];
-        
-        if (isset($_SESSION[UserController::KEY_GOOGLE_USER_DATA])) {
-            $userData = (array)$_SESSION[UserController::KEY_GOOGLE_USER_DATA];
-        }
-        
-        return $userData;
     }
     
     /**

@@ -42,15 +42,6 @@ class ScheduleController extends Controller {
         $this->outputFooter();
     }
 
-    public function action_insertSample() {
-
-        $this->outputHeader_logged();
-
-        echo $this->model->insertSampleToGoogleCalendar();
-
-        $this->outputFooter();
-    }
-
     /**
      * Add action for schedule
      * 
@@ -75,7 +66,8 @@ class ScheduleController extends Controller {
     public function action_show() {
         $this->model->saveMonday([]);
         $this->outputHeader_logged();
-        $plan = $this->model->getSchedule();
+        $userData = $this->modelUser->getUserData();
+        $plan = $this->model->getSchedule($userData[UserModel::FIELD_GROUP_NUMBER]);
         $formmondays = $this->model->loadmondays();
         $addEvent = $this->model->addEvent();
         require $this->dirViews . 'view.php';
