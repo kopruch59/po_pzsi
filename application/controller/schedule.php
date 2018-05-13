@@ -79,6 +79,7 @@ class ScheduleController extends Controller {
         $formmondays = $this->model->loadmondays();
         $addEvent = $this->model->addEvent();
         require $this->dirViews . 'view.php';
+        unset($_SESSION['subbmitedBtn']);
         $this->outputFooter();
     }
 

@@ -111,15 +111,16 @@ class ScheduleModel extends Model {
         $type = filter_input(INPUT_POST, 'type');
         $group = filter_input(INPUT_POST, 'group');
         $start_date = filter_input(INPUT_POST, 'start_date');
+        $room = filter_input(INPUT_POST, 'room');
         $periodicity = filter_input(INPUT_POST, 'periodicity');
 
         if ($periodicity == "Nie powtarza się") {
             $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
             $connection->query($instruction);
         } else if ($periodicity == "Codziennie") {
             $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
             $connection->query($instruction);
             $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
             $expire = $connection->query($instruction2);
@@ -130,13 +131,13 @@ class ScheduleModel extends Model {
             while ($counter != $expireData) {
                 $Date->add(new DateInterval('P1D'));
                 $newDate = $Date->format('Y-m-d');
-                $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
                 $connection->query($instruction);
                 $counter = $newDate;
             }
         } else if ($periodicity == "Co tydzień") {
             $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
             $connection->query($instruction);
             $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
             $expire = $connection->query($instruction2);
@@ -149,13 +150,13 @@ class ScheduleModel extends Model {
                 $newDate = $Date->format('Y-m-d');
                 $counter = $newDate;
                 if ($counter <= $expireData) {
-                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
                     $connection->query($instruction);
                 }
             }
         } else if ($periodicity == "Co 2 tygodnie") {
             $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
             $connection->query($instruction);
             $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
             $expire = $connection->query($instruction2);
@@ -168,7 +169,7 @@ class ScheduleModel extends Model {
                 $newDate = $Date->format('Y-m-d');
                 $counter = $newDate;
                 if ($counter <= $expireData) {
-                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
                     $connection->query($instruction);
                 }
             }
@@ -177,7 +178,7 @@ class ScheduleModel extends Model {
             $custom_periodicity_type = filter_input(INPUT_POST, 'custom_periodicity_type');
             $custom_end_date = filter_input(INPUT_POST, 'custom_end_date');
             $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date'";
+            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
             $connection->query($instruction);
             if ($custom_periodicity_type == "Dzień") {
                 $counter = "";
@@ -188,7 +189,7 @@ class ScheduleModel extends Model {
                     $newDate = $Date->format('Y-m-d');
                     $counter = $newDate;
                     if ($counter <= $custom_end_date) {
-                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
                         $connection->query($instruction);
                     }
                 }
@@ -201,7 +202,7 @@ class ScheduleModel extends Model {
                     $newDate = $Date->format('Y-m-d');
                     $counter = $newDate;
                     if ($counter <= $custom_end_date) {
-                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate'";
+                        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
                         $connection->query($instruction);
                     }
                 }
@@ -216,6 +217,7 @@ class ScheduleModel extends Model {
         $formData['types'] = $this->fetchType();
         $formData['group'] = $this->fetchGroup();
         $formData['teacher'] = $this->fetchTeacher();
+        $formData['room'] = $this->fetchRoom();
         return $formData;
     }
 
@@ -258,17 +260,25 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
+    
+    private function fetchRoom() {
+        $connection = $this->getConnection();
+        $instruction = "SELECT name FROM `" . DB_NAME . "`.rooms";
+        $query = $connection->query($instruction);
+        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
 
     //Table of Mondays in view
     public function loadmondays() {
         $formmondays = [];
-        $formmondays['mondays'] = $this->fetchMonday();
+        $formmondays['dates'] = $this->fetchMondaydate();
         return $formmondays;
     }
 
-    private function fetchMonday() {
+    private function fetchMondaydate() {
         $connection = $this->getConnection();
-        $instruction = "SELECT date FROM `" . DB_NAME . "`.mondays";
+        $instruction = "SELECT * FROM `" . DB_NAME . "`.mondays";
         $query = $connection->query($instruction);
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
@@ -288,8 +298,6 @@ class ScheduleModel extends Model {
             $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
             $queryPrepare = $connection->prepare($query);
             $queryPrepare->execute();
-            
-            unset($_SESSION['subbmitedBtn']);
         }
     }
 
