@@ -62,9 +62,11 @@ class UserController extends Controller {
      */
     public function action_index() {
         
+        UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        
         $userData = $this->getUserData();
         
-        $this->outputHeader();
+        $this->outputHeader_logged();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -88,7 +90,7 @@ class UserController extends Controller {
             $this->logInWithGoogleProvider();
         }
         
-        $this->outputHeader();
+        $this->outputHeader_unlogged();
         
         require $this->dirViews . 'login.php';
         
@@ -109,9 +111,11 @@ class UserController extends Controller {
             if ($this->modelGoogle->client->getAccessToken()) {
                 
                 $_SESSION[self::GOOGLE_ACCESS_TOKEN] = $authResonse['access_token'];
-                $_SESSION[self::KEY_GOOGLE_USER_DATA] = $this->modelGoogle->client->verifyIdToken();
+//                $_SESSION[self::KEY_GOOGLE_USER_DATA] = $this->modelGoogle->client->verifyIdToken();
                 
-                $this->model->updateUser($this->modelGoogle->plusService->people->get('me'));
+                $userId = $this->model->updateUser($this->modelGoogle->plusService->people->get('me'));
+                
+                $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
                 
                 header('Location: ' . APPLICATION_URL . 'user/index');
             } else {
@@ -142,18 +146,24 @@ class UserController extends Controller {
         $this->outputFooter();
     }
     
+    /**
+     * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
     public function action_settings() {
         
-        if(isset($_SESSION["test"])) {
-            $formSubmitted = filter_input(INPUT_POST, 'save_settings');
-            if ($formSubmitted == 1) {
-                $this->model->saveSettings($_SESSION["test"]);
-            }
-            $userGroup = $this->model->getUserGroup($_SESSION["test"]);
+        UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        
+        $formSubmitted = filter_input(INPUT_POST, 'save_settings');
+        
+        if ($formSubmitted == 1) {
+            $this->model->saveSettings($_SESSION[self::KEY_GOOGLE_USER_DATA]['id']);
         }
-        $groups= $this->model->fetchGroup();
+        
+        $user = $this->model->getUserByField('id', $_SESSION[self::KEY_GOOGLE_USER_DATA]['id']);
+        $userGroup = $user->group_number;
+        $groups = $this->model->fetchGroup();
 
-        $this->outputHeader_unlogged();
+        $this->outputHeader_logged();
         require $this->dirViews . 'settings.php';
         $this->outputFooter();
     }
@@ -165,7 +175,7 @@ class UserController extends Controller {
      * 
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function getUserData() {
+    public static function getUserData() {
         
         $userData = [];
         

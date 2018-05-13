@@ -2,6 +2,9 @@
 
 class HomeModel extends Model {
 
+    /**
+     * @deprecated since version 0.7 Using login with Google.
+     */
     public function checkLogin() {
         try {
             $connection = $this->getConnection();
@@ -34,9 +37,12 @@ class HomeModel extends Model {
     }
     
     /**
+     * @deprecated since version 0.7 Using login with Google.
+     * 
      * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function logout() {
+        
         session_unset();
         header("Location: " . APPLICATION_URL . "/home/login");
     }

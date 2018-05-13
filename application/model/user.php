@@ -7,6 +7,39 @@
 class UserModel extends Model {
     
     /**
+     * @var string Name of field with creation date.
+     */
+    const FIELD_CREATED = 'created';
+    /**
+     * @var string Name of field e-mail.
+     */
+    const FIELD_G_EMAIL = 'g_email';
+    /**
+     * @var string Name of field first name.
+     */
+    const FIELD_G_FIRST_NAME = 'g_first_name';
+    /**
+     * @var string Name of field with Google ID.
+     */
+    const FIELD_G_ID = 'g_id';
+    /**
+     * @var string Name of field last name.
+     */
+    const FIELD_G_LAST_NAME = 'g_last_name';
+    /**
+     * @var string Name of field with group number.
+     */
+    const FIELD_GROUP_NUMBER = 'group_number';
+    /**
+     * @var string Name of field ID.
+     */
+    const FIELD_ID = 'id';
+    /**
+     * @var string Name of field with last modified date.
+     */
+    const FIELD_MODIFIED = 'modified';
+    
+    /**
      * @var string Key name for Google access token element.
      */
     const GOOGLE_ACCESS_TOKEN = 'accessToken';
@@ -66,27 +99,27 @@ class UserModel extends Model {
     public function updateUser(Google_Service_Plus_Person $googlePlusUser) {
         
         $userData = [
-            'g_email' => $googlePlusUser->emails[0]->value,
+            self::FIELD_G_EMAIL => $googlePlusUser->emails[0]->value,
         ];
         
-        if (!$this->getUserByField('g_email', $userData['g_email'])) {
+        if (!$this->getUserByField(self::FIELD_G_EMAIL, $userData[self::FIELD_G_EMAIL])) {
             //Prepare all data to save.
             $userData += [
-                'g_id' => $googlePlusUser->id,
-                'g_first_name' => $googlePlusUser->name->givenName,
-                'g_last_name' => $googlePlusUser->name->familyName,
-                'g_created' => date(DateTime::ATOM),
-                'g_modified' => date(DateTime::ATOM),
+                self::FIELD_G_ID => $googlePlusUser->id,
+                self::FIELD_G_FIRST_NAME => $googlePlusUser->name->givenName,
+                self::FIELD_G_LAST_NAME => $googlePlusUser->name->familyName,
+                self::FIELD_CREATED => date(DateTime::ATOM),
+                self::FIELD_MODIFIED => date(DateTime::ATOM),
             ];
             //Save new user.
             return $this->saveUser($userData);
         } else {
             //Prepare data to update.
             $userData += [
-                'g_id' => $googlePlusUser->id,
-                'g_first_name' => $googlePlusUser->name->givenName,
-                'g_last_name' => $googlePlusUser->name->familyName,
-                'g_modified' => date(DateTime::ATOM),
+                self::FIELD_G_ID => $googlePlusUser->id,
+                self::FIELD_G_FIRST_NAME => $googlePlusUser->name->givenName,
+                self::FIELD_G_LAST_NAME => $googlePlusUser->name->familyName,
+                self::FIELD_MODIFIED => date(DateTime::ATOM),
             ];
             //Update user data.
             return $this->updateUserData($userData);
@@ -108,17 +141,17 @@ class UserModel extends Model {
         $query = "UPDATE `" . DB_NAME . "`.`users_g` " . " SET ";
         //Add all values to update to query.
         foreach ($userData as $columnName => $value) {
-            $query .= "$columnName='$value', ";
+            $query .= "`$columnName` = '$value', ";
         }
         //Remove necessary colon at the and.
         $query = substr_replace($query, '', -2, 1);
-        $query .= "WHERE g_email ='" . $userData['g_email'] . "';";
+        $query .= "WHERE `" . self::FIELD_G_EMAIL . "` ='" . $userData[self::FIELD_G_EMAIL] . "';";
         
         $statement = $connection->query($query);
         
         if ($statement && $statement->rowCount() > 0) {
             //Get updated user ID.
-            $user = $this->getUserByField('g_email', $userData['g_email']);
+            $user = $this->getUserByField(self::FIELD_G_EMAIL, $userData[self::FIELD_G_EMAIL]);
             return $user->id;
         }
         
@@ -139,14 +172,14 @@ class UserModel extends Model {
         $connection = $this->getConnection();
         
         $query = "INSERT INTO `" . DB_NAME . "`.`users_g` " . 
-            "(g_id, g_email, g_first_name, g_last_name, g_created, g_modified) " . 
+            "(g_id, g_email, g_first_name, g_last_name, created, modified) " . 
             "VALUES (" .
-            "'" . $userData['g_id'] . "', " .
-            "'" . $userData['g_email'] . "', " .
-            "'" . $userData['g_first_name'] . "', " .
-            "'" . $userData['g_last_name'] . "', " .
-            "'" . $userData['g_created'] . "', " .
-            "'" . $userData['g_modified'] . "'" .
+            "'" . $userData[self::FIELD_G_ID] . "', " .
+            "'" . $userData[self::FIELD_G_EMAIL] . "', " .
+            "'" . $userData[self::FIELD_G_FIRST_NAME] . "', " .
+            "'" . $userData[self::FIELD_G_LAST_NAME] . "', " .
+            "'" . $userData[self::FIELD_CREATED] . "', " .
+            "'" . $userData[self::FIELD_MODIFIED] . "'" .
             ")";
         
         return $connection->query($query) ? $connection->lastInsertId() : false;
@@ -160,29 +193,12 @@ class UserModel extends Model {
         return $rows;
     }
     
-    /**
-     * @param string|int $user User for which get group.
-     * @return type User group.
-     */
-    public function getUserGroup($user) {
-        $connection = $connection = $this->getConnection();
-        $query = 'SELECT group_number FROM `' . DB_NAME . '`.`users` WHERE login = :login';
-        $statement = $connection->prepare($query);
-        $group = $statement->execute(
-            [
-                'login' => $user,
-            ]
-        );
-        
-        return $group;
-    }
-    
-    public function saveSettings($user) {
+    public function saveSettings($userId) {
         
         $group = filter_input(INPUT_POST, 'group');
         
         $connection = $connection = $this->getConnection();
-        $query = "UPDATE `" . DB_NAME . "`.`users` SET `group_number` = '$group' WHERE `login` = '$user'";
+        $query = "UPDATE `" . DB_NAME . "`.`users_g` SET `group_number` = '$group' WHERE `id` = '$userId'";
         $connection->query($query);
     }
 }

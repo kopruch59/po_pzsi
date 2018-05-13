@@ -31,12 +31,16 @@
                     <li class="nav-item">
                         <a <a tabindex="0" class="nav-link" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Informacje o koncie"  data-content=" 
                         <?php
-                        echo 'Login: ' . $_SESSION["test"] .
-                        ' Grupa: ' . $_SESSION["group"];
-                        ?>">Konto</a>
+                        if (!empty($_SESSION['googleUserData'])) {
+                            echo $_SESSION['googleUserData']['g_first_name'] . ' ' 
+                                    . $_SESSION['googleUserData']['g_last_name'] . ' ' 
+                                    . $_SESSION['googleUserData']['g_email'];
+                        }
+                        ?>
+                        ">Konto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="../home/logout">Wyloguj się</a>
+                        <a class="nav-link " href="../user/logout">Wyloguj się</a>
                     </li>
                 </ul>
             </div>

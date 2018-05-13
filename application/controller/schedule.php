@@ -35,7 +35,7 @@ class ScheduleController extends Controller {
      */
     public function action_index() {
         //Load default header.
-        $this->outputHeader_unlogged();
+        $this->outputHeader_logged();
         //Load this action views.
         require $this->dirViews . 'index.php';
         //Load default footer.
@@ -44,7 +44,7 @@ class ScheduleController extends Controller {
 
     public function action_insertSample() {
 
-        $this->outputHeader_unlogged();
+        $this->outputHeader_logged();
 
         echo $this->model->insertSampleToGoogleCalendar();
 

@@ -4,7 +4,7 @@ class ScheduleModel extends Model {
 
     public function getSchedule() {
         $connection = $this->getConnection();
-        $group = $_SESSION["group"];
+        $group = 'Grupa W3 C5 L8';
 
         $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
         $queryPrepare = $connection->prepare($query);

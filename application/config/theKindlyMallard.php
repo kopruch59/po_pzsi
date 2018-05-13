@@ -18,7 +18,7 @@ ini_set('display_errors', 1);
 /**
  * @var string Application main URL.
  */
-define('APPLICATION_URL', 'http://vvposchedule/');
+define('APPLICATION_URL', 'http://127.0.0.69/');
 /**
  * @var string Application URL with IP address.
  */
