@@ -23,6 +23,10 @@ class UserModel extends Model {
      */
     const FIELD_G_ID = 'g_id';
     /**
+     * @var string Name of field with URL to profile image.
+     */
+    const FIELD_G_IMAGE = 'g_image';
+    /**
      * @var string Name of field last name.
      */
     const FIELD_G_LAST_NAME = 'g_last_name';
@@ -38,6 +42,10 @@ class UserModel extends Model {
      * @var string Name of field with last modified date.
      */
     const FIELD_MODIFIED = 'modified';
+    /**
+     * @var string Name of field saving to Google.
+     */
+    const FIELD_SAVING_TO_GOOGLE = 'saving_to_google';
     
     /**
      * @var string Key name for Google access token element.
@@ -117,11 +125,13 @@ class UserModel extends Model {
     public function saveSettings($userId) {
         
         $group = filter_input(INPUT_POST, 'group');
+        $saving = filter_input(INPUT_POST, 'savingToGoogle') == 'on' ? 1 : 0;
         
         $userDataToUpdate = [
             self::FIELD_ID => $userId,
             self::FIELD_G_EMAIL => '',
             self::FIELD_GROUP_NUMBER => $group,
+            self::FIELD_SAVING_TO_GOOGLE => $saving,
         ];
         
         return $this->updateUserData($userDataToUpdate);
@@ -146,6 +156,7 @@ class UserModel extends Model {
             //Prepare all data to save.
             $userData += [
                 self::FIELD_G_ID => $googlePlusUser->id,
+                self::FIELD_G_IMAGE => $googlePlusUser->image->url,
                 self::FIELD_G_FIRST_NAME => $googlePlusUser->name->givenName,
                 self::FIELD_G_LAST_NAME => $googlePlusUser->name->familyName,
                 self::FIELD_CREATED => date(DateTime::ATOM),
@@ -157,6 +168,7 @@ class UserModel extends Model {
             //Prepare data to update.
             $userData += [
                 self::FIELD_G_ID => $googlePlusUser->id,
+                self::FIELD_G_IMAGE => $googlePlusUser->image->url,
                 self::FIELD_G_FIRST_NAME => $googlePlusUser->name->givenName,
                 self::FIELD_G_LAST_NAME => $googlePlusUser->name->familyName,
                 self::FIELD_MODIFIED => date(DateTime::ATOM),

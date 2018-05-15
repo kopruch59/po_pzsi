@@ -1,10 +1,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
-            <h2>Wybierz grupę:</h2>
+            <h2>Ustawienia</h2>
             <form action="" method="post" name="addForm">
                 <div id="group">
-                    <label for="group"></label>
+                    <label for="group">Wybierz grupę</label>
                     <select name="group">
                         <option value="">-- Wybierz --</option>
                         <?php
@@ -16,8 +16,16 @@
                     </select>
                     <div id="group_error"></div>
                 </div>
-                <input type="submit" class="btn-primary btn" value="Zapisz ustawienia" name="submit" />
-                <input type="hidden" value="1" name="save_settings" />
+                <div id="saving">
+                    <label for="savingToGoogle">Zapisywać wydarzenia do kalendarza Google?</label>
+                    <input type="checkbox" name="savingToGoogle"
+                        <?= (string)$user->saving_to_google != 1 ?: 'checked'; ?>
+                    >
+                </div>
+                <div class="inputs">
+                    <input type="submit" class="btn-primary btn" value="Zapisz ustawienia" name="submit" />
+                    <input type="hidden" value="1" name="save_settings" />
+                </div>
             </form>
         </div>
     </div>

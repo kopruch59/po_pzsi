@@ -197,6 +197,13 @@ class ScheduleModel extends Model {
      */
     protected function saveGoogleEvent(array $lessonData) {
         
+        //First check if user allowed to saving into his Google calendar.
+        if (!empty($_SESSION['googleUserData'])) {
+            if ($_SESSION['googleUserData']['saving_to_google'] != 1) {
+                return;
+            }
+        }
+        
         $startDateTime = new DateTime($lessonData['start_date'] . ' ' . $lessonData['start']);
         $endDateTime = new DateTime($lessonData['start_date'] . ' ' . $lessonData['end']);
         

@@ -29,18 +29,22 @@
                         <a class="nav-link" href="../schedule/add">Dodaj zajęcia</a>
                     </li>
                     <li class="nav-item">
-                        <a <a tabindex="0" class="nav-link" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Informacje o koncie"  data-content=" 
-                        <?php
-                        if (!empty($_SESSION['googleUserData'])) {
-                            echo $_SESSION['googleUserData']['g_first_name'] . ' ' 
-                                    . $_SESSION['googleUserData']['g_last_name'] . ' ' 
-                                    . $_SESSION['googleUserData']['g_email'];
-                        }
-                        ?>
-                        ">Konto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="../user/logout">Wyloguj się</a>
+                        <div id="account-info" class="dropdown">
+                            <img class="dropdown-toggle" id="dropdownMenuButton" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                alt="KONTO" src="<?= $_SESSION['googleUserData']['g_image'] ?>">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <?php
+                                if (!empty($_SESSION['googleUserData'])) {
+                                    $name = $_SESSION['googleUserData']['g_first_name'] . ' ' . $_SESSION['googleUserData']['g_last_name'];
+                                    $email = $_SESSION['googleUserData']['g_email'];
+                                    echo "<a class=\"dropdown-item\" href=\"../user/settings\">$email</a>";
+                                } 
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../user/logout">Wyloguj się</a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
