@@ -20,7 +20,7 @@
                 <div class="navbar-nav mr-auto"></div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../home/login">zaloguj się</a>
+                        <a class="nav-link" href="../user/login">Zaloguj się</a>
                     </li>
                 </ul>
             </div>

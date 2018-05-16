@@ -1,8 +1,6 @@
-<h1>User profile homepage</h1>
-<?php
-if (isset($_SESSION[UserController::KEY_GOOGLE_USER_DATA])) {
-    $googleUserProfile = $_SESSION[self::KEY_GOOGLE_USER_DATA];
-    echo 'Witaj ' .$googleUserProfile['name'];
-} else {
-    echo 'Niezalogowany';
-}
+<div class="container">
+    <h1>User profile homepage</h1>
+    <?php
+    echo !empty($userData) ? 'Witaj ' . $userData['g_first_name'] . ' ' . $userData['g_last_name'] : 'Niezalogowany';
+    ?>
+</div>

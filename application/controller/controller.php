@@ -64,7 +64,7 @@ abstract class Controller {
         require DIR_VIEW . 'templates' . DS . 'header_logged.php';
     }
     
-        protected function outputHeader_unlogged() {
+    protected function outputHeader_unlogged() {
         //Default header.
         require DIR_VIEW . 'templates' . DS . 'header_unlogged.php';
     }

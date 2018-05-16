@@ -1,9 +1,10 @@
 <?php
 
-session_start();
-
 class HomeModel extends Model {
 
+    /**
+     * @deprecated since version 0.7 Using login with Google.
+     */
     public function checkLogin() {
         try {
             $connection = $this->getConnection();
@@ -34,14 +35,16 @@ class HomeModel extends Model {
             $message = $e->getMessage();
         }
     }
-
-    public function Logout() {
-        try {
-            session_unset();
-            header("Location: " . APPLICATION_URL . "/home/login");
-        } catch (PDOException $e) {
-            $message = $e->getMessage();
-        }
+    
+    /**
+     * @deprecated since version 0.7 Using login with Google.
+     * 
+     * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function logout() {
+        
+        session_unset();
+        header("Location: " . APPLICATION_URL . "/home/login");
     }
 
 }
