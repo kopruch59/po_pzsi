@@ -1,4 +1,3 @@
-
 input 
 {
     margin-bottom: 10px;
@@ -135,11 +134,27 @@ thead > tr
 }
 
 .navbar {
-  overflow: hidden;
   background-color: #333;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 80;
   margin-bottom: 100px;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+.inputs {
+    margin-top: 25px;
+}
+
+#account-info img {
+    border-radius: 50%;
+}
+
+.dropdown-menu {
+    left: unset;
+    right: 0;
 }
