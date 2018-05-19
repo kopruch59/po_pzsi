@@ -8,12 +8,13 @@ $Date = new DateTime($week);
 $Date1 = new DateTime($week);
 $Date1->modify('+6 day');
 ?>
-<div id="interval" style="margin-top: 60px;">
+<div class="container">
+<div id="interval">
     <?php
     echo "<h3>" . $Date->format('d-m') . " - " . $Date1->format('d-m') . "</h3>";
     ?>
 </div>
-<div id="choice" style="margin-top: 65px;">
+<div id="choice">
     <form action="" method="post">
         <label for="monday">Wybierz początek tygodnia:</label>
         <select id="week" name="week" onchange="this.form.submit()" onchange="options[selectedIndex].value && self.location.reload(true)">
@@ -192,3 +193,4 @@ $Date1->modify('+6 day');
             </div>
         </div>
     </div>
+</div>

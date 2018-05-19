@@ -1,18 +1,19 @@
-<?php
-echo 'Dla konta gmail ' . $results->summary . '<br />';
+<div class="container">
+    <?php
+    echo 'Dla konta gmail ' . $results->summary . '<br />';
 
-if (count($items) != 0) {
+    if (count($items) != 0) {
 
-    echo "Nadchodzące wydarzenia:<br />";
-    
-    foreach ($items as $event) {
+        echo "Nadchodzące wydarzenia:<br />";
 
-        $start = $event->start->dateTime ?: $event->start->date;
+        foreach ($items as $event) {
 
-        echo $event->getSummary() . " ($start)<br />";
+            $start = $event->start->dateTime ?: $event->start->date;
+
+            echo $event->getSummary() . " ($start)<br />";
+        }
+    } else {
+        echo "Nie znaleziono wydarzeń<br />";
     }
-} else {
-    echo "Nie znaleziono wydarzeń<br />";
-}
-?>
-<br />
+    ?>
+</div>

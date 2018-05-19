@@ -6,13 +6,24 @@ class ScheduleController extends Controller {
      * @var ScheduleModel Default model for this controller. 
      */
     protected $model;
+    
+    /**
+     * @var UserModel User model instance.
+     */
+    protected $modelUser;
 
     public function __construct(bool $loadModel = true) {
         parent::__construct($loadModel);
+        
+        $this->modelUser = Model::loadModel('User');
+        
+        session_name(UserModel::SESSION_NAME);
+        session_id(UserModel::SESSION_ID_GOOGLE);
+        session_start();
 
-        if (!isset($_SESSION['zalogowany'])) {
+        if (!$this->modelUser->isLoggedIn()) {
 
-            header("Location: " . APPLICATION_URL . "/home/login");
+            header("Location: " . APPLICATION_URL . "user/login");
             exit();
         }
     }
@@ -24,19 +35,10 @@ class ScheduleController extends Controller {
      */
     public function action_index() {
         //Load default header.
-        $this->outputHeader_unlogged();
+        $this->outputHeader_logged();
         //Load this action views.
         require $this->dirViews . 'index.php';
         //Load default footer.
-        $this->outputFooter();
-    }
-
-    public function action_insertSample() {
-
-        $this->outputHeader_unlogged();
-
-        echo $this->model->insertSampleToGoogleCalendar();
-
         $this->outputFooter();
     }
 
@@ -64,7 +66,8 @@ class ScheduleController extends Controller {
     public function action_show() {
         $this->model->saveMonday([]);
         $this->outputHeader_logged();
-        $plan = $this->model->getSchedule();
+        $userData = $this->modelUser->getUserData();
+        $plan = $this->model->getSchedule($userData[UserModel::FIELD_GROUP_NUMBER]);
         $formmondays = $this->model->loadmondays();
         $addEvent = $this->model->addEvent();
         require $this->dirViews . 'view.php';
