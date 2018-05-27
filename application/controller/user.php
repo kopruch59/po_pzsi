@@ -35,22 +35,6 @@ class UserController extends Controller {
      * @var GoogleModel GoogleModel object. 
      */
     protected $modelGoogle;
-        
-    /**
-     * Checks if current user is logged in with Google.
-     * 
-     * @return boolean TRUE if user is logged in, FALSE otherwise.
-     * 
-     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
-     */
-    public static function isLoggedIn() {
-        //Information about user login are stored in $_SESSION variable.
-        if (isset($_SESSION[self::GOOGLE_ACCESS_TOKEN]) && !empty($_SESSION[self::GOOGLE_ACCESS_TOKEN])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     
     /**
      * Additional initialize Google model.
@@ -64,7 +48,11 @@ class UserController extends Controller {
         
         $this->modelGoogle = Model::loadModel('Google');
         
+        session_name(UserModel::SESSION_NAME);
+        session_id(UserModel::SESSION_ID_GOOGLE);
         session_start();
+        
+        empty($_SESSION[self::GOOGLE_ACCESS_TOKEN]) ?: $this->modelGoogle->client->setAccessToken($_SESSION[self::GOOGLE_ACCESS_TOKEN]);
     }
     
     /**
@@ -74,7 +62,11 @@ class UserController extends Controller {
      */
     public function action_index() {
         
-        $this->outputHeader_unlogged();
+        UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        
+        $userData = UserModel::getUserData();
+        
+        $this->outputHeader_logged();
         require $this->dirViews . 'index.php';
         $this->outputFooter();
     }
@@ -88,9 +80,9 @@ class UserController extends Controller {
      */
     public function action_login() {
         
-        if ($this->isLoggedIn()) {
+        if (UserModel::isLoggedIn()) {
             //User already logged in. Redirect to index.
-            header('Location: ' . APPLICATION_URL_IP . $this->name . DS . 'index');
+            header('Location: ' . APPLICATION_URL . $this->name . DS . 'index');
         }
         
         if (filter_input(INPUT_POST, self::KEY_LOGIN_METHOD) == self::VALUE_LOGIN_METHOD_GOOGLE) {
@@ -119,14 +111,18 @@ class UserController extends Controller {
             if ($this->modelGoogle->client->getAccessToken()) {
                 
                 $_SESSION[self::GOOGLE_ACCESS_TOKEN] = $authResonse['access_token'];
-                $_SESSION[self::KEY_GOOGLE_USER_DATA] = $this->modelGoogle->client->verifyIdToken();
+//                $_SESSION[self::KEY_GOOGLE_USER_DATA] = $this->modelGoogle->client->verifyIdToken();
+                
+                $userId = $this->model->updateUser($this->modelGoogle->plusService->people->get('me'));
+                
+                $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
                 
                 header('Location: ' . APPLICATION_URL . 'user/index');
             } else {
                 echo $authResonse['error_description'] . ' ' . $authResonse['error'];
             }
         } else {
-            $error_uri = APPLICATION_URL_IP . 'user/login';
+            $error_uri = APPLICATION_URL . 'user/login';
             header(
                 'Location: ' . filter_var($error_uri, FILTER_SANITIZE_URL),
                 true,
@@ -142,31 +138,38 @@ class UserController extends Controller {
      */
     public function action_logout() {
         
-        unset($_SESSION[self::GOOGLE_ACCESS_TOKEN]);
-        unset($_SESSION[self::KEY_GOOGLE_USER_DATA]);
         $this->modelGoogle->client->revokeToken();
-        session_destroy();
+        session_unset();
         
         $this->outputHeader_unlogged();
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
     }
-   public function action_settings()
-    {
-        if(isset($_SESSION["test"])) {
+    
+    /**
+     * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    public function action_settings() {
+        
+        UserModel::isLoggedIn() ?: header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        $userId = $_SESSION[self::KEY_GOOGLE_USER_DATA][UserModel::FIELD_ID];
+        
         $formSubmitted = filter_input(INPUT_POST, 'save_settings');
         if ($formSubmitted == 1) {
-            $this->model->saveSettings($_SESSION["test"]);
+            if ($this->model->saveSettings($userId) != false) {
+                $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
+            }
         }
-    $userGroup = $this->model->getUserGroup($_SESSION["test"]);
-        }
-        $groups= $this->model->fetchGroup();
+        
+        $user = $this->model->getUserByField(UserModel::FIELD_ID, $userId);
+        $userGroup = $user->group_number;
+        $groups = $this->model->fetchGroup();
 
-        $this->outputHeader_unlogged();
+        $this->outputHeader_logged();
         require $this->dirViews . 'settings.php';
         $this->outputFooter();
     }
-
+    
     /**
      * Method provide user to log in with Google.
      * Redirects to Google's auth URL.
