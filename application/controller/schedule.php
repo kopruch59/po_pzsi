@@ -64,6 +64,17 @@ class ScheduleController extends Controller {
      * @author Tomasz <t.kusiek@gmail.com>
      */
     public function action_show() {
+        //Check if user changed date and save in cookie
+        if (filter_input(INPUT_POST, 'week')) {
+            // 86400 = 1 day
+            setcookie(
+                'studentSchedule_scheduleWeek', 
+                (string)filter_input(INPUT_POST, 'week'), 
+                time() + (86400 * 30), 
+                "/"
+            );
+        }
+        
         $this->model->saveMonday([]);
         $this->outputHeader_logged();
         $userData = $this->modelUser->getUserData();
