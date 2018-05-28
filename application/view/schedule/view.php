@@ -1,9 +1,12 @@
 <?php
-if (!isset($_POST['week'])) {
-    $week = date('Y-m-d', time());
-} else {
+if (isset($_POST['week'])) {
     $week = $_POST['week'];
+} else if (isset($_COOKIE['studentSchedule_scheduleWeek'])) {
+    $week = $_COOKIE['studentSchedule_scheduleWeek'];
+} else {
+    $week = date('Y-m-d', time());
 }
+
 $Date = new DateTime($week);
 $Date1 = new DateTime($week);
 $Date1->modify('+6 day');
@@ -20,7 +23,8 @@ $Date1->modify('+6 day');
         <select id="week" name="week" onchange="this.form.submit()" onchange="options[selectedIndex].value && self.location.reload(true)">
             <?php
             foreach ($formmondays['dates'] as $row) {
-                echo "<option value='" . $row['date'] . "'>" . 'Tydz ' . $row['week_number'] . ': ' . $row['date'] . "</option>";
+                $selected = ($row['date'] == $week) ? 'selected' : '';
+                echo "<option value='" . $row['date'] . "' " . $selected . ">" . 'Tydz ' . $row['week_number'] . ': ' . $row['date'] . "</option>";
             }
             ?>
         </select>
@@ -42,7 +46,6 @@ $Date1->modify('+6 day');
             foreach ($plan as $key => $lesson) {
                 if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
-                    '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
                     '<span class="time">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
                     '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
                     '<span>' . $lesson['lesson'] . '</span><br />' .
@@ -69,7 +72,6 @@ $Date1->modify('+6 day');
             foreach ($plan as $key => $lesson) {
                 if (($lesson['day'] == "Wtorek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
-                    '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
                     '<span class="time">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
                     '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
                     '<span>' . $lesson['lesson'] . '</span><br />' .
@@ -96,7 +98,6 @@ $Date1->modify('+6 day');
             foreach ($plan as $key => $lesson) {
                 if (($lesson['day'] == "Środa") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
-                    '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
                     '<span class="time">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
                     '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
                     '<span>' . $lesson['lesson'] . '</span><br />' .
@@ -123,7 +124,6 @@ $Date1->modify('+6 day');
             foreach ($plan as $key => $lesson) {
                 if (($lesson['day'] == "Czwartek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
-                    '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
                     '<span class="time">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
                     '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
                     '<span>' . $lesson['lesson'] . '</span><br />' .
@@ -150,7 +150,6 @@ $Date1->modify('+6 day');
             foreach ($plan as $key => $lesson) {
                 if (($lesson['day'] == "Piątek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
                     echo '<tr><td>' .
-                    '<div id="spanBold"><span class="startDateSpan">' . $lesson['start_date'] . '</span></div>' .
                     '<span class="time">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
                     '<span class="float-right-span">' . $lesson['room'] . '</span><br />' .
                     '<span>' . $lesson['lesson'] . '</span><br />' .
