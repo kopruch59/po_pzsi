@@ -1,24 +1,27 @@
 <?php
 
 class ScheduleModel extends Model {
-    
+
     /**
      * @var string Name of lesson type exercise. 
      */
     const LESSON_TYPE_EXERCISE = 'Ćwiczenia';
+
     /**
      * @var string Name of lesson type laboratory.
      */
     const LESSON_TYPE_LABORATORY = 'Laboratorium';
+
     /**
      * @var string Name of lesson type lecture.
      */
     const LESSON_TYPE_LECTURE = 'Wykład';
+
     /**
      * @var string Name of lesson type project.
      */
     const LESSON_TYPE_PROJECT = 'Projekt';
-    
+
     /**
      * @var GoogleModel An instance of GoogleModel.
      */
@@ -26,11 +29,11 @@ class ScheduleModel extends Model {
 
     public function __construct() {
         parent::__construct();
-        
+
         include DIR_MODEL . 'google.php';
         $this->modelGoogle = GoogleModel::getInstance();
     }
-    
+
     /**
      * Gets schedule for given group.
      * 
@@ -40,7 +43,7 @@ class ScheduleModel extends Model {
      * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     public function getSchedule(string $group) {
-        
+
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
@@ -63,7 +66,7 @@ class ScheduleModel extends Model {
         $start_date = filter_input(INPUT_POST, 'start_date');
         $room = filter_input(INPUT_POST, 'room');
         $periodicity = filter_input(INPUT_POST, 'periodicity');
-        
+
         $lessonData = [
             'lesson' => $subject_name,
             'start' => $start_time,
@@ -99,45 +102,11 @@ class ScheduleModel extends Model {
                 $counter = $newDate;
             }
         } else if ($periodicity == "Co tydzień") {
-            $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
-            !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
-            $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
-            $expire = $connection->query($instruction2);
-            $row = $expire->fetch();
-            $expireData = $row["expire"];
-            $counter = "";
-            $Date = new DateTime($start_date);
-            while ($counter <= $expireData) {
-                $Date->add(new DateInterval('P7D'));
-                $newDate = $Date->format('Y-m-d');
-                $counter = $newDate;
-                if ($counter <= $expireData) {
-                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
-                    $lessonData['start_date'] = $newDate;
-                    !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
-                }
-            }
+            $countDays = 7;
+            $this->setPeriodicity($countDays, $start_time, $end_time, $subject_name, $teacher_name, $day, $type, $group, $start_date, $room, $lessonData);
         } else if ($periodicity == "Co 2 tygodnie") {
-            $connection = $this->getConnection();
-            $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
-            !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
-            $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
-            $expire = $connection->query($instruction2);
-            $row = $expire->fetch();
-            $expireData = $row["expire"];
-            $counter = "";
-            $Date = new DateTime($start_date);
-            while ($counter <= $expireData) {
-                $Date->add(new DateInterval('P14D'));
-                $newDate = $Date->format('Y-m-d');
-                $counter = $newDate;
-                if ($counter <= $expireData) {
-                    $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
-                    $lessonData['start_date'] = $newDate;
-                    !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
-                }
-            }
+            $countDays = 14;
+            $this->setPeriodicity($countDays, $start_time, $end_time, $subject_name, $teacher_name, $day, $type, $group, $start_date, $room, $lessonData);
         } else if ($periodicity == "Niestandardowe") {
             $imputValue = filter_input(INPUT_POST, 'input_days_value');
             $custom_periodicity_type = filter_input(INPUT_POST, 'custom_periodicity_type');
@@ -176,7 +145,29 @@ class ScheduleModel extends Model {
             }
         }
     }
-
+    
+public function setPeriodicity($countDays, $start_time, $end_time, $subject_name, $teacher_name, $day, $type, $group, $start_date, $room, $lessonData) {
+        $connection = $this->getConnection();
+        $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
+        !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
+        $instruction2 = "SELECT expire FROM `" . DB_NAME . "`.groups WHERE name = '$group'";
+        $expire = $connection->query($instruction2);
+        $row = $expire->fetch();
+        $expireData = $row["expire"];
+        $counter = "";
+        $Date = new DateTime($start_date);
+        while ($counter <= $expireData) {
+            $Date->add(new DateInterval('P' . $countDays . 'D'));
+            $newDate = $Date->format('Y-m-d');
+            $counter = $newDate;
+            if ($counter <= $expireData) {
+                $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$newDate', room='$room'";
+                $lessonData['start_date'] = $newDate;
+                !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
+            }
+        }
+    }
+    
     public function loadData() {
         $formData = [];
         $formData['lessons'] = $this->fetchLesson();
@@ -187,7 +178,7 @@ class ScheduleModel extends Model {
         $formData['room'] = $this->fetchRoom();
         return $formData;
     }
-    
+
     /**
      * Saves given lesson data to Google Calendar.
      * 
@@ -196,20 +187,20 @@ class ScheduleModel extends Model {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     protected function saveGoogleEvent(array $lessonData) {
-        
+
         //First check if user allowed to saving into his Google calendar.
         if (!empty($_SESSION['googleUserData'])) {
             if ($_SESSION['googleUserData']['saving_to_google'] != 1) {
                 return;
             }
         }
-        
+
         $startDateTime = new DateTime($lessonData['start_date'] . ' ' . $lessonData['start']);
         $endDateTime = new DateTime($lessonData['start_date'] . ' ' . $lessonData['end']);
-        
+
         $lessonData['startDateTime'] = $startDateTime->format(DateTime::RFC3339);
         $lessonData['endDateTime'] = $endDateTime->format(DateTime::RFC3339);
-                
+
         $this->modelGoogle->insertEventIntoGoogleCalendar($lessonData);
     }
 
@@ -252,7 +243,7 @@ class ScheduleModel extends Model {
         $rows = $query->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-    
+
     private function fetchRoom() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.rooms";
@@ -292,7 +283,7 @@ class ScheduleModel extends Model {
             $queryPrepare->execute();
         }
     }
-    
+
     /**
      * Returns color which should be set in Google Calendar Evend for specified lesson type.<br>
      * Colors must refer to colors using by Google.
@@ -303,7 +294,7 @@ class ScheduleModel extends Model {
      * @author theKindlyMallard <the.kindly.mallard@gmail.com>
      */
     private function getLessonColor(string $lessonType) {
-        
+
         switch ($lessonType) {
             case self::LESSON_TYPE_EXERCISE:
                 $color = '#46d6db';
@@ -321,7 +312,8 @@ class ScheduleModel extends Model {
                 $color = '#dbadff';
                 break;
         }
-        
+
         return $color;
     }
+
 }

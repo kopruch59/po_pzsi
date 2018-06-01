@@ -117,7 +117,7 @@ class UserController extends Controller {
                 
                 $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
                 
-                header('Location: ' . APPLICATION_URL . 'user/index');
+                header('Location: ' . APPLICATION_URL . 'schedule/show');
             } else {
                 echo $authResonse['error_description'] . ' ' . $authResonse['error'];
             }

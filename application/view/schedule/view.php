@@ -12,7 +12,7 @@ $Date1 = new DateTime($week);
 $Date1->modify('+6 day');
 ?>
 <div class="container">
-<div id="interval">
+<div class="interval" id="interval">
     <?php
     echo "<h3>" . $Date->format('d-m') . " - " . $Date1->format('d-m') . "</h3>";
     ?>
@@ -34,7 +34,7 @@ $Date1->modify('+6 day');
 <div style="clear:both;"></div>
 <div id="tabels">
     <div class="table_left" id="Monday">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>
@@ -60,7 +60,7 @@ $Date1->modify('+6 day');
         </table>
     </div>
     <div class="table_left" id="Tuesday">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>
@@ -86,7 +86,7 @@ $Date1->modify('+6 day');
         </table>
     </div>
     <div class="table_left" id="Wednesday">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>
@@ -112,7 +112,7 @@ $Date1->modify('+6 day');
         </table>
     </div>
     <div class="table_left" id="Thursday">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>
@@ -138,7 +138,7 @@ $Date1->modify('+6 day');
         </table>
     </div>
     <div class="table_left" id="Friday">
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>

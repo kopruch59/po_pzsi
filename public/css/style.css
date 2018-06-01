@@ -23,7 +23,6 @@ input
 
 table
 {
-    border: 1px solid black;
     text-align: left;
     background-color: #efefef;
     margin-top: 10px;
@@ -31,15 +30,28 @@ table
     width: 100%;
 }
 
-tr
-{
-    border: 1px solid black;
-}
-
 thead > tr
 {
     text-align: center;
     background-color: lightgray;
+    border-top: 1px solid grey;
+}
+
+.table_left:first-of-type thead > tr {
+    border-left: 1px solid grey;
+}
+
+.table thead > tr {
+    border-right: 1px solid grey;
+}
+
+tbody > tr {
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.table_left:first-of-type tbody > tr {
+    border-left: 1px solid grey;
 }
 
 .float-right-span
@@ -123,6 +135,9 @@ thead > tr
     margin-bottom: 2%;
     margin-top: 2%;
 }
+#eventButton img {
+    cursor: pointer;
+}
 
 .eventsHeader {
     font-weight: bold;
@@ -139,11 +154,10 @@ thead > tr
   top: 0;
   width: 100%;
   z-index: 80;
-  margin-bottom: 100px;
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .inputs {
@@ -157,4 +171,77 @@ thead > tr
 .dropdown-menu {
     left: unset;
     right: 0;
+}
+
+.table td, .table th {
+    border-left: 1px solid;
+    border-top: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+table {
+    border-collapse: separate;
+}
+
+#main-label-v1 {
+    background-image: url(/public/pictures/headerMain.png);
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    width: 800px;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.carousel-control-prev-icon {
+    background-image: url(https://image.flaticon.com/icons/svg/60/60965.svg)
+}
+
+.carousel-control-next-icon {
+    background-image: url(https://image.flaticon.com/icons/svg/60/60758.svg)
+}
+
+.carousel-item {
+    height: 55vh;
+}
+.carousel-caption {
+    color: black;
+}
+.homeBanner {
+    box-shadow: 5px 5px 10px; 
+    color: black; 
+    height: 30%;
+}
+
+.homeContent{
+    padding:20px;
+}
+
+.homeTextContent {
+    margin-bottom: 0px;
+}
+
+loginBtn {
+    margin-bottom: 0px;
+}
+
+#carouselExampleIndicators {
+    margin-bottom: 20px;
+}
+
+.addHeader {
+    margin-top: 10px;
 }
