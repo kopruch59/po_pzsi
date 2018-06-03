@@ -69,7 +69,7 @@ tbody > tr {
     .table_left
     {
         float:left;
-        max-width: 19%;
+        max-width: 20%;
         display: block;
     }
 }
@@ -139,21 +139,21 @@ tbody > tr {
     cursor: pointer;
 }
 
-.eventsHeader {
+.lessonHeader {
     font-weight: bold;
 }
 
 #spanBold {
-    font-weight: bold;
+    // font-weight: bold;
     text-align: center;
 }
 
 .navbar {
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 80;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 80;
 }
 
 .container {
@@ -197,13 +197,13 @@ table {
 }
 
 .carousel-item {
-  height: 65vh;
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .carousel-control-prev-icon {
@@ -244,4 +244,37 @@ loginBtn {
 
 .addHeader {
     margin-top: 10px;
+}
+
+#choseWeek {
+    width: 79%;
+}
+
+body {
+    font-size: 0.9rem;
+}
+
+.dateInterval {
+    width: 100%;
+    margin-bottom: 0px;
+    margin-left: 70px;
+    margin-bottom: 5px;
+}
+
+#week {
+    margin-top: 10px;
+}
+
+@media screen and (max-width:1000px) {
+    #weekLabel {
+        margin-top: 80px;
+    }
+}
+
+.fa-arrow-left:before {
+    font-size: 20px;
+}
+
+.fa-arrow-right:before {
+    font-size: 20px;
 }

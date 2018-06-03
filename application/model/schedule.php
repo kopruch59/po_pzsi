@@ -272,7 +272,7 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
     }
 
     function addEvent() {
-        if (isset($_SESSION['subbmitedBtn'])) {
+        if (isset($variable)) {
             $eventName = filter_input(INPUT_POST, 'event-name', FILTER_SANITIZE_STRING);
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             $connection = $this->getConnection();
@@ -281,6 +281,7 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
             $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
             $queryPrepare = $connection->prepare($query);
             $queryPrepare->execute();
+            unset($_SESSION['subbmitedBtn']);
         }
     }
 
