@@ -114,14 +114,15 @@ tbody > tr {
 #interval
 {
     float:left;
-    width: 50%;
+    width: 350px;
     text-align: right;
+    margin-left: 34%;
 }
 
 #choice
 {
     float:left;
-    width: 50%;
+    width: 250px;
     text-align: right;
 }
 
@@ -247,18 +248,21 @@ loginBtn {
 }
 
 #choseWeek {
-    width: 79%;
+    width: 250px;
 }
 
 body {
     font-size: 0.9rem;
 }
 
+#interval.interval {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dateInterval {
-    width: 100%;
-    margin-bottom: 0px;
-    margin-left: 70px;
-    margin-bottom: 5px;
+    margin: 0px 10px;
 }
 
 #week {
@@ -267,7 +271,21 @@ body {
 
 @media screen and (max-width:1000px) {
     #weekLabel {
-        margin-top: 80px;
+        margin-top: 10%;
+
+    }
+
+    #choseWeek {
+        height: 
+    }
+
+    #interval {
+        margin-left: 5%;
+    }
+
+    #choice
+    {
+        margin-left: 10%;
     }
 }
 
@@ -277,4 +295,8 @@ body {
 
 .fa-arrow-right:before {
     font-size: 20px;
+}
+
+#divToHide {
+    display: none;
 }

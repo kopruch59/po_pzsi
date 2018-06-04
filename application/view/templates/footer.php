@@ -12,5 +12,6 @@
 <script type="text/javascript" src="../public/scripts/focusCurrentDay.js"></script>
 <script type="text/javascript" src="../public/scripts/week_choose.js"></script>
 <script type="text/javascript" src="../public/scripts/arrows.js"></script>
+<script type="text/javascript" src="../public/scripts/BSmodalAddEvent.js"></script>
 </body>
 </html>

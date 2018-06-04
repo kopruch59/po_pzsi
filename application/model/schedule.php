@@ -54,6 +54,11 @@ class ScheduleModel extends Model {
         return $schedule;
     }
 
+    /**
+     * Saves lesson to database with choosen periodicity.
+     * 
+     * @param array $formData - loaded data from database.
+     */
     public function saveSchedule(array $formData) {
 
         $start_time = filter_input(INPUT_POST, 'start_time');
@@ -145,8 +150,11 @@ class ScheduleModel extends Model {
             }
         }
     }
-    
-public function setPeriodicity($countDays, $start_time, $end_time, $subject_name, $teacher_name, $day, $type, $group, $start_date, $room, $lessonData) {
+
+    /**
+     * Functions sets Periodicy.
+     */
+    public function setPeriodicity($countDays, $start_time, $end_time, $subject_name, $teacher_name, $day, $type, $group, $start_date, $room, $lessonData) {
         $connection = $this->getConnection();
         $instruction = "INSERT INTO `" . DB_NAME . "`.plan SET lesson='$subject_name', start='$start_time', end='$end_time',teacher_name='$teacher_name',day='$day',type='$type',group_number='$group', start_date='$start_date', room='$room'";
         !$connection->query($instruction) ?: $this->saveGoogleEvent($lessonData);
@@ -167,7 +175,12 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
             }
         }
     }
-    
+
+    /**
+     * Loading data to $formData[].
+     * 
+     * @return required data for add-form from database.
+     */
     public function loadData() {
         $formData = [];
         $formData['lessons'] = $this->fetchLesson();
@@ -204,6 +217,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         $this->modelGoogle->insertEventIntoGoogleCalendar($lessonData);
     }
 
+    /**
+     * Fetching informations about lessons to $rows.
+     * 
+     * @return informations about lessons from database.
+     */
     private function fetchLesson() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.lessons";
@@ -212,6 +230,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Fetching informations about days to $rows.
+     * 
+     * @return informations about days from database.
+     */
     private function fetchDay() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.days";
@@ -220,6 +243,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Fetching informations about types to $rows.
+     * 
+     * @return informations about types from database.
+     */
     private function fetchType() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.type";
@@ -228,6 +256,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Fetching informations about groups to $rows.
+     * 
+     * @return informations about groups from database.
+     */
     private function fetchGroup() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.groups";
@@ -236,6 +269,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Fetching informations about teachers to $rows.
+     * 
+     * @return informations about teachers from database.
+     */
     private function fetchTeacher() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.teachers";
@@ -244,6 +282,11 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Fetching informations about rooms to $rows.
+     * 
+     * @return informations about rooms from database.
+     */
     private function fetchRoom() {
         $connection = $this->getConnection();
         $instruction = "SELECT name FROM `" . DB_NAME . "`.rooms";
@@ -252,13 +295,20 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
-    //Table of Mondays in view
+    /**
+     * Loading all weeks to $formmondays 
+     */
     public function loadmondays() {
         $formmondays = [];
         $formmondays['dates'] = $this->fetchMondaydate();
         return $formmondays;
     }
 
+    /**
+     * Getting information from database and save to $rows.
+     * 
+     * @return all weeks.
+     */
     private function fetchMondaydate() {
         $connection = $this->getConnection();
         $instruction = "SELECT * FROM `" . DB_NAME . "`.mondays";
@@ -267,16 +317,28 @@ public function setPeriodicity($countDays, $start_time, $end_time, $subject_name
         return $rows;
     }
 
+    /**
+     * Saves all weeks to $date.
+     * 
+     * @param array $formmondays
+     */
     public function saveMonday(array $formmondays) {
         $date = filter_input(INPUT_POST, 'date');
     }
 
+    /**
+     * Saves events to database.
+     * 
+     * @author skomando <szymonkomander@gmail.com>
+     */
     function addEvent() {
-        if (isset($variable)) {
+        if (!is_null(filter_input(INPUT_POST, 'eventAdd', FILTER_SANITIZE_STRING))) {
+
             $eventName = filter_input(INPUT_POST, 'event-name', FILTER_SANITIZE_STRING);
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+            $idPlan = filter_input(INPUT_POST, 'eventID', FILTER_SANITIZE_STRING);
+
             $connection = $this->getConnection();
-            $idPlan = $_SESSION['subbmitedBtn'];
 
             $query = "INSERT INTO `" . DB_NAME . "`.events SET name='$eventName', description='$description', id_plan='$idPlan'";
             $queryPrepare = $connection->prepare($query);

@@ -52,7 +52,7 @@ $Date1->modify('+6 day');
                         '<span>' . $lesson['teacher_name'] . '</span>' .
                         '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                         '<div id="spanBold"><span>Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" value="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
+                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
                         settype($_SESSION['subbmitedBtn'], "integer");
                     }
                 }
@@ -78,7 +78,7 @@ $Date1->modify('+6 day');
                         '<span>' . $lesson['teacher_name'] . '</span>' .
                         '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                         '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" value="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
+                        '<div id="eventButton"><img id="eventImg2" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
                         settype($_SESSION['subbmitedBtn'], "integer");
                     }
                 }
@@ -104,7 +104,7 @@ $Date1->modify('+6 day');
                         '<span>' . $lesson['teacher_name'] . '</span>' .
                         '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                         '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" value="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
+                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
                         settype($_SESSION['subbmitedBtn'], "integer");
                     }
                 }
@@ -130,7 +130,7 @@ $Date1->modify('+6 day');
                         '<span>' . $lesson['teacher_name'] . '</span>' .
                         '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                         '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" value="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
+                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
                         settype($_SESSION['subbmitedBtn'], "integer");
                     }
                 }
@@ -156,7 +156,7 @@ $Date1->modify('+6 day');
                         '<span>' . $lesson['teacher_name'] . '</span>' .
                         '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
                         '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" value="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
+                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
                         settype($_SESSION['subbmitedBtn'], "integer");
                     }
                 }
@@ -175,6 +175,10 @@ $Date1->modify('+6 day');
                     </div>
                     <div class="modal-body" align="left">
                         <form action="" method="POST" name="addEventForm">
+                            <div id="divToHide" class="form-group">
+                                <label for="recipient-name" class="col-form-label">ID wydarzenia:</label>
+                                <input  id="eventID" type="text" class="form-control" name="eventID" required="">
+                            </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Nazwa wydarzenia:</label>
                                 <input type="text" class="form-control" name="event-name" required="">
@@ -184,7 +188,7 @@ $Date1->modify('+6 day');
                                 <textarea class="form-control" id="description" name="description" required=""></textarea>
                             </div>
                             <div class="modal-footer" align="right">
-                                <input type="submit" class="btn btn-success" value="Dodaj">
+                                <input type="submit" class="btn btn-success" name="eventAdd" value="Dodaj">
                                 <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Zamknij">
                             </div>
                         </form>
@@ -193,10 +197,3 @@ $Date1->modify('+6 day');
             </div>
         </div>
     </div>
-    <script>
-        $('#eventImg').click(function () {
-            var value = document.getElementById("eventImg").value;
-            
-        });
-    </script>
- 
