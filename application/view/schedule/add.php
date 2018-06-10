@@ -1,7 +1,7 @@
 <div class="container" style="margin-top: 60px;">
     <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
-            <h2>Wprowadź dane dotyczące planu:</h2>
+            <h2 class="addHeader">Wprowadź dane dotyczące planu:</h2>
             <form action="" method="post" name="addForm">
                 <div id="subject_name">
                     <label for="lessons">Wprowadź nazwę przedmiotu:</label>

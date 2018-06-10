@@ -81,8 +81,7 @@ class ScheduleController extends Controller {
         $plan = $this->model->getSchedule($userData[UserModel::FIELD_GROUP_NUMBER]);
         $formmondays = $this->model->loadmondays();
         $addEvent = $this->model->addEvent();
-        require $this->dirViews . 'view.php';
-        unset($_SESSION['subbmitedBtn']);
+        require $this->dirViews . 'view.php';   
         $this->outputFooter();
     }
 

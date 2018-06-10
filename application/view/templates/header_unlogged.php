@@ -9,7 +9,7 @@
     </head>
     <body class="text-center" onload="focusCurrentDay()">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="../home/index">
+            <a class="navbar-brand" href="../user/login">
                 <img src="https://t4.ftcdn.net/jpg/01/09/28/51/240_F_109285174_dYigK3bMKNbnMVg3qDLDCu4qUhwYPc3s.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Kalendarz studencki
             </a>
@@ -20,7 +20,14 @@
                 <div class="navbar-nav mr-auto"></div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../user/login">Zaloguj się</a>
+                        <form name="loginWithGoogle" action="" method="POST">
+                            <input
+                                type="hidden"
+                                name="<?= UserController::KEY_LOGIN_METHOD ?>"
+                                value="<?= UserController::VALUE_LOGIN_METHOD_GOOGLE ?>"
+                                />
+                            <input type="submit" class="btn btn-primary loginBtn" value="Zaloguj się" />
+                        </form>
                     </li>
                 </ul>
             </div>

@@ -1,17 +1,17 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
 
-onunload = function()
+onunload = function ()
 {
-	var week = document.getElementById('week');
-	self.name = 'weekidx' + week.selectedIndex;
+    var week = document.getElementById('week');
+    self.name = 'weekidx' + week.selectedIndex;
 }
 
-onload = function()
+onload = function ()
 {
-	var idx, week = document.getElementById('week');
-	week.selectedIndex = (idx = self.name.split('weekidx')) ?	idx[1] : 0;
+    var idx, week = document.getElementById('week');
+    week.selectedIndex = (idx = self.name.split('weekidx')) ? idx[1] : 0;
 }
 
 
