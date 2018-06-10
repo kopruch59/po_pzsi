@@ -141,6 +141,9 @@ class UserController extends Controller {
         $this->modelGoogle->client->revokeToken();
         session_unset();
         
+        //New business rule.
+        header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
+        
         $this->outputHeader_unlogged();
         require $this->dirViews . 'logout.php';
         $this->outputFooter();
