@@ -5,7 +5,7 @@
             <form action="" method="post" name="addForm">
                 <div id="group">
                     <label for="group">Wybierz grupę</label>
-                    <select name="group">
+                    <select class="form-control groupSelect" name="group">
                         <option value="">-- Wybierz --</option>
                         <?php
                         foreach ($groups as $group) {

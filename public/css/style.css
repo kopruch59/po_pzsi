@@ -162,7 +162,7 @@ tbody > tr {
 }
 
 .inputs {
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 #account-info img {
@@ -299,4 +299,13 @@ body {
 
 #divToHide {
     display: none;
+}
+
+.nav-link {
+    font-size: 16px;
+}
+
+.groupSelect {
+    width: 50%;
+    margin-bottom:10px;
 }
