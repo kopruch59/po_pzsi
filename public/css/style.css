@@ -64,12 +64,27 @@ tbody > tr {
     padding-right: 10px;
 }
 
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items:  center;    
+}
+
+.event-header i {
+    color: lightgreen;
+}
+
+.event-header i,
+.events li {
+    cursor: pointer;
+}
+
 @media screen and (min-width:1000px) 
 {
     .table_left
     {
         float:left;
-        max-width: 20%;
+        width: 20%;
         display: block;
     }
 }
@@ -79,7 +94,7 @@ tbody > tr {
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
-    width: 80%;
+    font-size: 1rem;
 }
 
 #error_message {
@@ -114,9 +129,7 @@ tbody > tr {
 #interval
 {
     float:left;
-    width: 350px;
     text-align: right;
-    margin-left: 34%;
 }
 
 #choice
@@ -145,7 +158,6 @@ tbody > tr {
 }
 
 #spanBold {
-    // font-weight: bold;
     text-align: center;
 }
 
@@ -247,10 +259,6 @@ loginBtn {
     margin-top: 10px;
 }
 
-#choseWeek {
-    width: 250px;
-}
-
 body {
     font-size: 0.9rem;
 }
@@ -275,10 +283,6 @@ body {
 
     }
 
-    #choseWeek {
-        height: 
-    }
-
     #interval {
         margin-left: 5%;
     }
@@ -286,6 +290,10 @@ body {
     #choice
     {
         margin-left: 10%;
+    }
+    
+    .row-filler {
+        display: none;
     }
 }
 

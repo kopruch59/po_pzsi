@@ -42,7 +42,7 @@
                                 if (!empty($_SESSION['googleUserData'])) {
                                     $name = $_SESSION['googleUserData']['g_first_name'] . ' ' . $_SESSION['googleUserData']['g_last_name'];
                                     $email = $_SESSION['googleUserData']['g_email'];
-                                    echo "<a class=\"dropdown-item\" >Zalogowany jako: </br> <b>$name</b> </br> $email</a>";
+                                    echo "<a class=\"dropdown-item disabled\" >Zalogowany jako: </br> <b>$name</b> </br> $email</a>";
                                 }
                                 ?>
                                 <div class="dropdown-divider"></div>

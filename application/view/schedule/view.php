@@ -12,23 +12,26 @@ $Date1 = new DateTime($week);
 $Date1->modify('+6 day');
 ?>
 <div class="container">
-    <div class="interval" id="interval">
-        <?php
-        echo "<i id='leftArrow' type='button' class='fas fa-arrow-left'></i>" . "<h3 class='dateInterval'>" . $Date->format('d-m') . " - " . $Date1->format('d-m') . "</h3>" . "<i id='rightArrow' type='button' class='fas fa-arrow-right'></i>";
-        ?>
-    </div>
-    <div id="choice">
-        <form id="choseWeek" action="" method="post">
-            <label id="weekLabel">Tydzień:</label>
-            <select id="week" name="week" onchange="this.form.submit()" onchange="options[selectedIndex].value && self.location.reload(true)">
-                <?php
-                foreach ($formmondays['dates'] as $row) {
-                    $selected = ($row['date'] == $week) ? 'selected' : '';
-                    echo "<option value='" . $row['date'] . "' " . $selected . ">" . 'Tydz ' . $row['week_number'] . ': ' . $row['date'] . "</option>";
-                }
-                ?>
-            </select>
-        </form>
+    <div class="row">
+        <div class="col-sm row-filler"></div>
+        <div class="interval col-sm" id="interval">
+            <?php
+            echo "<i id='leftArrow' type='button' class='fas fa-arrow-left'></i>" . "<h3 class='dateInterval'>" . $Date->format('d-m') . " - " . $Date1->format('d-m') . "</h3>" . "<i id='rightArrow' type='button' class='fas fa-arrow-right'></i>";
+            ?>
+        </div>
+        <div id="choice" class="col-sm">
+            <form id="choseWeek" action="" method="post">
+                <label id="weekLabel">Tydzień:</label>
+                <select id="week" name="week" onchange="this.form.submit()" onchange="options[selectedIndex].value && self.location.reload(true)">
+                    <?php
+                    foreach ($formmondays['dates'] as $row) {
+                        $selected = ($row['date'] == $week) ? 'selected' : '';
+                        echo "<option value='" . $row['date'] . "' " . $selected . ">" . 'Tydz ' . $row['week_number'] . ': ' . $row['date'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </form>
+        </div>
     </div>
 
     <div style="clear:both;"></div>
@@ -42,21 +45,48 @@ $Date1->modify('+6 day');
                         </th>
                     </tr>
                 </thead>
-                <?php
-                foreach ($plan as $key => $lesson) {
-                    if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
-                        echo '<tr><td>' .
-                        '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
-                        '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
-                        '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
-                        '<span>' . $lesson['teacher_name'] . '</span>' .
-                        '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
-                        '<div id="spanBold"><span>Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
-                        settype($_SESSION['subbmitedBtn'], "integer");
+                <tbody>
+                    <?php
+                    $addedIdsList = [];
+                    foreach ($plan as $key => $lesson) {
+                        if (($lesson['day'] == "Poniedziałek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
+
+                            if (in_array($lesson['id'], $addedIdsList)) {
+                                continue;
+                            }
+
+                            echo '<tr><td>' .
+                            '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
+                            '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
+                            '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
+                            '<span>' . $lesson['teacher_name'] . '</span>' .
+                            '<span class="float-right-span">' . $lesson['type'] . '</span><br><br>';
+
+                            echo '<div class="event-header"><span class="lessonHeader">Wydarzenia</span>';
+                            echo '<i class="fas fa-plus fa-2x" id="eventImg" title="Dodaj nowe wydarzenie do tego zajęcia" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></i></div>';
+
+                            if (!empty($lesson['id_event'])) {
+                                echo'<ul class="events">';
+
+                                foreach ($plan as $key => $lesson2) {
+                                    if ($lesson2['id'] == $lesson['id']) {
+                                        $eventData = [
+                                            'name' => $lesson2['name'],
+                                            'description' => $lesson2['description'],
+                                        ];
+                                        $this->outputEvent($eventData);
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+
+                            echo '</td></tr>';
+                            settype($_SESSION['subbmitedBtn'], "integer");
+                            $addedIdsList[] = $lesson['id'];
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </tbody>
             </table>
         </div>
         <div class="table_left" id="Tuesday">
@@ -68,21 +98,48 @@ $Date1->modify('+6 day');
                         </th>
                     </tr>
                 </thead>
-                <?php
-                foreach ($plan as $key => $lesson) {
-                    if (($lesson['day'] == "Wtorek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
-                        echo '<tr><td>' .
-                        '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
-                        '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
-                        '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
-                        '<span>' . $lesson['teacher_name'] . '</span>' .
-                        '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
-                        '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg2" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
-                        settype($_SESSION['subbmitedBtn'], "integer");
+                <tbody>
+                    <?php
+                    $addedIdsList = [];
+                    foreach ($plan as $key => $lesson) {
+                        if (($lesson['day'] == "Wtorek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
+
+                            if (in_array($lesson['id'], $addedIdsList)) {
+                                continue;
+                            }
+
+                            echo '<tr><td>' .
+                            '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
+                            '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
+                            '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
+                            '<span>' . $lesson['teacher_name'] . '</span>' .
+                            '<span class="float-right-span">' . $lesson['type'] . '</span><br><br>';
+
+                            echo '<div class="event-header"><span class="lessonHeader">Wydarzenia</span>';
+                            echo '<i class="fas fa-plus fa-2x" id="eventImg" title="Dodaj nowe wydarzenie do tego zajęcia" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></i></div>';
+
+                            if (!empty($lesson['id_event'])) {
+                                echo'<ul class="events">';
+
+                                foreach ($plan as $key => $lesson2) {
+                                    if ($lesson2['id'] == $lesson['id']) {
+                                        $eventData = [
+                                            'name' => $lesson2['name'],
+                                            'description' => $lesson2['description'],
+                                        ];
+                                        $this->outputEvent($eventData);
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+
+                            echo '</td></tr>';
+                            settype($_SESSION['subbmitedBtn'], "integer");
+                            $addedIdsList[] = $lesson['id'];
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </tbody>
             </table>
         </div>
         <div class="table_left" id="Wednesday">
@@ -94,21 +151,48 @@ $Date1->modify('+6 day');
                         </th>
                     </tr>
                 </thead>
-                <?php
-                foreach ($plan as $key => $lesson) {
-                    if (($lesson['day'] == "Środa") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
-                        echo '<tr><td>' .
-                        '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
-                        '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
-                        '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
-                        '<span>' . $lesson['teacher_name'] . '</span>' .
-                        '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
-                        '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
-                        settype($_SESSION['subbmitedBtn'], "integer");
+                <tbody>
+                    <?php
+                    $addedIdsList = [];
+                    foreach ($plan as $key => $lesson) {
+                        if (($lesson['day'] == "Środa") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
+
+                            if (in_array($lesson['id'], $addedIdsList)) {
+                                continue;
+                            }
+
+                            echo '<tr><td>' .
+                            '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
+                            '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
+                            '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
+                            '<span>' . $lesson['teacher_name'] . '</span>' .
+                            '<span class="float-right-span">' . $lesson['type'] . '</span><br><br>';
+
+                            echo '<div class="event-header"><span class="lessonHeader">Wydarzenia</span>';
+                            echo '<i class="fas fa-plus fa-2x" id="eventImg" title="Dodaj nowe wydarzenie do tego zajęcia" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></i></div>';
+
+                            if (!empty($lesson['id_event'])) {
+                                echo'<ul class="events">';
+
+                                foreach ($plan as $key => $lesson2) {
+                                    if ($lesson2['id'] == $lesson['id']) {
+                                        $eventData = [
+                                            'name' => $lesson2['name'],
+                                            'description' => $lesson2['description'],
+                                        ];
+                                        $this->outputEvent($eventData);
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+
+                            echo '</td></tr>';
+                            settype($_SESSION['subbmitedBtn'], "integer");
+                            $addedIdsList[] = $lesson['id'];
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </tbody>
             </table>
         </div>
         <div class="table_left" id="Thursday">
@@ -120,21 +204,48 @@ $Date1->modify('+6 day');
                         </th>
                     </tr>
                 </thead>
-                <?php
-                foreach ($plan as $key => $lesson) {
-                    if (($lesson['day'] == "Czwartek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
-                        echo '<tr><td>' .
-                        '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
-                        '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
-                        '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
-                        '<span>' . $lesson['teacher_name'] . '</span>' .
-                        '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
-                        '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
-                        settype($_SESSION['subbmitedBtn'], "integer");
+                <tbody>
+                    <?php
+                    $addedIdsList = [];
+                    foreach ($plan as $key => $lesson) {
+                        if (($lesson['day'] == "Czwartek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
+
+                            if (in_array($lesson['id'], $addedIdsList)) {
+                                continue;
+                            }
+
+                            echo '<tr><td>' .
+                            '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
+                            '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
+                            '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
+                            '<span>' . $lesson['teacher_name'] . '</span>' .
+                            '<span class="float-right-span">' . $lesson['type'] . '</span><br><br>';
+
+                            echo '<div class="event-header"><span class="lessonHeader">Wydarzenia</span>';
+                            echo '<i class="fas fa-plus fa-2x" id="eventImg" title="Dodaj nowe wydarzenie do tego zajęcia" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></i></div>';
+
+                            if (!empty($lesson['id_event'])) {
+                                echo'<ul class="events">';
+
+                                foreach ($plan as $key => $lesson2) {
+                                    if ($lesson2['id'] == $lesson['id']) {
+                                        $eventData = [
+                                            'name' => $lesson2['name'],
+                                            'description' => $lesson2['description'],
+                                        ];
+                                        $this->outputEvent($eventData);
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+
+                            echo '</td></tr>';
+                            settype($_SESSION['subbmitedBtn'], "integer");
+                            $addedIdsList[] = $lesson['id'];
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </tbody>
             </table>
         </div>
         <div class="table_left" id="Friday">
@@ -146,21 +257,48 @@ $Date1->modify('+6 day');
                         </th>
                     </tr>
                 </thead>
-                <?php
-                foreach ($plan as $key => $lesson) {
-                    if (($lesson['day'] == "Piątek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
-                        echo '<tr><td>' .
-                        '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
-                        '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
-                        '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
-                        '<span>' . $lesson['teacher_name'] . '</span>' .
-                        '<span class="float-right-span">' . $lesson['type'] . '</span></br>' .
-                        '<div id="spanBold"><span class="eventsHeader">Wydarzenia:</span></div></br>' .
-                        '<div id="eventButton"><img id="eventImg" title="Dodaj wydarzenie!" height="30" width="30" src="../public/pictures/addEventIcon.png" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></div></td></tr>';
-                        settype($_SESSION['subbmitedBtn'], "integer");
+                <tbody>
+                    <?php
+                    $addedIdsList = [];
+                    foreach ($plan as $key => $lesson) {
+                        if (($lesson['day'] == "Piątek") && ($lesson['start_date'] >= ($Date->format('Y-m-d'))) && ($lesson['start_date'] <= ($Date1->format('Y-m-d')))) {
+
+                            if (in_array($lesson['id'], $addedIdsList)) {
+                                continue;
+                            }
+
+                            echo '<tr><td>' .
+                            '<span class="time lessonHeader">' . substr($lesson['start'], 0, 5) . ' - ' . substr($lesson['end'], 0, 5) . '</span>' .
+                            '<span class="float-right-span lessonHeader">' . $lesson['room'] . '</span><br />' .
+                            '<span class="lessonHeader">' . $lesson['lesson'] . '</span><br />' .
+                            '<span>' . $lesson['teacher_name'] . '</span>' .
+                            '<span class="float-right-span">' . $lesson['type'] . '</span><br><br>';
+
+                            echo '<div class="event-header"><span class="lessonHeader">Wydarzenia</span>';
+                            echo '<i class="fas fa-plus fa-2x" id="eventImg" title="Dodaj nowe wydarzenie do tego zajęcia" data-lessonid="' . $_SESSION['subbmitedBtn'] = $lesson['id'] . '" data-toggle="modal" data-target="#addEvent"></i></div>';
+
+                            if (!empty($lesson['id_event'])) {
+                                echo'<ul class="events">';
+
+                                foreach ($plan as $key => $lesson2) {
+                                    if ($lesson2['id'] == $lesson['id']) {
+                                        $eventData = [
+                                            'name' => $lesson2['name'],
+                                            'description' => $lesson2['description'],
+                                        ];
+                                        $this->outputEvent($eventData);
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+
+                            echo '</td></tr>';
+                            settype($_SESSION['subbmitedBtn'], "integer");
+                            $addedIdsList[] = $lesson['id'];
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </tbody>
             </table>
         </div>
         <div style="clear:both;"></div>
