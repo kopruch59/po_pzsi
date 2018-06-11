@@ -23,7 +23,6 @@ input
 
 table
 {
-    border: 1px solid black;
     text-align: left;
     background-color: #efefef;
     margin-top: 10px;
@@ -31,15 +30,28 @@ table
     width: 100%;
 }
 
-tr
-{
-    border: 1px solid black;
-}
-
 thead > tr
 {
     text-align: center;
     background-color: lightgray;
+    border-top: 1px solid grey;
+}
+
+.table_left:first-of-type thead > tr {
+    border-left: 1px solid grey;
+}
+
+.table thead > tr {
+    border-right: 1px solid grey;
+}
+
+tbody > tr {
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.table_left:first-of-type tbody > tr {
+    border-left: 1px solid grey;
 }
 
 .float-right-span
@@ -52,12 +64,27 @@ thead > tr
     padding-right: 10px;
 }
 
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items:  center;    
+}
+
+.event-header i {
+    color: lightgreen;
+}
+
+.event-header i,
+.events li {
+    cursor: pointer;
+}
+
 @media screen and (min-width:1000px) 
 {
     .table_left
     {
         float:left;
-        max-width: 19%;
+        width: 20%;
         display: block;
     }
 }
@@ -67,7 +94,7 @@ thead > tr
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
-    width: 80%;
+    font-size: 1rem;
 }
 
 #error_message {
@@ -102,14 +129,13 @@ thead > tr
 #interval
 {
     float:left;
-    width: 50%;
     text-align: right;
 }
 
 #choice
 {
     float:left;
-    width: 50%;
+    width: 250px;
     text-align: right;
 }
 
@@ -123,31 +149,32 @@ thead > tr
     margin-bottom: 2%;
     margin-top: 2%;
 }
+#eventButton img {
+    cursor: pointer;
+}
 
-.eventsHeader {
+.lessonHeader {
     font-weight: bold;
 }
 
 #spanBold {
-    font-weight: bold;
     text-align: center;
 }
 
 .navbar {
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 80;
-  margin-bottom: 100px;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 80;
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .inputs {
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 #account-info img {
@@ -157,4 +184,136 @@ thead > tr
 .dropdown-menu {
     left: unset;
     right: 0;
+}
+
+.table td, .table th {
+    border-left: 1px solid;
+    border-top: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+table {
+    border-collapse: separate;
+}
+
+#main-label-v1 {
+    background-image: url(/public/pictures/headerMain.png);
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    width: 800px;
+}
+
+.carousel-item {
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.carousel-control-prev-icon {
+    background-image: url(https://image.flaticon.com/icons/svg/60/60965.svg)
+}
+
+.carousel-control-next-icon {
+    background-image: url(https://image.flaticon.com/icons/svg/60/60758.svg)
+}
+
+.carousel-item {
+    height: 55vh;
+}
+.carousel-caption {
+    color: black;
+}
+.homeBanner {
+    box-shadow: 5px 5px 10px; 
+    color: black; 
+    height: 30%;
+}
+
+.homeContent{
+    padding:20px;
+}
+
+.homeTextContent {
+    margin-bottom: 0px;
+}
+
+loginBtn {
+    margin-bottom: 0px;
+}
+
+#carouselExampleIndicators {
+    margin-bottom: 20px;
+}
+
+.addHeader {
+    margin-top: 10px;
+}
+
+body {
+    font-size: 0.9rem;
+}
+
+#interval.interval {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dateInterval {
+    margin: 0px 10px;
+}
+
+#week {
+    margin-top: 10px;
+}
+
+@media screen and (max-width:1000px) {
+    #weekLabel {
+        margin-top: 10%;
+
+    }
+
+    #interval {
+        margin-left: 5%;
+    }
+
+    #choice
+    {
+        margin-left: 10%;
+    }
+    
+    .row-filler {
+        display: none;
+    }
+}
+
+.fa-arrow-left:before {
+    font-size: 20px;
+}
+
+.fa-arrow-right:before {
+    font-size: 20px;
+}
+
+#divToHide {
+    display: none;
+}
+
+.nav-link {
+    font-size: 16px;
+}
+
+.groupSelect {
+    width: 50%;
+    margin-bottom:10px;
 }

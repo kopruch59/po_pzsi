@@ -117,7 +117,7 @@ class UserController extends Controller {
                 
                 $this->storeUserInSession((array)$this->model->getUserByField(UserModel::FIELD_ID, $userId));
                 
-                header('Location: ' . APPLICATION_URL . 'user/index');
+                header('Location: ' . APPLICATION_URL . 'schedule/show');
             } else {
                 echo $authResonse['error_description'] . ' ' . $authResonse['error'];
             }
@@ -140,6 +140,9 @@ class UserController extends Controller {
         
         $this->modelGoogle->client->revokeToken();
         session_unset();
+        
+        //New business rule.
+        header('Location: ' . APPLICATION_URL . $this->name . DS . 'login');
         
         $this->outputHeader_unlogged();
         require $this->dirViews . 'logout.php';

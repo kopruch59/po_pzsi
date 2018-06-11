@@ -78,12 +78,22 @@ class ScheduleController extends Controller {
         $this->model->saveMonday([]);
         $this->outputHeader_logged();
         $userData = $this->modelUser->getUserData();
-        $plan = $this->model->getSchedule($userData[UserModel::FIELD_GROUP_NUMBER]);
+        $plan = $this->model->getSchedule($userData[UserModel::FIELD_GROUP_NUMBER], true);
         $formmondays = $this->model->loadmondays();
         $addEvent = $this->model->addEvent();
-        require $this->dirViews . 'view.php';
-        unset($_SESSION['subbmitedBtn']);
+        require $this->dirViews . 'view.php';   
         $this->outputFooter();
     }
-
+    
+    /**
+     * Outputs event list item.
+     * 
+     * @param array $eventData Event data to display.
+     * 
+     * @author theKindlyMallard <the.kindly.mallard@gmail.com>
+     */
+    private function outputEvent(array $eventData) {
+        
+        echo '<li data-toggle="popover" title="' . $eventData['name'] . '" data-content="' . $eventData['description'] . '">' . $eventData['name'] . '</li>';
+    }
 }
