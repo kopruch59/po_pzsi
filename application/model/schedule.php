@@ -38,15 +38,24 @@ class ScheduleModel extends Model {
      * Gets schedule for given group.
      * 
      * @param string $group Group name for which get schedule.
+     * @param bool $getEvents Set to true if get events related to plan.
      * @return array Schedule for group.
      * 
      * @editor theKindlyMallard <the.kindly.mallard@gmail.com>
      */
-    public function getSchedule(string $group) {
+    public function getSchedule(string $group, bool $getEvents = false) {
 
         $connection = $this->getConnection();
 
-        $query = "SELECT * FROM `" . DB_NAME . "`.plan WHERE `group_number` = '$group' order by start";
+        $joinEvents = $getEvents ? "LEFT JOIN `" . DB_NAME . "`.`events` e ON e.`id_plan` = p.id" : "";
+        // 
+        $query = "SELECT p.*, e.id AS id_event, e.name, e.description, e.id_plan "
+            . "FROM `" . DB_NAME . "`.`plan` p "
+            . "$joinEvents "
+            . "WHERE p.`group_number` = '$group' "
+            . "ORDER BY p.`start` ";
+        
+        
         $queryPrepare = $connection->prepare($query);
         $queryPrepare->execute();
         $schedule = $queryPrepare->fetchAll();
